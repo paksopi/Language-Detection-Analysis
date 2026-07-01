@@ -1,0 +1,11 @@
+Log: C:\Users\faids\Documents\PersonalGitHub\language detection\results\logs\test_case_7_enmyid\log_kappa_s2_2.txt
+Loading models...
+  lingua-high, openlid-v3, pycld2 ready.
+
+Loaded 1273 cases. Running predictions...
+Done.
+
+=====================================================================================
+SCENARIO 2 TRIO — COHEN'S KAPPA + PAIRWISE AGREEMENT
+(lingua-high + openlid-v3 + pycld2)
+=====================================================================================

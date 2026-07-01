@@ -1,4 +1,4 @@
-Log: C:\Users\faids\Documents\GitHub\language detection\voting_scenario2\test_case_7_enmyid\final_report_s2.txt
+Log: C:\Users\faids\Documents\PersonalGitHub\language detection\results\logs_scenario2\test_case_7_enmyid\final_report_s2.txt
 Scenario 2: lingua-high + openlid-v3 + pycld2
 Scenario 1: lingua-high + langdetect  + pycld2  (re-run for side-by-side comparison)
 
@@ -119,4 +119,4 @@ Weights used:
   S1: lingua=0.8503 | langdetect=0.7516 | pycld2=0.9634
   S2: lingua=0.8503 | openlid-v3=0.7097 | pycld2=0.9634
 
-Log saved: C:\Users\faids\Documents\GitHub\language detection\voting_scenario2\test_case_7_enmyid\final_report_s2.txt
+Log saved: C:\Users\faids\Documents\PersonalGitHub\language detection\results\logs_scenario2\test_case_7_enmyid\final_report_s2.txt

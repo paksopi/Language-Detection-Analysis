@@ -4,7 +4,12 @@ pycld2==0.42
 fasttext-wheel==0.9.2
 langid==1.1.6
 regex==2026.6.28
-numpy==2.5.0
+# numpy/scipy pinned below 2.x: fasttext-wheel's predict() silently returns garbage
+# (caught by a bare except, so no crash — just 0% accuracy) under numpy>=2.0's stricter
+# np.array(..., copy=False) semantics. scipy must be pinned explicitly too, since
+# scikit-learn/statsmodels would otherwise pull in a scipy version that requires numpy>=2.0.
+numpy==1.26.4
+scipy==1.17.1
 matplotlib==3.11.0
 scikit-learn==1.9.0
 statsmodels==0.14.6

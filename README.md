@@ -47,7 +47,7 @@ python src/benchmark/benchmark.py [path/to/test_case.txt]
 Run the voting ensemble evaluation:
 
 ```bash
-python src/voting/voting.py
+python src/voting/voting_main.py
 ```
 
 Scripts write logs/plots into `results/`, keyed by test case, and default to

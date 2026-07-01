@@ -1,0 +1,67 @@
+Loaded 1273 test cases from 'test_case_7_enmyid.txt'
+Log: C:\Users\faids\Documents\PersonalGitHub\language detection\results\logs\test_case_7_enmyid\log_voting_2.txt
+
+Loading models...
+  lingua-high   : ready
+  langdetect    : ready (lazy load)
+  pycld2        : ready (compiled C++)
+All models loaded.
+
+===================================================================================================================
+VOTING RESULTS — OVERALL ACCURACY BY LANGUAGE
+===================================================================================================================
+  LANG  |   n |  lingua-high |   langdetect |       pycld2 |         hard |         soft |     weighted
+-------------------------------------------------------------------------------------------------------
+  EN    | 432 |        92.1% |        51.4% |        26.6% |        92.4% |        91.7% |        91.7%
+  MY    | 421 |        55.8% |         0.0% |        21.6% |        51.3% |        32.3% |        37.1%
+  ID    | 420 |        57.9% |        49.3% |        25.2% |        63.1% |        74.3% |        73.1%
+-------------------------------------------------------------------------------------------------------
+  ALL   | 1273 |        68.8% |        33.7% |        24.5% |        69.1% |        66.3% |        67.5%
+
+===================================================================================================================
+VOTING RESULTS — ACCURACY BY BUCKET & LANGUAGE
+===================================================================================================================
+
+Bucket: 1 word
+  LANG  |   n |  lingua-high |   langdetect |       pycld2 |         hard |         soft |     weighted
+  EN    | 226 |        88.9% |        34.5% |         4.0% |        88.9% |        88.1% |        88.1%
+  MY    | 226 |        47.3% |         0.0% |         6.6% |        43.4% |        27.4% |        28.8%
+  ID    | 225 |        49.3% |        30.7% |        11.6% |        52.0% |        63.1% |        62.2%
+
+Bucket: 2 words
+  LANG  |   n |  lingua-high |   langdetect |       pycld2 |         hard |         soft |     weighted
+  EN    | 141 |        94.3% |        56.0% |        29.8% |        94.3% |        93.6% |        93.6%
+  MY    | 129 |        61.2% |         0.0% |        22.5% |        57.4% |        30.2% |        34.9%
+  ID    | 129 |        62.0% |        56.6% |        17.8% |        65.9% |        80.6% |        78.3%
+
+Bucket: 3-7 words
+  LANG  |   n |  lingua-high |   langdetect |       pycld2 |         hard |         soft |     weighted
+  EN    |  30 |        96.7% |       100.0% |        96.7% |       100.0% |       100.0% |       100.0%
+  MY    |  32 |        78.1% |         0.0% |        56.2% |        68.8% |        40.6% |        59.4%
+  ID    |  32 |        65.6% |        96.9% |        78.1% |        90.6% |       100.0% |       100.0%
+
+Bucket: 8-16 words
+  LANG  |   n |  lingua-high |   langdetect |       pycld2 |         hard |         soft |     weighted
+  EN    |  25 |       100.0% |       100.0% |       100.0% |       100.0% |       100.0% |       100.0%
+  MY    |  24 |        70.8% |         0.0% |        79.2% |        62.5% |        62.5% |        79.2%
+  ID    |  24 |        95.8% |       100.0% |        91.7% |       100.0% |       100.0% |       100.0%
+
+Bucket: 17-50 words
+  LANG  |   n |  lingua-high |   langdetect |       pycld2 |         hard |         soft |     weighted
+  EN    |  10 |       100.0% |       100.0% |       100.0% |       100.0% |       100.0% |       100.0%
+  MY    |  10 |        70.0% |         0.0% |       100.0% |        70.0% |        70.0% |        80.0%
+  ID    |  10 |        80.0% |       100.0% |       100.0% |       100.0% |       100.0% |       100.0%
+
+===================================================================================================================
+VOTE GAIN OVER BEST INDIVIDUAL MODEL
+===================================================================================================================
+  EN     best individual: lingua-high   92.1%  |  best vote: hard      92.4%  |  gain: +0.2%
+  MY     best individual: lingua-high   55.8%  |  best vote: hard      51.3%  |  gain: -4.5%
+  ID     best individual: lingua-high   57.9%  |  best vote: soft      74.3%  |  gain: +16.4%
+  ALL    best individual: lingua-high   68.8%  |  best vote: hard      69.1%  |  gain: +0.3%
+
+===================================================================================================================
+Voting weights used  —  lingua-high: 0.8503  |  langdetect: 0.7516  |  pycld2: 0.9634
+(Weights derived from ROC AUC scores in benchmarkV5)
+
+Log saved to: C:\Users\faids\Documents\PersonalGitHub\language detection\results\logs\test_case_7_enmyid\log_voting_2.txt
