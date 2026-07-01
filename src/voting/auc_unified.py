@@ -11,11 +11,9 @@ Writes: log/log_auc_unified_N.txt
 
 import sys
 import numpy as np
-from pathlib import Path
 from sklearn.metrics import roc_auc_score
 
-sys.path.insert(0, str(Path(__file__).parent))
-from core import (
+from voting.core import (
     ROOT, LOG_DIR, DS_DIR, LANGUAGE_ORDER, next_path,
     load_dataset, load_lingua, run_predictions,
 )

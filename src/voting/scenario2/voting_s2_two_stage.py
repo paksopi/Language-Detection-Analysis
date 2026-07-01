@@ -15,7 +15,6 @@ Writes: voting_scenario2/log_s2_two_stage_N.txt
 import sys
 import regex
 import numpy as np
-from pathlib import Path
 from collections import defaultdict, Counter
 
 import fasttext
@@ -24,9 +23,7 @@ from statsmodels.stats.contingency_tables import mcnemar
 from langdetect import DetectorFactory
 DetectorFactory.seed = 0
 
-VOTING_DIR = Path(__file__).parent.parent
-sys.path.insert(0, str(VOTING_DIR))
-from core import (
+from voting.core import (
     ROOT, TARGET_LANGS, LANGUAGE_ORDER, BUCKET_ORDER, EXPECTED_TO_ISO, next_path,
     load_dataset, load_lingua, lingua_probs, pycld2_probs, langdetect_probs,
     run_predictions as run_s1_predictions,

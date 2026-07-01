@@ -149,7 +149,8 @@ def pycld2_probs(text: str) -> dict:
         pass
     return probs
 
-def _top(probs: dict) -> str:
+def pick_top(probs: dict) -> str:
+    """Return the highest-probability language, or 'unknown' if all scores are zero."""
     return max(probs, key=probs.get) if any(probs.values()) else "unknown"
 
 # ── Voting strategies ──────────────────────────────────────────────────────────
@@ -216,9 +217,9 @@ def run_predictions(cases: list, detector) -> list:
         lp   = lingua_probs(detector, text)
         dp   = langdetect_probs(text)
         cp   = pycld2_probs(text)
-        l_pred = _top(lp)
-        d_pred = _top(dp)
-        c_pred = _top(cp)
+        l_pred = pick_top(lp)
+        d_pred = pick_top(dp)
+        c_pred = pick_top(cp)
         results.append({
             "expected_iso": case["expected_iso"],
             "expected_lbl": case["expected_lbl"],

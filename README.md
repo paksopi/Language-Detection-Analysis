@@ -19,16 +19,21 @@ All code lives under `src/`, grouped by purpose:
 | `results/` | Generated artifacts: `logs/`, `logs_scenario2/`, `calibration/`, `confusion_matrix/`, `roc_curve/` — all reproducible by re-running the scripts above |
 | `reports/` | Written analysis of results — see [`reports/FINAL_REPORT.md`](reports/FINAL_REPORT.md) for the current canonical report. Superseded drafts/earlier runs live in `reports/archive/`. |
 | `docs/reference/` | Background reference material from a separate, unrelated project — **not** documentation of this repo. See [`docs/reference/README.md`](docs/reference/README.md). |
+| `tests/` | Unit tests (pytest) for the pure, model-free functions in `src/voting/core.py` |
 
 ## Setup
 
-Requires **Python 3.12** — `fasttext`, `pycld2`, `langid`, and `statsmodels` don't yet
-have prebuilt wheels for newer Python versions.
+Requires **Python 3.12** — `pycld2`, `langid`, and `statsmodels` don't yet have prebuilt
+wheels for newer Python versions. `requirements.txt` installs `fasttext-wheel` rather than
+the official `fasttext` package, since `fasttext` has no prebuilt Windows wheel and fails
+to compile from source on newer MSVC/pybind11 toolchains — `fasttext-wheel` is a drop-in,
+prebuilt-wheel fork; the import name is still `import fasttext`.
 
 ```bash
 python3.12 -m venv .venv
 .venv\Scripts\activate      # Windows
 pip install -r requirements.txt
+pip install -e .             # registers voting/benchmark as importable packages
 ```
 
 ## Usage
@@ -47,3 +52,9 @@ python src/voting/voting.py
 
 Scripts write logs/plots into `results/`, keyed by test case, and default to
 `data/test_case_7_enmyid.txt` if no input file is given.
+
+## Tests
+
+```bash
+python -m pytest tests/
+```

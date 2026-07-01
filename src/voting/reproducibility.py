@@ -11,16 +11,14 @@ Writes: log/log_reproducibility_N.txt
 
 import sys
 import numpy as np
-from pathlib import Path
 from collections import defaultdict
 
 import langdetect as _ld
 from langdetect import DetectorFactory
 
-sys.path.insert(0, str(Path(__file__).parent))
-from core import (
+from voting.core import (
     ROOT, LOG_DIR, DS_DIR, LANGUAGE_ORDER, TARGET_LANGS, next_path,
-    load_dataset, load_lingua, lingua_probs, pycld2_probs,
+    load_dataset, load_lingua, lingua_probs, pycld2_probs, pick_top,
     hard_vote, soft_vote, weighted_vote, DEFAULT_WEIGHTS,
 )
 
@@ -65,9 +63,6 @@ def langdetect_probs_seeded(text: str, seed=None) -> dict:
         pass
     return probs
 
-def _top(probs):
-    return max(probs, key=probs.get) if any(probs.values()) else "unknown"
-
 def run_single(cases, seed=0) -> dict:
     """Run full pipeline for one seed setting. Returns {strat: {lbl: accuracy}}."""
     accs = defaultdict(lambda: defaultdict(lambda: [0, 0]))
@@ -78,7 +73,7 @@ def run_single(cases, seed=0) -> dict:
         lp   = lingua_probs(detector, text)
         dp   = langdetect_probs_seeded(text, seed)
         cp   = pycld2_probs(text)
-        l_pred = _top(lp); d_pred = _top(dp); c_pred = _top(cp)
+        l_pred = pick_top(lp); d_pred = pick_top(dp); c_pred = pick_top(cp)
         preds = {
             "hard":     hard_vote(l_pred, d_pred, c_pred),
             "soft":     soft_vote(lp, dp, cp),

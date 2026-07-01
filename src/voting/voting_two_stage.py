@@ -17,15 +17,13 @@ Writes: log/log_voting_two_stage_N.txt
 import sys
 import math
 import numpy as np
-from pathlib import Path
 from collections import defaultdict
 
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score
 from statsmodels.stats.contingency_tables import mcnemar as sm_mcnemar
 
-sys.path.insert(0, str(Path(__file__).parent))
-from core import (
+from voting.core import (
     ROOT, LOG_DIR, DS_DIR, LANGUAGE_ORDER, BUCKET_ORDER, TARGET_LANGS,
     DEFAULT_WEIGHTS, next_path, load_dataset, load_lingua,
     run_predictions, binary_correct, overall_accuracy, accuracy_by_lang,

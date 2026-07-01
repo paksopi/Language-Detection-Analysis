@@ -1,28 +1,16 @@
 import sys
-import math
-import re
-import regex
 from pathlib import Path
 from collections import defaultdict
 
-from lingua import Language, LanguageDetectorBuilder
-import langdetect
-import pycld2
+from voting.core import (
+    ROOT, LOG_DIR, DS_DIR, EXPECTED_TO_ISO, TARGET_LANGS, LANGUAGE_ORDER, BUCKET_ORDER,
+    next_path, bucket_for, load_lingua, lingua_probs, langdetect_probs, pycld2_probs,
+    hard_vote, soft_vote, weighted_vote, pick_top, DEFAULT_WEIGHTS,
+)
 
 # ==============================================================================
 # PATHS
 # ==============================================================================
-ROOT    = Path(__file__).parent.parent.parent
-LOG_DIR = ROOT / "results" / "logs" / "test_case_7_enmyid"
-DS_DIR  = ROOT / "data"
-
-def next_path(directory: Path, stem: str, suffix: str) -> Path:
-    directory.mkdir(parents=True, exist_ok=True)
-    n = 1
-    while (directory / f"{stem}_{n}{suffix}").exists():
-        n += 1
-    return directory / f"{stem}_{n}{suffix}"
-
 LOG_PATH = next_path(LOG_DIR, "log_voting", ".txt")
 
 class Logger:
@@ -60,113 +48,20 @@ with open(TEST_CASE_FILE, "r", encoding="utf-8") as f:
             label, text = line.split("|", 1)
             test_cases.append({"expected": label.strip().upper(), "text": text.strip()})
 
-EXPECTED_TO_ISO = {"EN": "en", "MY": "ms", "ID": "id"}
-TARGET_LANGS    = ["en", "ms", "id"]
-LANGUAGE_ORDER  = ["EN", "MY", "ID"]
-
 print(f"Loaded {len(test_cases)} test cases from {TEST_CASE_FILE.name!r}")
 print(f"Log: {LOG_PATH}\n")
-
-
-# ==============================================================================
-# WORD-COUNT BUCKETING
-# ==============================================================================
-CJK_RANGES = [(0x4E00, 0x9FFF), (0x3040, 0x30FF), (0xAC00, 0xD7A3)]
-
-def is_cjk(text):
-    cjk = sum(1 for ch in text if any(s <= ord(ch) <= e for s, e in CJK_RANGES))
-    return cjk > 0 and cjk >= len(text.replace(" ", "")) * 0.3
-
-def bucket_for(text):
-    if is_cjk(text):
-        n = len(re.sub(r'[^\w]', '', text))
-        if n <= 2:   return "1 word"
-        elif n <= 6:  return "2 words"
-        elif n <= 15: return "3-7 words"
-        elif n <= 48: return "8-16 words"
-        else:         return "17-50 words"
-    else:
-        clean = re.sub(r'[^\w\s஀-௿]', '', text)
-        n = len(clean.split())
-        if n <= 1:   return "1 word"
-        elif n <= 2:  return "2 words"
-        elif n <= 7:  return "3-7 words"
-        elif n <= 16: return "8-16 words"
-        else:         return "17-50 words"
-
-BUCKET_ORDER = ["1 word", "2 words", "3-7 words", "8-16 words", "17-50 words"]
 
 
 # ==============================================================================
 # LOAD MODELS
 # ==============================================================================
 print("Loading models...")
-
-LANGS = (Language.ENGLISH, Language.MALAY, Language.INDONESIAN)
-detector = LanguageDetectorBuilder.from_languages(*LANGS).build()
+detector = load_lingua()
 
 print("  lingua-high   : ready")
 print("  langdetect    : ready (lazy load)")
 print("  pycld2        : ready (compiled C++)")
 print("All models loaded.\n")
-
-
-# ==============================================================================
-# LINGUA-HIGH — ISO mapper
-# ==============================================================================
-_LINGUA_ISO = {
-    Language.ENGLISH:    "en",
-    Language.MALAY:      "ms",
-    Language.INDONESIAN: "id",
-}
-
-def lingua_probs(text):
-    """Return {iso: confidence} for all 5 target languages."""
-    confs = detector.compute_language_confidence_values(text)
-    return {_LINGUA_ISO[c.language]: c.value for c in confs if c.language in _LINGUA_ISO}
-
-
-# ==============================================================================
-# LANGDETECT — ISO mapper
-# ==============================================================================
-def langdetect_probs(text):
-    """Return {iso: probability} for detected languages, normalised to target set."""
-    try:
-        raw = langdetect.detect_langs(text)
-    except Exception:
-        return {l: 0.0 for l in TARGET_LANGS}
-
-    probs = {l: 0.0 for l in TARGET_LANGS}
-    for item in raw:
-        iso = item.lang
-        if iso.startswith("zh"):
-            iso = "zh"
-        if iso in probs:
-            probs[iso] += item.prob
-    return probs
-
-
-# ==============================================================================
-# PYCLD2 — ISO mapper
-# ==============================================================================
-def pycld2_probs(text):
-    """Return {iso: confidence} from CLD2 percent scores, normalised to target set."""
-    probs = {l: 0.0 for l in TARGET_LANGS}
-    try:
-        _, _, details = pycld2.detect(text)
-        total = sum(d[2] for d in details if d[1].lower() in TARGET_LANGS
-                    or d[1].lower().startswith("zh"))
-        if total == 0:
-            return probs
-        for d in details:
-            iso = d[1].lower()
-            if iso.startswith("zh"):
-                iso = "zh"
-            if iso in probs:
-                probs[iso] += d[2] / 100.0
-    except Exception:
-        pass
-    return probs
 
 
 # ==============================================================================
@@ -192,48 +87,8 @@ def pycld2_probs(text):
 # effectively making langdetect a strong ID/EN/TA voter that never competes on
 # the MY axis.
 #
-# Source: log_combined_3.txt (strict scoring, no fallbacks)
-WEIGHTS = {
-    "lingua":      0.8503,   # lingua-high AUC (log_combined_3.txt)
-    "langdetect":  0.7516,   # corrected AUC — proxy rule removed (was 0.7593)
-    "pycld2":      0.9634,   # pycld2 AUC (unchanged)
-}
-
-
-# ==============================================================================
-# VOTING STRATEGIES
-# ==============================================================================
-def hard_vote(lingua_pred, ld_pred, cld2_pred):
-    """Majority vote on raw predicted labels. Ties go to lingua-high."""
-    votes = defaultdict(int)
-    for pred in [lingua_pred, ld_pred, cld2_pred]:
-        if pred and pred != "unknown":
-            votes[pred] += 1
-    if not votes:
-        return "unknown"
-    max_votes = max(votes.values())
-    winners = [lang for lang, v in votes.items() if v == max_votes]
-    # tie → trust lingua-high
-    return lingua_pred if lingua_pred in winners else winners[0]
-
-
-def soft_vote(lingua_p, ld_p, cld2_p):
-    """Average probability across all 3 models, pick highest."""
-    combined = {l: (lingua_p.get(l, 0.0) + ld_p.get(l, 0.0) + cld2_p.get(l, 0.0)) / 3
-                for l in TARGET_LANGS}
-    return max(combined, key=combined.get)
-
-
-def weighted_vote(lingua_p, ld_p, cld2_p):
-    """Weighted sum of probabilities by AUC weight, pick highest."""
-    combined = {}
-    for l in TARGET_LANGS:
-        combined[l] = (
-            lingua_p.get(l, 0.0)  * WEIGHTS["lingua"]     +
-            ld_p.get(l, 0.0)      * WEIGHTS["langdetect"] +
-            cld2_p.get(l, 0.0)    * WEIGHTS["pycld2"]
-        )
-    return max(combined, key=combined.get)
+# Source: log_combined_3.txt (strict scoring, no fallbacks). Weights themselves
+# live in voting.core.DEFAULT_WEIGHTS — shared with every other script here.
 
 
 # ==============================================================================
@@ -254,13 +109,13 @@ for case in test_cases:
     bucket       = bucket_for(text)
 
     # --- individual model predictions ---
-    lingua_p  = lingua_probs(text)
+    lingua_p  = lingua_probs(detector, text)
     ld_p      = langdetect_probs(text)
     cld2_p    = pycld2_probs(text)
 
-    lingua_pred = max(lingua_p, key=lingua_p.get) if any(lingua_p.values()) else "unknown"
-    ld_pred     = max(ld_p,     key=ld_p.get)     if any(ld_p.values())     else "unknown"
-    cld2_pred   = max(cld2_p,   key=cld2_p.get)   if any(cld2_p.values())   else "unknown"
+    lingua_pred = pick_top(lingua_p)
+    ld_pred     = pick_top(ld_p)
+    cld2_pred   = pick_top(cld2_p)
 
     # langdetect has no ms profile so it outputs 'id' for Malay text.
     # No score adjustment is made — the vote from lingua-high and pycld2 corrects this.
@@ -369,7 +224,7 @@ for lbl in LANGUAGE_ORDER + ["ALL"]:
           f"best vote: {best_vote:<8} {vote_accs[best_vote]:5.1f}%  |  gain: {sign}{gain:.1f}%")
 
 print(f"\n{'='*115}")
-print(f"Voting weights used  —  lingua-high: {WEIGHTS['lingua']}  |  "
-      f"langdetect: {WEIGHTS['langdetect']}  |  pycld2: {WEIGHTS['pycld2']}")
+print(f"Voting weights used  —  lingua-high: {DEFAULT_WEIGHTS['lingua']}  |  "
+      f"langdetect: {DEFAULT_WEIGHTS['langdetect']}  |  pycld2: {DEFAULT_WEIGHTS['pycld2']}")
 print(f"(Weights derived from ROC AUC scores in benchmarkV5)")
 print(f"\nLog saved to: {LOG_PATH}")

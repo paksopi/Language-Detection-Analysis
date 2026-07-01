@@ -8,34 +8,27 @@ Writes all output to voting_scenario2/log_s2_N.txt
 """
 
 import sys
-import re
 import regex
-import math
 import numpy as np
-from pathlib import Path
 from collections import defaultdict
 
 import fasttext
-import pycld2
-from lingua import Language, LanguageDetectorBuilder
-import langdetect as _ld
+from lingua import LanguageDetectorBuilder
 from langdetect import DetectorFactory
 DetectorFactory.seed = 0
 
 from statsmodels.stats.contingency_tables import mcnemar as sm_mcnemar
 
+from voting.core import (
+    ROOT, TARGET_LANGS, LANGUAGE_ORDER, BUCKET_ORDER, LINGUA_LANGS,
+    load_dataset, lingua_probs, langdetect_probs, pycld2_probs, pick_top,
+)
+
 # ── Paths ──────────────────────────────────────────────────────────────────────
-ROOT       = Path(__file__).parent.parent.parent.parent
 OUT_DIR    = ROOT / "results" / "logs_scenario2" / "test_case_7_enmyid"
 SRC_DIR    = ROOT / "models"
 DS_DIR     = ROOT / "data"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
-
-def next_path(directory, stem, suffix):
-    n = 1
-    while (directory / f"{stem}_{n}{suffix}").exists():
-        n += 1
-    return directory / f"{stem}_{n}{suffix}"
 
 LOG_PATH = OUT_DIR / "final_report_s2.txt"
 
@@ -49,16 +42,8 @@ class Logger:
 sys.stdout = Logger(LOG_PATH)
 
 # ── Constants ──────────────────────────────────────────────────────────────────
-TARGET_LANGS    = ["en", "ms", "id"]
-LANGUAGE_ORDER  = ["EN", "MY", "ID"]
-EXPECTED_TO_ISO = {"EN": "en", "MY": "ms", "ID": "id"}
-BUCKET_ORDER    = ["1 word", "2 words", "3-7 words", "8-16 words", "17-50 words"]
-LINGUA_LANGS    = (Language.ENGLISH, Language.MALAY, Language.INDONESIAN)
-_LINGUA_ISO     = {
-    Language.ENGLISH:    "en",
-    Language.MALAY:      "ms",
-    Language.INDONESIAN: "id",
-}
+# TARGET_LANGS, LANGUAGE_ORDER, BUCKET_ORDER, LINGUA_LANGS come from voting.core (shared
+# with Scenario 1) so both scenarios always evaluate against the same language set.
 
 # OpenLID FLORES-200 -> ISO mapping (strict — only confirmed mappings)
 OPENLID_TO_ISO = {
@@ -85,47 +70,8 @@ print(f"Log: {LOG_PATH}")
 print("Scenario 2: lingua-high + openlid-v3 + pycld2")
 print("Scenario 1: lingua-high + langdetect  + pycld2  (re-run for side-by-side comparison)\n")
 
-# ── Bucketing ──────────────────────────────────────────────────────────────────
-CJK_RANGES = [(0x4E00, 0x9FFF), (0x3040, 0x30FF), (0xAC00, 0xD7A3)]
-
-def is_cjk(text):
-    n = sum(1 for ch in text if any(s <= ord(ch) <= e for s, e in CJK_RANGES))
-    return n > 0 and n >= len(text.replace(" ", "")) * 0.3
-
-def bucket_for(text):
-    if is_cjk(text):
-        n = len(re.sub(r"[^\w]", "", text))
-        if n <= 2:    return "1 word"
-        elif n <= 6:  return "2 words"
-        elif n <= 15: return "3-7 words"
-        elif n <= 48: return "8-16 words"
-        else:         return "17-50 words"
-    else:
-        clean = re.sub(r"[^\w\s஀-௿]", "", text)
-        n = len(clean.split())
-        if n <= 1:    return "1 word"
-        elif n <= 2:  return "2 words"
-        elif n <= 7:  return "3-7 words"
-        elif n <= 16: return "8-16 words"
-        else:         return "17-50 words"
-
 # ── Load dataset ───────────────────────────────────────────────────────────────
-cases = []
-with open(DS_DIR / "test_case_7_enmyid.txt", "r", encoding="utf-8") as f:
-    for line in f:
-        line = line.strip()
-        if not line or line.startswith("#"):
-            continue
-        if "|" in line:
-            label, text = line.split("|", 1)
-            label = label.strip().upper()
-            if label in EXPECTED_TO_ISO:
-                cases.append({
-                    "expected_lbl": label,
-                    "expected_iso": EXPECTED_TO_ISO[label],
-                    "text":         text.strip(),
-                    "bucket":       bucket_for(text.strip()),
-                })
+cases = load_dataset(DS_DIR / "test_case_7_enmyid.txt")
 print(f"Loaded {len(cases)} test cases.\n")
 
 # ── Load models ────────────────────────────────────────────────────────────────
@@ -154,10 +100,8 @@ def openlid_label_to_iso(label):
     return OPENLID_TO_ISO.get(code, "unknown")
 
 # ── Probability functions ──────────────────────────────────────────────────────
-def lingua_probs(text):
-    confs = detector.compute_language_confidence_values(text)
-    return {_LINGUA_ISO[c.language]: c.value for c in confs if c.language in _LINGUA_ISO}
-
+# lingua_probs, langdetect_probs, pycld2_probs come from voting.core (shared with
+# Scenario 1). Only openlid_probs is unique to this scenario.
 def openlid_probs(text):
     """Return {iso: prob} from openlid-v3. Uses top-20 FLORES-200 predictions."""
     probs = {l: 0.0 for l in TARGET_LANGS}
@@ -173,32 +117,6 @@ def openlid_probs(text):
     except Exception:
         pass
     return probs
-
-def langdetect_probs(text):
-    probs = {l: 0.0 for l in TARGET_LANGS}
-    try:
-        for item in _ld.detect_langs(text):
-            iso = item.lang
-            if iso.startswith("zh"): iso = "zh"
-            if iso in probs: probs[iso] += item.prob
-    except Exception:
-        pass
-    return probs
-
-def pycld2_probs(text):
-    probs = {l: 0.0 for l in TARGET_LANGS}
-    try:
-        _, _, details = pycld2.detect(text)
-        for d in details:
-            iso = d[1].lower()
-            if iso.startswith("zh"): iso = "zh"
-            if iso in probs: probs[iso] += d[2] / 100.0
-    except Exception:
-        pass
-    return probs
-
-def _top(probs):
-    return max(probs, key=probs.get) if any(probs.values()) else "unknown"
 
 # ── Voting strategies (generic — works for both scenarios) ─────────────────────
 def hard_vote_3(p1, p2, p3, tiebreak_pred):
@@ -229,15 +147,15 @@ s2_results = []   # lingua + openlid   + pycld2
 
 for i, case in enumerate(cases):
     text = case["text"]
-    lp   = lingua_probs(text)
+    lp   = lingua_probs(detector, text)
     dp   = langdetect_probs(text)
     op   = openlid_probs(text)
     cp   = pycld2_probs(text)
 
-    l_pred = _top(lp)
-    d_pred = _top(dp)
-    o_pred = _top(op)
-    c_pred = _top(cp)
+    l_pred = pick_top(lp)
+    d_pred = pick_top(dp)
+    o_pred = pick_top(op)
+    c_pred = pick_top(cp)
 
     base = {
         "expected_iso": case["expected_iso"],

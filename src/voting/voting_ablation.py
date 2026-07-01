@@ -12,11 +12,9 @@ Writes: log/log_voting_ablation_N.txt
 
 import sys
 import numpy as np
-from pathlib import Path
 from collections import defaultdict
 
-sys.path.insert(0, str(Path(__file__).parent))
-from core import (
+from voting.core import (
     ROOT, LOG_DIR, DS_DIR, LANGUAGE_ORDER, BUCKET_ORDER, DEFAULT_WEIGHTS,
     TARGET_LANGS, next_path, load_dataset, load_lingua, run_predictions,
     hard_vote, soft_vote, weighted_vote, pct,

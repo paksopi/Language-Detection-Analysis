@@ -19,7 +19,6 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from pathlib import Path
 from collections import defaultdict
 
 # Statistical libraries — see function-level comments for exact APIs used
@@ -28,8 +27,7 @@ from statsmodels.stats.proportion import proportion_confint               # bino
 from sklearn.metrics import cohen_kappa_score                             # kappa
 from sklearn.calibration import calibration_curve                         # reliability
 
-sys.path.insert(0, str(Path(__file__).parent))
-from core import (
+from voting.core import (
     ROOT, LOG_DIR, CALIB_DIR, DS_DIR,
     LANGUAGE_ORDER, BUCKET_ORDER, IND_KEYS, VOTE_KEYS, ALL_KEYS, KEY_NAMES,
     next_path, load_dataset, load_lingua, run_predictions,

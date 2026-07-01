@@ -19,8 +19,7 @@ from sklearn.metrics import cohen_kappa_score
 from langdetect import DetectorFactory
 DetectorFactory.seed = 0
 
-sys.path.insert(0, str(Path(__file__).parent))
-from core import (
+from voting.core import (
     ROOT, LOG_DIR, DS_DIR, LANGUAGE_ORDER, TARGET_LANGS, next_path,
     load_dataset, load_lingua, lingua_probs, pycld2_probs,
 )
