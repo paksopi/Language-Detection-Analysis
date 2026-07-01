@@ -1,0 +1,508 @@
+# ==============================================================================
+# test_case_5.txt — format: LANG | text
+# Languages: EN (English), MY (Malay), ID (Indonesian), ZH (Chinese), TA (Tamil)
+#
+# Organized into 5 word-count buckets, each with >= the required minimum
+# examples PER LANGUAGE, so accuracy and speed can be measured per bucket
+# per language, not just overall.
+#
+# BUCKETS 1 & 2: 50% Shared/Formal Roots (Stress-testing ambiguity) 
+#                50% Exclusive/Colloquial (Testing distinct dialect routing)
+# BUCKETS 3, 4, & 5: Authentic "Bahasa Rojak" and localized Southeast Asian
+#                    code-switching patterns and slang.
+# ==============================================================================
+
+# ==============================================================================
+# BUCKET 1: SINGLE WORD (1 word) — 30 per language (50/50 Split)
+# ==============================================================================
+EN | Algorithm
+EN | Strategy
+EN | Economy
+EN | Politics
+EN | Psychology
+EN | Democracy
+EN | Justice
+EN | Computer
+EN | Symphony
+EN | Organization
+EN | System
+EN | Structure
+EN | Analysis
+EN | Theory
+EN | Global
+EN | Yall
+EN | Aint
+EN | Gonna
+EN | Wanna
+EN | Bro
+EN | Dude
+EN | Awesome
+EN | Cool
+EN | Freaking
+EN | Literally
+EN | Tbh
+EN | Idk
+EN | Yeah
+EN | Nope
+EN | Okay
+MY | Algoritma
+MY | Strategi
+MY | Ekonomi
+MY | Politik
+MY | Psikologi
+MY | Demokrasi
+MY | Keadilan
+MY | Komputer
+MY | Simfoni
+MY | Organisasi
+MY | Sistem
+MY | Struktur
+MY | Analisis
+MY | Teori
+MY | Global
+MY | Kereta
+MY | Tandas
+MY | Seronok
+MY | Kelmarin
+MY | Gempak
+MY | Kacang
+MY | Cikgu
+MY | Pejabat
+MY | Awat
+MY | Macam
+MY | Bising
+MY | Pening
+MY | Sembang
+MY | Kamek
+MY | Kitorang
+ID | Algoritma
+ID | Strategi
+ID | Ekonomi
+ID | Politik
+ID | Psikologi
+ID | Demokrasi
+ID | Keadilan
+ID | Komputer
+ID | Simfoni
+ID | Organisasi
+ID | Sistem
+ID | Struktur
+ID | Analisis
+ID | Teori
+ID | Global
+ID | Mobil
+ID | Kamar
+ID | Asyik
+ID | Kemarin
+ID | Keren
+ID | Gampang
+ID | Dosen
+ID | Kantor
+ID | Kenapa
+ID | Kayak
+ID | Berisik
+ID | Pusing
+ID | Ngobrol
+ID | Gue
+ID | Kita
+ZH | 算法
+ZH | 策略
+ZH | 经济
+ZH | 政治
+ZH | 心理
+ZH | 民主
+ZH | 正义
+ZH | 电脑
+ZH | 音乐
+ZH | 组织
+ZH | 系统
+ZH | 结构
+ZH | 分析
+ZH | 理论
+ZH | 全球
+ZH | 搞定
+ZH | 哇塞
+ZH | 厉害
+ZH | 随便
+ZH | 帮忙
+ZH | 东西
+ZH | 明白
+ZH | 麻烦
+ZH | 到底
+ZH | 真的
+ZH | 还是
+ZH | 觉得
+ZH | 喜欢
+ZH | 知道
+ZH | 可是
+TA | அல்காரிதம்
+TA | உத்தி
+TA | பொருளாதாரம்
+TA | அரசியல்
+TA | உளவியல்
+TA | ஜனநாயகம்
+TA | நீதி
+TA | கணினி
+TA | இசை
+TA | அமைப்பு
+TA | முறை
+TA | கட்டமைப்பு
+TA | பகுப்பாய்வு
+TA | கோட்பாடு
+TA | உலகம்
+TA | மச்சி
+TA | மாப்ள
+TA | தல
+TA | சூப்பர்
+TA | செம்ம
+TA | சும்மா
+TA | கண்டிப்பா
+TA | ஆமா
+TA | இல்ல
+TA | சரி
+TA | என்ன
+TA | எப்படி
+TA | ஏது
+TA | நல்லா
+TA | ரொம்ப
+
+# ==============================================================================
+# BUCKET 2: TWO WORDS (2 words) — 30 per language (50/50 Split)
+# ==============================================================================
+EN | Artificial intelligence
+EN | Global warming
+EN | Social media
+EN | Operating system
+EN | Climate change
+EN | Human rights
+EN | Free trade
+EN | High inflation
+EN | Data structure
+EN | System analysis
+EN | Scientific theory
+EN | Industrial revolution
+EN | Young generation
+EN | Economic factor
+EN | Political conflict
+EN | Whats up
+EN | Hang out
+EN | Chill out
+EN | My bad
+EN | No worries
+EN | Sounds good
+EN | Fair enough
+EN | Pretty cool
+EN | Right on
+EN | Oh well
+EN | Hit up
+EN | Catch up
+EN | Good vibes
+EN | You know
+EN | For real
+MY | Kecerdasan buatan
+MY | Pemanasan global
+MY | Media sosial
+MY | Sistem operasi
+MY | Perubahan iklim
+MY | Hak asasi
+MY | Perdagangan bebas
+MY | Inflasi tinggi
+MY | Struktur data
+MY | Analisis sistem
+MY | Teori sains
+MY | Revolusi industri
+MY | Generasi muda
+MY | Faktor ekonomi
+MY | Konflik politik
+MY | Bas kilang
+MY | Pejabat pos
+MY | Tandas awam
+MY | Cikgu sekolah
+MY | Budak pandai
+MY | Wayang pacak
+MY | Makan angin
+MY | Kaki bangku
+MY | Kedai mamak
+MY | Tudung saji
+MY | Selipar jepun
+MY | Ais kosong
+MY | Teh tarik
+MY | Nasi lemak
+MY | Balik kampung
+ID | Kecerdasan buatan
+ID | Pemanasan global
+ID | Media sosial
+ID | Sistem operasi
+ID | Perubahan iklim
+ID | Hak asasi
+ID | Perdagangan bebas
+ID | Inflasi tinggi
+ID | Struktur data
+ID | Analisis sistem
+ID | Teori sains
+ID | Revolusi industri
+ID | Generasi muda
+ID | Faktor ekonomi
+ID | Konflik politik
+ID | Bus kota
+ID | Kantor pos
+ID | Kamar mandi
+ID | Dosen kampus
+ID | Anak pintar
+ID | Layar tancap
+ID | Jalan jalan
+ID | Kurang jago
+ID | Warung tegal
+ID | Nasi goreng
+ID | Sandal jepit
+ID | Es jeruk
+ID | Teh manis
+ID | Indomie telor
+ID | Mudik lebaran
+ZH | 人工智能
+ZH | 全球变暖
+ZH | 社交媒体
+ZH | 操作系统
+ZH | 气候变化
+ZH | 基本人权
+ZH | 自由贸易
+ZH | 通货膨胀
+ZH | 数据结构
+ZH | 系统分析
+ZH | 科学理论
+ZH | 工业革命
+ZH | 年轻一代
+ZH | 经济因素
+ZH | 政治冲突
+ZH | 没问题
+ZH | 怎么办
+ZH | 也可以
+ZH | 当然啦
+ZH | 太棒了
+ZH | 真的假
+ZH | 不好意思
+ZH | 算了吧
+ZH | 随便你
+ZH | 搞笑哦
+ZH | 肚子饿
+ZH | 吃饱没
+ZH | 那个啦
+ZH | 就是说
+ZH | 都可以
+TA | செயற்கை நுண்ணறிவு
+TA | புவி வெப்பமடைதல்
+TA | சமூக ஊடகம்
+TA | இயக்க முறைமை
+TA | காலநிலை மாற்றம்
+TA | மனித உரிமைகள்
+TA | சுதந்திர வர்த்தகம்
+TA | அதிக பணவீக்கம்
+TA | தரவு கட்டமைப்பு
+TA | அமைப்பு பகுப்பாய்வு
+TA | அறிவியல் கோட்பாடு
+TA | தொழில்துறை புரட்சி
+TA | இளம் தலைமுறை
+TA | பொருளாதார காரணி
+TA | அரசியல் மோதல்
+TA | என்ன மச்சி
+TA | எப்படி இருக்க
+TA | நல்லா இருக்கேன்
+TA | சும்மா தான்
+TA | வேற லெவல்
+TA | செம்ம பாஸ்
+TA | என்ன ஆச்சு
+TA | போயிட்டு வரேன்
+TA | சாப்பிட்டியா ப்ரோ
+TA | என்னப்பா இது
+TA | ஒன்னும் இல்ல
+TA | அப்புறம் பாப்போம்
+TA | சொல்லு தல
+TA | செம்ம காமெடி
+TA | சூப்பர் மாப்ள
+
+# ==============================================================================
+# BUCKET 3: SHORT PHRASE (3-7 words) — Natural Slang & Short forms
+# ==============================================================================
+EN | Wait what's photosynthesis exactly tbh?
+EN | Can you explain osmosis again?
+EN | I literally don't get derivatives.
+EN | Why do cells divide anyway?
+EN | How do enzymes speed up reactions?
+EN | What even is a mitochondria?
+EN | Quadratic formula is so hard bro.
+EN | Pls explain standard deviation again.
+EN | Nervous system notes are too long.
+EN | Genetic mutation sounds kinda confusing.
+EN | Linear equations make no sense.
+EN | Digestive system is actually kinda cool.
+EN | Right triangles are easy af.
+EN | Figurative language is so annoying.
+EN | How does cell division work?
+MY | Fotosintesis tu menatang apa do sebenarnya?
+MY | Boleh cikgu terangkan balik pasal osmosis?
+MY | Pening r tak faham bab pembezaan.
+MY | Kenapa sel kena membahagi camtu ek?
+MY | Camne enzim boleh lajukan tindak balas?
+MY | Mitokondria tu function dia pe do?
+MY | Formula kuadratik ni susah gila weh.
+MY | Cikgu terangkan sisihan piawai sekali lagi.
+MY | Nota sistem saraf panjang gila.
+MY | Mutasi genetik ni pening sikit ah.
+MY | Persamaan linear ni tak masuk akal.
+MY | Sistem pencernaan ni best gak eh.
+MY | Segi tiga tepat ni senang kacang.
+MY | Bahasa kiasan ni menyusahkan betul la.
+MY | Macam mana pembahagian sel jadi weh?
+ID | Fotosintesis itu apaan sih sebenernya?
+ID | Bisa ibu jelasin ulang soal osmosis?
+ID | Pusing nih nggak ngerti turunan sama sekali.
+ID | Kenapa sel harus ngebelah kayak gitu?
+ID | Gimana enzim bisa percepat reaksi kimia?
+ID | Mitokondria tuh fungsinya buat apaan dah?
+ID | Rumus kuadrat ini susah banget sumpah.
+ID | Tolong jelasin deviasi standar lagi dong.
+ID | Catetan sistem saraf panjang bener.
+ID | Mutasi genetik ini agak ribet ya.
+ID | Persamaan linear tuh ga masuk akal.
+ID | Sistem pencernaan ini lumayan seru sih.
+ID | Segitiga siku-siku mah gampang banget.
+ID | Bahasa kiasan ini ngerepotin banget deh.
+ID | Gimana sih cara pembelahan sel itu?
+ZH | 光合作用到底是做么的？
+ZH | 老师可以再讲一次渗透吗？
+ZH | 那个导数我真的是完全听不懂。
+ZH | 为什么细胞要这样分裂咧？
+ZH | 酶到底是怎样变快反应的？
+ZH | 线粒体的 function 是什么咯？
+ZH | 二次公式真的是有够难背。
+ZH | 标准差可以再 explain 多一次吗？
+ZH | 神经系统的 notes 也太长了吧。
+ZH | 基因突变听起来很复杂leh。
+ZH | 线性方程我真的不会做啊。
+ZH | 消化系统其实蛮有趣的。
+ZH | 直角三角形这个很容易罢了。
+ZH | 比喻语言真的是很麻烦一下。
+ZH | 细胞分裂到底是怎样走的？
+TA | Photosynthesis னா exactly என்ன சொல்லுங்க?
+TA | Osmosis-ஐ திருப்பி explain பண்ண முடியுமா?
+TA | Derivative சுத்தமா புரியல தலைவா.
+TA | Cell ஏன் இப்படி divide ஆகுது?
+TA | Enzyme எப்படி reaction-ஐ ஸ்பீட் ஆக்கும்?
+TA | Mitochondria-வோட function என்ன பாஸ்?
+TA | Quadratic formula ரொம்ப கஷ்டம் மாப்ள.
+TA | Standard deviation திரும்ப explain பண்ணுங்க.
+TA | Nervous system notes ரொம்ப பெருசு.
+TA | Genetic mutation கொஞ்சம் குழப்பமா இருக்கு.
+TA | Linear equation சுத்தமா செட் ஆகல.
+TA | Digestive system படிக்க நல்லா இருக்கு.
+TA | Right triangle செம்ம ஈஸி டா.
+TA | Figurative language ரொம்ப போர் அடிக்குது.
+TA | Cell division எப்படி நடக்குதுனு சொல்லுங்க.
+
+# ==============================================================================
+# BUCKET 4: MEDIUM SENTENCE (8-16 words) — Natural Slang & Short forms
+# ==============================================================================
+EN | I'm slightly confused about cellular respiration. What's the difference between aerobic and anaerobic again?
+EN | How does oxygenated blood get pumped? I don't really get the left ventricle part.
+EN | The xylem tissue's function is to transport water and minerals from roots to leaves right?
+EN | If the exam asks about genetic mutation, do we actually have to include Down syndrome?
+EN | How do I solve this simultaneous equation? I tried substituting the value but it's still wrong.
+EN | Matrices are driving me crazy. How do you find the inverse if the determinant is zero?
+EN | I don't get this probability question. Why do we multiply instead of adding the chances?
+EN | Could you explain what amylase actually breaks down into during the digestion process?
+EN | Why do we automatically pull our hand away from hot stuff? Is it a reflex?
+EN | Is the surface area formula for a sphere correct if I write it like this?
+MY | Cikgu, pening sikit la bab respirasi sel ni. Apa beza aerobik dengan anaerobik eh?
+MY | Macam mana darah beroksigen dipam? Tak faham sgt part ventrikel kiri tu.
+MY | Fungsi tisu xilem ni utk angkut air dgn mineral dari akar ke daun kan?
+MY | Cikgu, kalau exam tanya pasal mutasi genetik, wajib ke letak cth sindrom Down?
+MY | Macam mana nak selesaikan persamaan serentak ni? Dah try masuk nilai tapi still salah.
+MY | Pening gila bab matriks ni. Camne nak cari songsangan kalau penentu dia kosong?
+MY | Tak faham r soalan kebarangkalian ni. Asal kena darab and bukan tambah probabiliti dia?
+MY | Cikgu explain balik jap, waktu enzim amilase pecahkan kanji tu dia jadi apa sebenarnya?
+MY | Asal tangan kita automatik tarik bila sentuh benda panas ek? Tu tindakan refleks kan?
+MY | Cikgu, formula utk cari luas permukaan sfera tu betul tak kalau saya buat camni?
+ID | Bu, aku agak bingung soal respirasi sel. Bedanya aerobik sama anaerobik tuh apa ya?
+ID | Gimana darah beroksigen dipompa? Aku nggak paham banget bagian ventrikel kiri itu sih.
+ID | Fungsi jaringan xilem tuh buat transport air sama mineral dari akar ke daun kan?
+ID | Bu, kalo ujian nanya soal mutasi genetik, wajib nggak sih kasih contoh sindrom Down?
+ID | Gimana cara kelarin persamaan simultan ini? Udah coba masukin nilai tapi tetep salah.
+ID | Pusing banget bab matriks ini. Gimana cara nyari invers kalo determinannya nol?
+ID | Nggak ngerti deh soal probabilitas ini. Kenapa peluangnya harus dikali dan bukan ditambah?
+ID | Bisa jelasin ulang nggak, pas enzim amilase mecah pati itu jadinya apa aja?
+ID | Kenapa tangan kita otomatis narik pas nyentuh benda panas? Itu gerak refleks ya?
+ID | Bu, rumus buat nyari luas permukaan bola itu bener nggak sih kalo kaya gini?
+ZH | 老师，我有点乱，细胞呼吸的 aerobic 和 anaerobic 到底有什么差别？
+ZH | 那个含氧血到底是怎样泵的？左心室那边的 process 我完全看不懂。
+ZH | Xylem tissue 的功能就是把水分和矿物质从根部送去叶子对不对？
+ZH | 如果考试出到 genetic mutation，我们是不是 wajib 要写 Down syndrome 进去？
+ZH | 这个 simultaneous equation 怎样做？我代了号码进去算可是答案还是错的。
+ZH | Matrix 这一课真的是搞到我头痛。如果 determinant 是零要怎样找 inverse？
+ZH | 这个 probability 的题目好奇怪，做么要拿来乘而不是拿来加？
+ZH | 老师可以讲回 amylase 分解 starch 的时候到底是变去什么东西吗？
+ZH | 为什么我们摸到烧的东西手会自然弹开？那个是 reflex action 来的对吗？
+ZH | 老师，如果我这样写 sphere 的 surface area formula，考试会扣分吗？
+TA | Cellular respiration கொஞ்சம் குழப்பமா இருக்கு. Aerobic க்கும் anaerobic க்கும் என்ன வித்தியாசம்?
+TA | Oxygenated blood எப்படி பம்ப் ஆகுது? Left ventricle பார்ட் எனக்கு சுத்தமா புரியல.
+TA | Xylem tissue ஓட function water-ஐ root-ல இருந்து லீப்-க்கு கொண்டு போறது தான?
+TA | Exam-ல genetic mutation பத்தி கேட்டா, கண்டிப்பா Down syndrome example கொடுக்கணுமா?
+TA | இந்த simultaneous equation-ஐ எப்படி solve பண்றது? Value போட்டு பார்த்தும் தப்பா வருது.
+TA | Matrix chapter ரொம்ப கஷ்டம். Determinant zero வா இருந்தா எப்படி inverse கண்டுபிடிக்கிறது?
+TA | Probability question சுத்தமா புரியல. ஏன் ஆட் பண்ணாம மல்டிபிளை பண்றோம்னு சொல்லுங்க?
+TA | Amylase enzyme starch-ஐ எப்படி break down பண்ணும்னு கொஞ்சம் திருப்பி explain பண்ணுங்க.
+TA | சூடான பொருள்ல கை பட்டா ஏன் ஆட்டோமேட்டிக்கா கை பின்னாடி வருது?
+TA | Sphere-ஓட surface area formula நான் இப்படி எழுதினா கரெக்டா இருக்குமா டீச்சர்?
+
+# ==============================================================================
+# BUCKET 5: LONG SENTENCE/PARAGRAPH (17-50 words) — Natural Slang & Short forms
+# ==============================================================================
+EN | I feel like the ecosystem chapter is super easy to memorize, but when it comes to genetics my brain just stops working because of all the weird terms, especially the mutation and inheritance parts.
+EN | If a question asks us to draw a trigonometric graph, do we really have to label every single x-intercept, or is it acceptable if we just mark the critical points?
+EN | Hey, did you manage to get the answer for calculus question 4? I calculated it multiple times but still got a negative value, I think I messed up the second derivative somewhere.
+EN | It's so hard to find the implicit meaning in this passage. The writer uses way too many metaphors and figurative language until I'm totally confused about what the main point actually is.
+EN | The IGCSE exam is literally next week and I'm freaking out over the reading comprehension section because I always misinterpret the questions, especially the ones asking for evidence across multiple paragraphs.
+EN | How are we supposed to calculate fractions when the denominators are different? I always get confused when we have to equalize the denominators first before we can add or subtract the fractions.
+EN | Teacher, for paper 2, if I choose descriptive writing, do I need to include a ton of sensory details, or do you prefer if we just focus on keeping the plot progression moving?
+EN | Have you guys read the short story for literature yet? I completely don't understand the main character's motives at all because they made such a weird decision right at the ending of the story.
+EN | How do I improve my vocabulary so my essays look more advanced like a band 9 student? My marks are always stuck at band 6 even though I try using complex sentences.
+EN | Honestly, the mitochondria generates most of the ATP supply through cellular respiration, but I always mix up the specific chemical steps when I'm under pressure during the actual biology paper.
+MY | Bab ekosistem ni kacang je nak hafal, tapi masuk bab genetik terus pening otak sbb banyak gila terma pelik, tambah-tambah tang mutasi dengan pewarisan tu.
+MY | Kalau soalan suruh lukis graf trigonometri, wajib ke label semua pintasan-x, atau cikgu boleh terima je kalau kita tanda point-point yg penting je?
+MY | Wei, kau dpt tak jawapan soalan kalkulus num 4 tu? Aku kira byk kali still dpt negatif, rasanya aku tersilap kat pembezaan peringkat kedua kot.
+MY | Susah la nak cari maksud tersirat dlm petikan ni. Penulis ni pakai banyak sgt kiasan dgn metafora sampai aku confuse apa sbnrnya point yg dia nak smpaikan.
+MY | Exam IGCSE minggu depan weh, cuak gila part pemahaman sbb asyik salah faham soalan, lg-lg yg mintak kita cari bukti dari dua tiga perenggan serentak.
+MY | Camne nak kira pecahan yang penyebut dia tak sama ek? Aku selalu keliru bila kena samakan penyebut dulu baru boleh tambah tolak benda alah tu.
+MY | Cikgu, utk paper 2 kalau saya amik karangan deskriptif, kena letak detail deria banyak-banyak ke, atau cikgu lagi suka kalau jalan cerita dia gerak laju?
+MY | Korang dah baca short story sastera tu belum? Aku sumpah tak faham motif watak utama tu, tibe-tibe buat keputusan pelik gila babi kat ending dia.
+MY | Camne nak gempakkan vocab aku supaya essay nampak pro sikit? Markah asyik sangkut kat band 6 je padahal dah try hard buat ayat majmuk.
+MY | Mitokondria ni function dia buat tenaga ATP ikut respirasi sel kan, tapi asal aku selalu tertukar step kimia dia bila jawab soalan bio time exam do.
+ID | Bab ekosistem ini emang gampang banget dihafal sih, tapi pas masuk bab genetika pusingnya minta ampun gara-gara banyak istilah aneh, apalagi bagian mutasi sama pewarisannya.
+ID | Kalo soal nyuruh gambar grafik trigonometri, wajib nggak sih labelin semua perpotongan-x, atau ibu bisa terima kalo kita tandain titik-titik yg penting aja?
+ID | Eh, lu dapet nggak jawaban buat soal kalkulus nomor 4? Udah ngitung berkali-kali tetep dapet negatif, kayanya gue salah hitung di turunan keduanya deh.
+ID | Susah banget nyari makna tersirat di bacaan ini. Penulisnya pake banyak banget kiasan sama metafora sampe aku bingung apa sebenernya poin utama yg mau disampein.
+ID | Ujian IGCSE minggu depan nih, panik banget bagian pemahaman soalnya sering salah nangkep maksud pertanyaan, apalagi yg minta kita cari bukti dari beberapa paragraf sekaligus.
+ID | Gimana sih cara ngitung pecahan yg penyebutnya beda? Aku sering banget keliru pas harus nyamain penyebutnya dulu sebelum bisa ditambahin atau dikurangin.
+ID | Bu, buat paper 2 kalo aku milih nulis deskriptif, harus masukin banyak detail indera ya, atau ibu lebih suka kalo kita fokus ke alur ceritanya aja?
+ID | Kalian udah pada baca cerpen sastranya belum sih? Gue beneran nggak paham motif tokoh utamanya, tiba-tiba ngambil keputusan aneh banget pas endingnya.
+ID | Gimana cara ningkatin vocab biar esaiku keliatan lebih advance? Nilai aku nyangkut di band 6 terus padahal udah nyoba pake kalimat majemuk.
+ID | Mitokondria ini kan fungsinya buat hasilin energi ATP lewat respirasi sel, tapi kok aku selalu kebalik-balik ya step kimianya pas ngerjain soal biologi pas ujian.
+ZH | Ecosystem 这课真的是 kacang 罢了很容易背，可是遇到 genetics 我的脑就直接 jam 掉，因为太多那些奇怪的 terms 要记，特别是 mutation 跟 inheritance 那边真的是头晕。
+ZH | 如果题目叫我们画 trigo graph 的话，是不是一定要 label 完所有的 x-intercept 才可以，还是只要把几个比较重要的 points 画出来老师也会给对？
+ZH | 喂，你们有做对 calculus 第四题的答案吗？我算了大概十次都还是拿到 negative，我在猜是不是我的 second derivative 那边做错了步骤。
+ZH | 这篇 passage 的 implicit meaning 真的是有够难找的，那个作者一直放一堆 metaphor 跟 kiasan 在里面，搞到我都不知道他真正的 main point 是什么。
+ZH | 下个礼拜就是 IGCSE exam 了，我现在超紧张 reading comprehension 那 part，因为我每次都会 interpret 错题目，特别是那种要我们找几个 paragraph 里面的 evidence 的。
+ZH | 这个分母不一样的 fraction 到底要怎样算？每次要把它加起来或者减掉之前，我都会 confuse 到底要怎样把分母变一样先。
+ZH | 老师，Paper 2 如果我选 descriptive writing 的话，是不是一定要写很多那些 senses 的 details，还是只要专注让整个 plot 顺着走下去就可以了？
+ZH | 你们读了那个 literature 的 short story 了没有？我真的是完全 get 不懂那个主角到底在想什么，跑到 ending 的时候突然间做一个这样奇怪的 decision。
+ZH | 到底要怎样才可以进步我的 vocab 让他看起来像 band 9 写的？我每次尽量写 complex sentences 了可是分数永远都卡在 band 6 那边上不去。
+ZH | 线粒体明明就是靠 cellular respiration 来制造 ATP energy 给整个 cell 的，可是我每次考试一紧张，就会把那个 chemical reaction 的 steps 倒反来写。
+TA | Ecosystem chapter படிக்க ரொம்ப ஈஸியா இருக்கு, ஆனா genetics-னு வரும்போது அந்த புது terms எல்லாம் பார்த்தா மண்டையே வெடிச்சிடும் போல இருக்கு, குறிப்பா அந்த mutation அப்புறம் inheritance part ரொம்ப கஷ்டம்.
+TA | Exam-ல trigo graph வரைய சொன்னா எல்லா x-intercept-யும் கண்டிப்பா label பண்ணணுமா, இல்ல முக்கியமான points-ஐ மட்டும் mark பண்ணா teacher correct போடுவாங்களா?
+TA | மச்சி, calculus fourth question-க்கு answer வந்துச்சா? நான் திரும்ப திரும்ப calculate பண்ணிப் பார்த்தும் negative value தான் வருது, செகண்ட் derivative-ல ஏதோ தப்பு பண்ணிட்டேன் போல.
+TA | இந்த passage-ல implicit meaning கண்டுபிடிக்க ரொம்ப கஷ்டமா இருக்கு. Writer நிறைய metaphor யூஸ் பண்ணிருக்காரு, அதனால main point என்ன சொல்ல வராரு-னு சுத்தமா கன்பியூஸ் ஆயிடுச்சு.
+TA | IGCSE exam அடுத்த வாரம் வருது, reading comprehension நினைச்சா ரொம்ப பயமா இருக்கு, நிறைய தடவை question-ஐ தப்பா புரிஞ்சிக்கிறேன், குறிப்பா paragraph-ல இருந்து evidence தேடுற questions.
+TA | Denominator வேற வேறயா இருந்தா fraction எப்படி calculate பண்றது? ஆட் பண்ணுறதுக்கு முன்னாடி denominator-ஐ எப்படி ஈக்குவல் பண்றது-னு எப்பவுமே குழப்பமா இருக்கு.
+TA | Teacher, paper 2-ல descriptive writing எடுத்தா நிறைய sensory details எழுதணுமா, இல்ல கதை போற போக்குலயே எழுதினா போதுமா?
+TA | Literature short story படிச்சிட்டீங்களா? அந்த main character-ஓட motive சுத்தமா புரியல, ending-ல எதுக்கு அப்படி ஒரு weird-ஆன முடிவை எடுத்தாரு-னு ஒண்ணுமே விளங்கல.
+TA | Band 9 essay மாதிரி எழுத vocab-ஐ எப்படி improve பண்றது? Complex sentences எவ்வளவோ ட்ரை பண்ணியும் mark எப்பவுமே band 6-லயே நிக்குது.
+TA | Mitochondria தான் cellular respiration மூலமா ATP energy produce பண்ணுது-னு நல்லா தெரியும், ஆனா exam tension-ல அந்த chemical steps எப்பவுமே மாத்தி மாத்தி எழுதிருவேன்.

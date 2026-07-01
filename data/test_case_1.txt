@@ -1,0 +1,102 @@
+# test_case.txt — one message per line. Each line is ONE test case, no matter
+# how long — multi-paragraph samples are written as a single long line on
+# purpose, since the script reads one test case per physical line.
+# Lines starting with # are comments and are skipped.
+#
+# PRIORITY LANGUAGES for this project: Malay (MY), Indonesian (ID), English (EN).
+# Every tier below gives MY/ID/EN roughly equal, deliberate coverage — this is
+# the actual target user base (Malaysia + Indonesia). Chinese and Tamil are
+# kept in as lighter secondary cases (realistic in a Malaysian classroom) but
+# are not the primary thing being measured here.
+#
+# The single most decision-relevant test in this file is the MY vs ID pairs:
+# they're the closest two languages in the set, so they're the real stress
+# test of whether lingua (or langdetect) can tell priority languages apart
+# from each other, not just from English.
+# Replace these with real logged the project messages once you have a sample to pull from.
+
+# ===================== TIER 1: SINGLE WORD (6 samples) =====================
+
+# single English word
+Photosynthesis
+
+# single Malay word — the "tumbuhan" vocabulary-gap case
+Tumbuhan
+
+# single Indonesian word — spelled distinctly from Malay ("karena" vs Malay "kerana", meaning "because")
+Karena
+
+# single Malay vocative — the "Cikgu" trap, no surrounding context at all
+Cikgu
+
+# single Indonesian vocative equivalent — "Bu" address is different from Malay "Cikgu", worth seeing if lingua tells these apart
+Bu
+
+# extremely short, low-signal filler (realistic chat noise)
+ok
+
+# ==================== TIER 2: SINGLE SENTENCE (7 samples) ===================
+
+# plain English sentence
+What is photosynthesis and why do plants need sunlight to survive?
+
+# plain Malay sentence
+Kenapa tumbuhan perlukan cahaya matahari untuk hidup dengan sihat?
+
+# plain Indonesian sentence — same topic, Indonesian spelling/vocabulary throughout
+Mengapa tumbuh-tumbuhan memerlukan sinar matahari supaya bisa hidup dengan sehat?
+
+# vocative + English content — Cikgu next to a real subject question (Malay-style)
+Cikgu, what is photosynthesis?
+
+# Indonesian vocative + English content — same structure as above, Indonesian-style address
+Bu, apa itu photosynthesis?
+
+# genuine Malay-English code-switching across most of the sentence
+Saya nak tanya soalan tentang photosynthesis, boleh tak?
+
+# genuine Indonesian-English code-switching, same topic, Indonesian particles/spelling instead of Malay
+Saya mau tanya soal photosynthesis, bisa enggak dijelaskan lagi?
+
+# ===================== TIER 3: SINGLE PARAGRAPH (7 samples) =================
+
+# plain English paragraph (3-4 sentences)
+Photosynthesis is the process plants use to convert sunlight into energy. It happens mostly in the leaves, inside structures called chloroplasts. Plants take in carbon dioxide from the air and water from the soil, then use light energy to turn these into glucose and oxygen. This is why plants are sometimes called producers, since they make their own food.
+
+# plain Malay paragraph
+Tumbuhan menggunakan cahaya matahari untuk menghasilkan tenaga melalui proses yang dipanggil fotosintesis. Proses ini berlaku di dalam daun, lebih khusus di bahagian yang dipanggil kloroplas. Tumbuhan menyerap karbon dioksida dari udara dan air dari tanah, kemudian menukarkannya kepada glukosa dan oksigen. Oleh sebab itu tumbuhan digolongkan sebagai pengeluar dalam rantai makanan.
+
+# plain Indonesian paragraph — same topic as the Malay paragraph above, Indonesian spelling/grammar throughout
+Tumbuhan menggunakan sinar matahari untuk menghasilkan energi melalui proses yang disebut fotosintesis. Proses ini terjadi di dalam daun, lebih khususnya di bagian yang disebut kloroplas. Tumbuhan menyerap karbon dioksida dari udara dan air dari tanah, kemudian mengubahnya menjadi glukosa dan oksigen. Karena itu tumbuhan digolongkan sebagai produsen dalam rantai makanan.
+
+# code-switched paragraph, Malay-dominant with English subject terms mixed in
+Cikgu, saya masih tidak faham tentang photosynthesis ni. Macam mana tumbuhan boleh tukar sunlight kepada energy? Lepas tu apa pula function daripada chlorophyll dalam proses ni? Boleh tak cikgu explain dengan lebih details sikit, saya keliru sangat.
+
+# code-switched paragraph, Indonesian-dominant with English subject terms mixed in — direct ID counterpart to the MY paragraph above
+Bu, saya masih belum ngerti soal photosynthesis ini. Gimana caranya tumbuhan bisa ubah sunlight jadi energy? Habis itu apa sih function dari chlorophyll dalam proses ini? Bisa enggak bu explain dengan lebih detail lagi, saya bingung banget.
+
+# code-switched paragraph, English-dominant with Malay particles mixed in
+I think I understand the basics lah, but I'm still confused about one part. So tumbuhan absorbs sunlight through chlorophyll kan, then converts it into glucose. But how come some leaves look reddish, is that still considered tumbuhan hijau or not? Boleh explain a bit more please.
+
+# light secondary-language case: Chinese word mixed into an otherwise Malay/English paragraph (not the main focus, kept light per project priority)
+Cikgu, 光合作用 ni susah betul nak faham. I know tumbuhan need sunlight, water, dan carbon dioxide, but the chemical equation part confuses me. Boleh tolong bagi contoh yang lagi simple tak cikgu?
+
+# =================== TIER 4: TWO TO THREE PARAGRAPHS (6 samples) ============
+
+# plain English, 3 paragraphs
+Photosynthesis is one of the most important processes on Earth because nearly all life depends on it directly or indirectly. Plants, algae, and some bacteria use this process to convert light energy into chemical energy stored in glucose. Without it, the food chains that support animals and humans would not exist in their current form. The process takes place mainly in the chloroplasts of plant cells, which contain a green pigment called chlorophyll. Chlorophyll is responsible for absorbing sunlight, particularly in the red and blue wavelengths, while reflecting green light, which is why most plants appear green to our eyes. Sunlight energy is used to split water molecules and eventually combine carbon dioxide and hydrogen into glucose. The overall process can be summarized by a single chemical equation, but the actual biochemical pathway involves many smaller steps across two main stages, the light-dependent reactions and the light-independent reactions, also known as the Calvin cycle. Understanding both stages helps explain why factors like light intensity, carbon dioxide concentration, and temperature all affect how efficiently a plant can photosynthesize.
+
+# plain Malay, 2 paragraphs
+Fotosintesis adalah satu proses biologi yang sangat penting kepada kehidupan di bumi, kerana hampir semua hidupan bergantung kepadanya secara langsung atau tidak langsung. Tumbuhan, alga, dan sesetengah bakteria menggunakan proses ini untuk menukar tenaga cahaya kepada tenaga kimia yang disimpan dalam bentuk glukosa. Tanpa proses ini, rantaian makanan yang menyokong haiwan dan manusia tidak akan wujud dalam bentuk yang kita kenal sekarang. Proses ini berlaku terutamanya di dalam kloroplas sel tumbuhan, yang mengandungi pigmen hijau dipanggil klorofil. Klorofil bertanggungjawab menyerap cahaya matahari, terutamanya pada jalur gelombang merah dan biru, sambil memantulkan cahaya hijau, itulah sebabnya kebanyakan tumbuhan kelihatan berwarna hijau pada mata kita.
+
+# plain Indonesian, 2 paragraphs — direct ID counterpart to the MY paragraph above, same topic and length
+Fotosintesis adalah suatu proses biologi yang sangat penting bagi kehidupan di bumi, karena hampir semua makhluk hidup bergantung padanya secara langsung maupun tidak langsung. Tumbuhan, alga, dan sebagian bakteri menggunakan proses ini untuk mengubah energi cahaya menjadi energi kimia yang disimpan dalam bentuk glukosa. Tanpa proses ini, rantai makanan yang mendukung hewan dan manusia tidak akan ada dalam bentuk yang kita kenal sekarang. Proses ini terjadi terutama di dalam kloroplas sel tumbuhan, yang mengandung pigmen hijau yang disebut klorofil. Klorofil bertanggung jawab menyerap cahaya matahari, terutama pada gelombang merah dan biru, sambil memantulkan cahaya hijau, itulah sebabnya kebanyakan tumbuhan terlihat berwarna hijau di mata kita.
+
+# heavily code-switched, 2 paragraphs, Malay-English mixed throughout, student-style writing with informal particles
+Cikgu, saya rasa saya dah faham sikit tentang fotosintesis ni tapi ada banyak part yang masih confusing. So basically tumbuhan akan absorb sunlight through daun dia, then guna chlorophyll untuk convert tu jadi energy. Lepas tu air dengan carbon dioxide pun involved kan dalam proses ni, jadi end result dia akan produce glucose dengan oxygen. Betul tak cikgu pemahaman saya ni? Lepas tu saya nak tanya lagi satu soalan, kalau tumbuhan tu kena letak dalam bilik gelap je without any light source, apa akan jadi kepada proses photosynthesis tu, will it just stop completely or ada cara lain tumbuhan tu survive? Saya confuse sebab dalam buku teks ada sebut pasal respiration jugak so I'm not sure macam mana dua proses ni connect antara satu sama lain, boleh tak cikgu bagi explanation yang lagi clear pasal benda ni.
+
+# heavily code-switched, 2 paragraphs, Indonesian-English mixed throughout — direct ID counterpart to the MY sample above, same content and length
+Bu, saya rasa saya udah ngerti sedikit soal fotosintesis ini tapi ada banyak part yang masih confusing. Jadi basically tumbuhan bakal absorb sunlight lewat daunnya, lalu pakai chlorophyll buat convert itu jadi energy. Habis itu air sama carbon dioxide juga involved kan dalam proses ini, jadi end result-nya bakal produce glucose sama oxygen. Bener enggak bu pemahaman saya ini? Habis itu saya mau tanya satu pertanyaan lagi, kalau tumbuhan itu ditaruh di ruangan gelap aja without any light source, apa yang bakal terjadi sama proses photosynthesis itu, will it just stop completely atau ada cara lain tumbuhan itu bisa survive? Saya bingung soalnya di buku teks ada disebut soal respiration juga so I'm not sure gimana dua proses ini connect satu sama lain, bisa enggak bu kasih explanation yang lebih clear soal hal ini.
+
+# light secondary-language stress case: Tamil word mixed into an English/Malay paragraph (kept light, per project priority — MY/ID/EN remain primary)
+Cikgu, what is செடி called in English class context? I mean tumbuhan, just curious if the Tamil word and the Malay word for plant come from a similar root or not, since my friend who speaks Tamil at home asked me this after class today.

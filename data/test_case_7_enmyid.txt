@@ -1,0 +1,1307 @@
+# ==============================================================================
+# test_case_7_enmyid.txt — format: LANG | text
+# Filtered from test_case_7.txt: EN (English), MY (Malay), ID (Indonesian) only.
+# ZH (Chinese) and TA (Tamil) cases removed.
+#
+# Organized into 5 word-count buckets, each with >= the required minimum
+# examples PER LANGUAGE, so accuracy and speed can be measured per bucket
+# per language, not just overall.
+#
+# BUCKETS 1 & 2: 50% Shared/Formal Roots (Stress-testing ambiguity) 
+#                50% Exclusive/Colloquial (Testing distinct dialect routing)
+# BUCKETS 3, 4, & 5: Authentic "Bahasa Rojak" and localized Southeast Asian
+#                    code-switching patterns and slang.
+# ==============================================================================
+
+# ==============================================================================
+# BUCKET 1: SINGLE WORD (1 word)
+# ==============================================================================
+EN | Algorithm
+EN | Strategy
+EN | Economy
+EN | Politics
+EN | Psychology
+EN | Democracy
+EN | Justice
+EN | Computer
+EN | Symphony
+EN | Organization
+EN | System
+EN | Structure
+EN | Analysis
+EN | Theory
+EN | Global
+EN | Yall
+EN | Aint
+EN | Gonna
+EN | Wanna
+EN | Bro
+EN | Dude
+EN | Awesome
+EN | Cool
+EN | Freaking
+EN | Literally
+EN | Tbh
+EN | Idk
+EN | Yeah
+EN | Nope
+EN | Okay
+EN | Ecosystem
+EN | Momentum
+EN | Velocity
+EN | Friction
+EN | Acceleration
+EN | Calculus
+EN | Integration
+EN | Derivative
+EN | Probability
+EN | Statistics
+EN | Geometry
+EN | Trigonometry
+EN | Matrix
+EN | Vector
+EN | Kinematics
+EN | Dynamics
+EN | Thermodynamics
+EN | Entropy
+EN | Enthalpy
+EN | Mutation
+EN | Genotype
+EN | Phenotype
+EN | Chromosome
+EN | Nucleus
+EN | Ribosome
+EN | Chloroplast
+EN | Xylem
+EN | Phloem
+EN | Mitosis
+EN | Meiosis
+EN | Osmosis
+EN | Diffusion
+EN | Respiration
+EN | Digestion
+EN | Enzyme
+EN | Catalyst
+EN | Polymer
+EN | Isotope
+EN | Electron
+EN | Proton
+EN | Neutron
+EN | Ion
+EN | Anion
+EN | Cation
+EN | Molecule
+EN | Element
+EN | Compound
+EN | Acid
+EN | Base
+EN | Alkali
+EN | Salt
+EN | Oxide
+EN | Metal
+EN | Alloy
+EN | Plastic
+EN | Rubber
+EN | Glass
+EN | Ceramic
+EN | Conductor
+EN | Insulator
+EN | Semiconductor
+EN | Diode
+EN | Transistor
+EN | Capacitor
+EN | Resistor
+EN | Inductor
+EN | Battery
+EN | Generator
+EN | Motor
+EN | Transformer
+EN | Frequency
+EN | Wavelength
+EN | Amplitude
+EN | Reflection
+EN | Refraction
+EN | Diffraction
+EN | Interference
+EN | Spectrum
+EN | Photon
+EN | Optics
+EN | Gravity
+EN | Vacuum
+EN | Orbit
+EN | Planet
+EN | Star
+EN | Galaxy
+EN | Universe
+EN | Meteor
+EN | Comet
+EN | Asteroid
+EN | Eclipse
+EN | Tides
+EN | Climate
+EN | Weather
+EN | Atmosphere
+EN | Lithosphere
+EN | Biosphere
+EN | Mantle
+EN | Core
+EN | Crust
+EN | Magma
+EN | Lava
+EN | Volcano
+EN | Earthquake
+EN | Tsunami
+EN | Hurricane
+EN | Tornado
+EN | Monsoon
+EN | Drought
+EN | Flood
+EN | Glacier
+EN | Continent
+EN | Ocean
+EN | Island
+EN | Mountain
+EN | Valley
+EN | River
+EN | Lake
+EN | Forest
+EN | Desert
+EN | Tundra
+EN | Taiga
+EN | Savanna
+EN | Jungle
+EN | Swamp
+EN | Marsh
+EN | Bog
+EN | Estuary
+EN | Delta
+EN | Reef
+EN | Coral
+EN | Plankton
+EN | Algae
+EN | Fungi
+EN | Bacteria
+EN | Virus
+EN | Parasite
+EN | Host
+EN | Predator
+EN | Prey
+EN | Carnivore
+EN | Herbivore
+EN | Omnivore
+EN | Scavenger
+EN | Decomposer
+EN | Producer
+EN | Consumer
+EN | Foodchain
+EN | Foodweb
+EN | Biomass
+EN | Niche
+EN | Habitat
+EN | Biome
+EN | Evolution
+EN | Adaptation
+EN | Selection
+EN | Fossil
+EN | Artifact
+EN | Ruin
+EN | Temple
+EN | Castle
+EN | Palace
+EN | Fort
+EN | Tomb
+EN | Pyramid
+EN | Statue
+EN | Monument
+EN | Museum
+EN | Gallery
+EN | Theater
+EN | Cinema
+EN | Stadium
+EN | Arena
+EN | Library
+EN | School
+EN | College
+EN | University
+EN | Campus
+EN | Hostel
+EN | Dormitory
+EN | Canteen
+EN | Cafeteria
+EN | Laboratory
+EN | Workshop
+EN | Studio
+EN | Office
+EN | Clinic
+EN | Hospital
+EN | Pharmacy
+EN | Dispensary
+EN | Surgery
+EN | Ward
+EN | Bed
+EN | Patient
+EN | Doctor
+EN | Nurse
+MY | Algoritma
+MY | Strategi
+MY | Ekonomi
+MY | Politik
+MY | Psikologi
+MY | Demokrasi
+MY | Keadilan
+MY | Komputer
+MY | Simfoni
+MY | Organisasi
+MY | Sistem
+MY | Struktur
+MY | Analisis
+MY | Teori
+MY | Global
+MY | Kereta
+MY | Tandas
+MY | Seronok
+MY | Kelmarin
+MY | Gempak
+MY | Kacang
+MY | Cikgu
+MY | Pejabat
+MY | Awat
+MY | Macam
+MY | Bising
+MY | Pening
+MY | Sembang
+MY | Kamek
+MY | Kitorang
+MY | Vektor
+MY | Momentum
+MY | Kinetik
+MY | Sel
+MY | Atom
+MY | Molekul
+MY | Genetik
+MY | Habitat
+MY | Karbon
+MY | Oksigen
+MY | Kalsium
+MY | Vakum
+MY | Cahaya
+MY | Lensa
+MY | Bunyi
+MY | Suhu
+MY | Iklim
+MY | Cuaca
+MY | Benua
+MY | Samudra
+MY | Pulau
+MY | Gunung
+MY | Hutan
+MY | Flora
+MY | Fauna
+MY | Populasi
+MY | Ekosistem
+MY | Simbiosis
+MY | Parasitisme
+MY | Mutualisme
+MY | Komensalisme
+MY | Nutrisi
+MY | Vitamin
+MY | Protein
+MY | Karbohidrat
+MY | Lipid
+MY | Enzim
+MY | Hormon
+MY | Saraf
+MY | Otak
+MY | Jantung
+MY | Ginjal
+MY | Hati
+MY | Darah
+MY | Nadi
+MY | Otot
+MY | Tulang
+MY | Rangka
+MY | Sendi
+MY | Kulit
+MY | Rambut
+MY | Mata
+MY | Telinga
+MY | Hidung
+MY | Lidah
+MY | Gigi
+MY | Mulut
+MY | Perut
+MY | Usus
+MY | Virus
+MY | Fungi
+MY | Alga
+MY | Klorofil
+MY | Stoma
+MY | Xilem
+MY | Floem
+MY | Akar
+MY | Batang
+MY | Daun
+MY | Bunga
+MY | Buah
+MY | Biji
+MY | Fosil
+MY | Galaksi
+MY | Bintang
+MY | Planet
+MY | Meteor
+MY | Komet
+MY | Orbit
+MY | Satelit
+MY | Teleskop
+MY | Mikroskop
+MY | Silinder
+MY | Termometer
+MY | Neraca
+MY | Corong
+MY | Pipet
+MY | Buret
+MY | Tekanan
+MY | Daya
+MY | Kerja
+MY | Arus
+MY | Magnet
+MY | Kutub
+MY | Frekuensi
+MY | Gelombang
+MY | Pantulan
+MY | Prisma
+MY | Spektrum
+MY | Optik
+MY | Foton
+MY | Nukleus
+MY | Proton
+MY | Neutron
+MY | Elektron
+MY | Isotop
+MY | Ion
+MY | Kation
+MY | Anion
+MY | Campuran
+MY | Larutan
+MY | Pelarut
+MY | Bahan
+MY | Hasil
+MY | Statik
+MY | Entropi
+MY | Entalpi
+MY | Polimer
+MY | Plastik
+MY | Kaca
+MY | Komposit
+MY | Semikonduktor
+MY | Transistor
+MY | Kapasitor
+MY | Induktor
+MY | Generator
+MY | Motor
+MY | Budak
+MY | Bas
+MY | Duit
+MY | Balik
+MY | Kantin
+MY | Wayang
+MY | Makan
+MY | Minum
+MY | Tidur
+MY | Bangun
+MY | Mandi
+MY | Baju
+MY | Seluar
+MY | Kasut
+MY | Stoking
+MY | Topi
+MY | Payung
+MY | Hujan
+MY | Panas
+MY | Sejuk
+MY | Angin
+MY | Ribut
+MY | Kilat
+MY | Guruh
+MY | Pelangi
+MY | Awan
+MY | Langit
+MY | Bumi
+MY | Bulan
+MY | Matahari
+MY | Bintang
+MY | Malam
+MY | Siang
+MY | Pagi
+MY | Petang
+MY | Senja
+MY | Subuh
+MY | Zohor
+MY | Asar
+MY | Maghrib
+MY | Isyak
+MY | Solat
+MY | Doa
+MY | Puasa
+MY | Raya
+MY | Masjid
+MY | Surau
+MY | Kuil
+MY | Tokong
+MY | Gereja
+MY | Sekolah
+MY | Kelas
+MY | Makmal
+MY | Padang
+MY | Dewan
+MY | Pustaka
+MY | Buku
+MY | Kertas
+MY | Pen
+MY | Pensel
+MY | Pemadam
+MY | Pembaris
+MY | Beg
+MY | Meja
+MY | Kerusi
+MY | Papan
+MY | Kapur
+MY | Duster
+MY | Kipas
+ID | Algoritma
+ID | Strategi
+ID | Ekonomi
+ID | Politik
+ID | Psikologi
+ID | Demokrasi
+ID | Keadilan
+ID | Komputer
+ID | Simfoni
+ID | Organisasi
+ID | Sistem
+ID | Struktur
+ID | Analisis
+ID | Teori
+ID | Global
+ID | Mobil
+ID | Kamar
+ID | Asyik
+ID | Kemarin
+ID | Keren
+ID | Gampang
+ID | Dosen
+ID | Kantor
+ID | Kenapa
+ID | Kayak
+ID | Berisik
+ID | Pusing
+ID | Ngobrol
+ID | Gue
+ID | Kita
+ID | Vektor
+ID | Momentum
+ID | Kinetik
+ID | Sel
+ID | Atom
+ID | Molekul
+ID | Genetik
+ID | Habitat
+ID | Karbon
+ID | Oksigen
+ID | Kalsium
+ID | Vakum
+ID | Cahaya
+ID | Lensa
+ID | Bunyi
+ID | Suhu
+ID | Iklim
+ID | Cuaca
+ID | Benua
+ID | Samudra
+ID | Pulau
+ID | Gunung
+ID | Hutan
+ID | Flora
+ID | Fauna
+ID | Populasi
+ID | Ekosistem
+ID | Simbiosis
+ID | Parasitisme
+ID | Mutualisme
+ID | Komensalisme
+ID | Nutrisi
+ID | Vitamin
+ID | Protein
+ID | Karbohidrat
+ID | Lipid
+ID | Enzim
+ID | Hormon
+ID | Saraf
+ID | Otak
+ID | Jantung
+ID | Ginjal
+ID | Hati
+ID | Darah
+ID | Nadi
+ID | Otot
+ID | Tulang
+ID | Rangka
+ID | Sendi
+ID | Kulit
+ID | Rambut
+ID | Mata
+ID | Telinga
+ID | Hidung
+ID | Lidah
+ID | Gigi
+ID | Mulut
+ID | Perut
+ID | Usus
+ID | Virus
+ID | Fungi
+ID | Alga
+ID | Klorofil
+ID | Stoma
+ID | Xilem
+ID | Floem
+ID | Akar
+ID | Batang
+ID | Daun
+ID | Bunga
+ID | Buah
+ID | Biji
+ID | Fosil
+ID | Galaksi
+ID | Bintang
+ID | Planet
+ID | Meteor
+ID | Komet
+ID | Orbit
+ID | Satelit
+ID | Teleskop
+ID | Mikroskop
+ID | Silinder
+ID | Termometer
+ID | Neraca
+ID | Corong
+ID | Pipet
+ID | Buret
+ID | Tekanan
+ID | Daya
+ID | Kerja
+ID | Arus
+ID | Magnet
+ID | Kutub
+ID | Frekuensi
+ID | Gelombang
+ID | Pantulan
+ID | Prisma
+ID | Spektrum
+ID | Optik
+ID | Foton
+ID | Nukleus
+ID | Proton
+ID | Neutron
+ID | Elektron
+ID | Isotop
+ID | Ion
+ID | Kation
+ID | Anion
+ID | Campuran
+ID | Larutan
+ID | Pelarut
+ID | Bahan
+ID | Hasil
+ID | Statik
+ID | Entropi
+ID | Entalpi
+ID | Polimer
+ID | Plastik
+ID | Kaca
+ID | Komposit
+ID | Semikonduktor
+ID | Transistor
+ID | Kapasitor
+ID | Induktor
+ID | Generator
+ID | Motor
+ID | Anak
+ID | Bis
+ID | Uang
+ID | Pulang
+ID | Kantin
+ID | Bioskop
+ID | Makan
+ID | Minum
+ID | Tidur
+ID | Bangun
+ID | Mandi
+ID | Baju
+ID | Celana
+ID | Sepatu
+ID | Kaos
+ID | Topi
+ID | Payung
+ID | Hujan
+ID | Panas
+ID | Dingin
+ID | Angin
+ID | Badai
+ID | Petir
+ID | Guntur
+ID | Pelangi
+ID | Awan
+ID | Langit
+ID | Bumi
+ID | Bulan
+ID | Matahari
+ID | Bintang
+ID | Malam
+ID | Siang
+ID | Pagi
+ID | Sore
+ID | Senja
+ID | Subuh
+ID | Dzuhur
+ID | Ashar
+ID | Maghrib
+ID | Isya
+ID | Sholat
+ID | Doa
+ID | Puasa
+ID | Lebaran
+ID | Masjid
+ID | Musholla
+ID | Pura
+ID | Vihara
+ID | Gereja
+ID | Sekolah
+ID | Kelas
+ID | Lab
+ID | Lapangan
+ID | Aula
+ID | Perpus
+ID | Buku
+ID | Kertas
+ID | Pulpen
+ID | Pensil
+ID | Penghapus
+ID | Penggaris
+ID | Tas
+ID | Meja
+ID | Kursi
+ID | Papan
+ID | Kapur
+ID | Kipas
+
+# ==============================================================================
+# BUCKET 2: TWO WORDS (2 words)
+# ==============================================================================
+EN | Artificial intelligence
+EN | Global warming
+EN | Social media
+EN | Operating system
+EN | Climate change
+EN | Human rights
+EN | Free trade
+EN | High inflation
+EN | Data structure
+EN | System analysis
+EN | Scientific theory
+EN | Industrial revolution
+EN | Young generation
+EN | Economic factor
+EN | Political conflict
+EN | Whats up
+EN | Hang out
+EN | Chill out
+EN | My bad
+EN | No worries
+EN | Sounds good
+EN | Fair enough
+EN | Pretty cool
+EN | Right on
+EN | Oh well
+EN | Hit up
+EN | Catch up
+EN | Good vibes
+EN | You know
+EN | For real
+EN | Kinetic energy
+EN | Potential energy
+EN | Food web
+EN | Food chain
+EN | Magnetic field
+EN | Electric current
+EN | Chemical reaction
+EN | Atomic mass
+EN | Cell wall
+EN | Plasma membrane
+EN | White blood
+EN | Red blood
+EN | Nervous system
+EN | Digestive tract
+EN | Respiratory tract
+EN | Endocrine system
+EN | Periodic table
+EN | Covalent bond
+EN | Ionic bond
+EN | Noble gas
+EN | Transition metal
+EN | Alkali metal
+EN | Absolute zero
+EN | Specific heat
+EN | Latent heat
+EN | Thermal equilibrium
+EN | Refractive index
+EN | Focal length
+EN | Virtual image
+EN | Real image
+EN | Convex lens
+EN | Concave lens
+EN | Nuclear fission
+EN | Nuclear fusion
+EN | Alpha particle
+EN | Beta decay
+EN | Gamma ray
+EN | Standard deviation
+EN | Normal distribution
+EN | Linear regression
+EN | Null hypothesis
+EN | Dependent variable
+EN | Independent variable
+EN | Simultaneous equation
+EN | Quadratic formula
+EN | Right angle
+EN | Isosceles triangle
+EN | Equilateral triangle
+EN | Parallel lines
+EN | Perpendicular lines
+EN | Cartesian plane
+EN | Complex number
+EN | Real number
+EN | Prime number
+EN | Even number
+EN | Odd number
+EN | Rational number
+EN | Irrational number
+EN | Moral values
+EN | Ethical issue
+EN | World war
+EN | Cold war
+EN | Foreign policy
+EN | Domestic policy
+EN | Physical geography
+EN | Human geography
+EN | Short story
+EN | Poetic device
+EN | Figurative language
+EN | Object oriented
+EN | Machine learning
+EN | Deep learning
+EN | Database management
+EN | Cloud computing
+EN | Cyber security
+EN | Virtual reality
+EN | Augmented reality
+EN | Software engineering
+EN | Daily routine
+EN | Public transport
+EN | Traffic jam
+EN | Shopping mall
+EN | Night market
+EN | Street food
+EN | Fast food
+EN | Soft drink
+EN | Mineral water
+EN | Fried rice
+EN | Chicken chop
+EN | Ice cream
+EN | High school
+EN | Final exam
+EN | Report card
+EN | Tuition center
+EN | Study group
+EN | Past year
+EN | Marking scheme
+EN | Extra curricular
+EN | Sports day
+EN | Canteen food
+EN | School uniform
+EN | P E
+EN | Add maths
+EN | No cap
+EN | Lowkey stressed
+EN | Literally dead
+EN | Can la
+EN | Got time
+EN | Very mafan
+EN | Super sien
+EN | Walao eh
+MY | Kecerdasan buatan
+MY | Pemanasan global
+MY | Media sosial
+MY | Sistem operasi
+MY | Perubahan iklim
+MY | Hak asasi
+MY | Perdagangan bebas
+MY | Inflasi tinggi
+MY | Struktur data
+MY | Analisis sistem
+MY | Teori sains
+MY | Revolusi industri
+MY | Generasi muda
+MY | Faktor ekonomi
+MY | Konflik politik
+MY | Bas kilang
+MY | Pejabat pos
+MY | Tandas awam
+MY | Cikgu sekolah
+MY | Budak pandai
+MY | Wayang pacak
+MY | Makan angin
+MY | Kaki bangku
+MY | Kedai mamak
+MY | Tudung saji
+MY | Selipar jepun
+MY | Ais kosong
+MY | Teh tarik
+MY | Nasi lemak
+MY | Balik kampung
+MY | Sistem saraf
+MY | Pembuluh darah
+MY | Sumsum tulang
+MY | Tulang rusuk
+MY | Tulang rawan
+MY | Rongga mulut
+MY | Medan magnet
+MY | Gelombang bunyi
+MY | Tekanan udara
+MY | Lapisan ozon
+MY | Pencemaran air
+MY | Gempa bumi
+MY | Samudra pasifik
+MY | Cuaca ekstrem
+MY | Gerhana matahari
+MY | Gerhana bulan
+MY | Lubang hitam
+MY | Sel darah
+MY | Vitamin c
+MY | Bunga mawar
+MY | Biji kopi
+MY | Mesin diesel
+MY | Pompa air
+MY | Kipas angin
+MY | Transfusi darah
+MY | Masker oksigen
+MY | Tabung oksigen
+MY | Analisis data
+MY | Hipotesis nol
+MY | Sampel acak
+MY | Kurva normal
+MY | Studi kasus
+MY | Diskusi kelompok
+MY | Fokus grup
+MY | Desain penelitian
+MY | Teknik sampling
+MY | Kertas saring
+MY | Pipet tetes
+MY | Buret kaca
+MY | Labu erlenmeyer
+MY | Gelas kimia
+MY | Mikroskop cahaya
+MY | Jarum preparat
+MY | Lilin mainan
+MY | Tindak balas
+MY | Tenaga kinetik
+MY | Sel haiwan
+MY | Asid amino
+MY | Gas nadir
+MY | Jadual berkala
+MY | Nombor atom
+MY | Ikatan ionik
+MY | Litar bersiri
+MY | Kutub utara
+MY | Pantulan cahaya
+MY | Titik fokus
+MY | Kanta cembung
+MY | Suhu bilik
+MY | Gas rumah
+MY | Bahan api
+MY | Tenaga suria
+MY | Sisa toksik
+MY | Alam sekitar
+MY | Habitat semula
+MY | Rantai makanan
+MY | Kertas litmus
+MY | Sisihan piawai
+MY | Ketumpatan cecair
+MY | Kelajuan bas
+MY | Takat didih
+MY | Kacang je
+MY | Pening r
+MY | Sembang kencang
+MY | Awat ni
+MY | Kitorang gerak
+MY | Cikgu disiplin
+MY | Budak nakal
+MY | Kereta sewa
+MY | Pejabat tanah
+MY | Kelmarin dulu
+MY | Tandas rosak
+MY | Wayang gambar
+MY | Makan malam
+MY | Air suam
+MY | Baju kurung
+MY | Kasut sekolah
+MY | Hujan lebat
+MY | Panas terik
+MY | Angin kencang
+MY | Kilat sabung
+MY | Solat jumaat
+MY | Puasa sunat
+MY | Kelas tambahan
+MY | Makmal sains
+MY | Padang bola
+MY | Dewan besar
+MY | Buku teks
+MY | Meja guru
+MY | Kapur tulis
+ID | Kecerdasan buatan
+ID | Pemanasan global
+ID | Media sosial
+ID | Sistem operasi
+ID | Perubahan iklim
+ID | Hak asasi
+ID | Perdagangan bebas
+ID | Inflasi tinggi
+ID | Struktur data
+ID | Analisis sistem
+ID | Teori sains
+ID | Revolusi industri
+ID | Generasi muda
+ID | Faktor ekonomi
+ID | Konflik politik
+ID | Bus kota
+ID | Kantor pos
+ID | Kamar mandi
+ID | Dosen kampus
+ID | Anak pintar
+ID | Layar tancap
+ID | Jalan jalan
+ID | Kurang jago
+ID | Warung tegal
+ID | Nasi goreng
+ID | Sandal jepit
+ID | Es jeruk
+ID | Teh manis
+ID | Indomie telor
+ID | Mudik lebaran
+ID | Sistem saraf
+ID | Pembuluh darah
+ID | Sumsum tulang
+ID | Tulang rusuk
+ID | Tulang rawan
+ID | Rongga mulut
+ID | Medan magnet
+ID | Gelombang bunyi
+ID | Tekanan udara
+ID | Lapisan ozon
+ID | Pencemaran air
+ID | Gempa bumi
+ID | Samudra pasifik
+ID | Cuaca ekstrem
+ID | Gerhana matahari
+ID | Gerhana bulan
+ID | Lubang hitam
+ID | Sel darah
+ID | Vitamin c
+ID | Bunga mawar
+ID | Biji kopi
+ID | Mesin diesel
+ID | Pompa air
+ID | Kipas angin
+ID | Transfusi darah
+ID | Masker oksigen
+ID | Tabung oksigen
+ID | Analisis data
+ID | Hipotesis nol
+ID | Sampel acak
+ID | Kurva normal
+ID | Studi kasus
+ID | Diskusi kelompok
+ID | Fokus grup
+ID | Desain penelitian
+ID | Teknik sampling
+ID | Kertas saring
+ID | Pipet tetes
+ID | Buret kaca
+ID | Labu erlenmeyer
+ID | Gelas kimia
+ID | Mikroskop cahaya
+ID | Jarum preparat
+ID | Lilin mainan
+ID | Reaksi kimia
+ID | Energi kinetik
+ID | Sel hewan
+ID | Asam amino
+ID | Gas mulia
+ID | Tabel periodik
+ID | Nomor atom
+ID | Ikatan ion
+ID | Rangkaian seri
+ID | Kutub utara
+ID | Pantulan cahaya
+ID | Titik fokus
+ID | Lensa cembung
+ID | Suhu ruangan
+ID | Gas rumah
+ID | Bahan bakar
+ID | Energi surya
+ID | Sisa toksik
+ID | Lingkungan hidup
+ID | Habitat alami
+ID | Rantai makanan
+ID | Kertas lakmus
+ID | Standar deviasi
+ID | Massa jenis
+ID | Kecepatan bis
+ID | Titik didih
+ID | Gampang banget
+ID | Pusing nih
+ID | Ngobrol bareng
+ID | Kenapa sih
+ID | Kita jalan
+ID | Dosen pembimbing
+ID | Anak bandel
+ID | Mobil rental
+ID | Kantor pajak
+ID | Kemarin sore
+ID | Kamar mandi
+ID | Bioskop xxi
+ID | Makan malam
+ID | Air hangat
+ID | Baju batik
+ID | Sepatu sekolah
+ID | Hujan deras
+ID | Panas banget
+ID | Angin kencang
+ID | Petir nyambar
+ID | Sholat jumat
+ID | Puasa sunah
+ID | Kelas tambahan
+ID | Lab ipa
+ID | Lapangan bola
+ID | Aula besar
+ID | Buku paket
+ID | Meja guru
+ID | Kapur tulis
+
+# ==============================================================================
+# BUCKET 3: SHORT PHRASE (3-7 words)
+# ==============================================================================
+EN | Wait what's photosynthesis exactly tbh?
+EN | Can you explain osmosis again?
+EN | I literally don't get derivatives.
+EN | Why do cells divide anyway?
+EN | How do enzymes speed up reactions?
+EN | What even is a mitochondria?
+EN | Quadratic formula is so hard bro.
+EN | Pls explain standard deviation again.
+EN | Nervous system notes are too long.
+EN | Genetic mutation sounds kinda confusing.
+EN | Linear equations make no sense.
+EN | Digestive system is actually kinda cool.
+EN | Right triangles are easy af.
+EN | Figurative language is so annoying.
+EN | How does cell division work?
+EN | Can or not we just skip this chapter?
+EN | This add maths question got no answer lah.
+EN | Lowkey hate studying history tbh.
+EN | How to find the area of this right triangle?
+EN | Blue litmus paper turns red in acid no cap.
+EN | Ionic bonds share electrons right?
+EN | Vectors have magnitude and direction bro.
+EN | Sejarah essay is too long pls.
+EN | Geographic coordinates are confusing af.
+EN | What's the python syntax for loop?
+EN | Coding is literally driving me crazy.
+EN | I don't understand the moral value here.
+EN | Literature passage is so deep bro.
+EN | Canteen food is so expensive nowadays.
+EN | Pls send the chemistry lab notes.
+EN | When is the physics experiment due?
+EN | Got homework for add maths today?
+EN | I lowkey failed the moral test.
+EN | The mitochondria is the powerhouse of the cell.
+EN | Newton's third law makes total sense tbh.
+MY | Fotosintesis tu menatang apa do sebenarnya?
+MY | Boleh cikgu terangkan balik pasal osmosis?
+MY | Pening r tak faham bab pembezaan.
+MY | Kenapa sel kena membahagi camtu ek?
+MY | Camne enzim boleh lajukan tindak balas?
+MY | Mitokondria tu function dia pe do?
+MY | Formula kuadratik ni susah gila weh.
+MY | Cikgu terangkan sisihan piawai sekali lagi.
+MY | Nota sistem saraf panjang gila.
+MY | Mutasi genetik ni pening sikit ah.
+MY | Persamaan linear ni tak masuk akal.
+MY | Sistem pencernaan ni best gak eh.
+MY | Segi tiga tepat ni senang kacang.
+MY | Bahasa kiasan ni menyusahkan betul la.
+MY | Macam mana pembahagian sel jadi weh?
+MY | Persamaan linear ni susah gila la.
+MY | Kitaran karbon penting utk ekosistem kita awat.
+MY | Proses mitosis berlaku dalam sel soma je.
+MY | Kelajuan cahaya dlm vakum tu malar r.
+MY | Hukum Newton ketiga pasal tindakan dan tindakbalas weh.
+MY | Elektromagnet bertambah kuat bila arus naik kot.
+MY | Titik didih air tu seratus darjah celcius la.
+MY | Enzim pencernaan pecahkan molekul besar jadi kecik do.
+MY | Asid hidroklorik dalam perut bunuh bakteria weh.
+MY | Cari luas segi tiga tepat ni camne?
+MY | Kertas litmus biru jadi merah kalau asid la.
+MY | Pejabat pengetua kat mana ek?
+MY | Tandas cikgu rosak kelmarin r.
+MY | Kitorang tak faham bab sastera ni.
+MY | Budak kelas sebelah bising gila do.
+MY | Kereta cikgu Ali warna merah kot.
+MY | Teori kinetik gas tu masuk exam kot.
+MY | Proses fotosintesis perlukan karbon dioksida weh.
+MY | Analisis vektor ni pening r.
+MY | Struktur molekul air ada ikatan hidrogen la.
+MY | Keseimbangan terma berlaku bila suhu sama.
+ID | Fotosintesis itu apaan sih sebenernya?
+ID | Bisa ibu jelasin ulang soal osmosis?
+ID | Pusing nih nggak ngerti turunan sama sekali.
+ID | Kenapa sel harus ngebelah kayak gitu?
+ID | Gimana enzim bisa percepat reaksi kimia?
+ID | Mitokondria tuh fungsinya buat apaan dah?
+ID | Rumus kuadrat ini susah banget sumpah.
+ID | Tolong jelasin deviasi standar lagi dong.
+ID | Catetan sistem saraf panjang bener.
+ID | Mutasi genetik ini agak ribet ya.
+ID | Persamaan linear tuh ga masuk akal.
+ID | Sistem pencernaan ini lumayan seru sih.
+ID | Segitiga siku-siku mah gampang banget.
+ID | Bahasa kiasan ini ngerepotin banget deh.
+ID | Gimana sih cara pembelahan sel itu?
+ID | Persamaan linear ini susah banget deh.
+ID | Siklus karbon penting buat ekosistem kita nih.
+ID | Proses mitosis terjadi di sel soma aja.
+ID | Kecepatan cahaya di vakum itu konstan ya.
+ID | Hukum Newton ketiga soal aksi dan reaksi dong.
+ID | Elektromagnet tambah kuat pas arus naik sih.
+ID | Titik didih air itu seratus derajat celcius ya.
+ID | Enzim pencernaan mecah molekul besar jadi kecil deh.
+ID | Asam klorida di perut bunuh bakteri nih.
+ID | Cari luas segitiga siku-siku ini gimana?
+ID | Kertas lakmus biru jadi merah kalo asam ya.
+ID | Kantor kepala sekolah di mana sih?
+ID | Kamar mandi dosen rusak kemarin deh.
+ID | Kita nggak ngerti bab sastra ini.
+ID | Anak kelas sebelah berisik banget dah.
+ID | Mobil pak Ali warna merah nih.
+ID | Teori kinetik gas itu masuk ujian deh.
+ID | Proses fotosintesis butuh karbon dioksida nih.
+ID | Analisis vektor ini pusing deh.
+ID | Struktur molekul air ada ikatan hidrogen ya.
+ID | Keseimbangan termal terjadi pas suhu sama.
+
+# ==============================================================================
+# BUCKET 4: MEDIUM SENTENCE (8-16 words)
+# ==============================================================================
+EN | I'm slightly confused about cellular respiration. What's the difference between aerobic and anaerobic again?
+EN | How does oxygenated blood get pumped? I don't really get the left ventricle part.
+EN | The xylem tissue's function is to transport water and minerals from roots to leaves right?
+EN | If the exam asks about genetic mutation, do we actually have to include Down syndrome?
+EN | How do I solve this simultaneous equation? I tried substituting the value but it's still wrong.
+EN | Matrices are driving me crazy. How do you find the inverse if the determinant is zero?
+EN | I don't get this probability question. Why do we multiply instead of adding the chances?
+EN | Could you explain what amylase actually breaks down into during the digestion process?
+EN | Why do we automatically pull our hand away from hot stuff? Is it a reflex?
+EN | Is the surface area formula for a sphere correct if I write it like this?
+EN | This chemical reaction is so fast tbh, the catalyst literally worked magic in the lab.
+EN | Did you copy the biology notes or not? My book is missing the photosynthesis part.
+EN | Add maths is literally impossible to pass if you don't memorize the calculus formulas properly.
+EN | Sejarah teacher didn't come today lah, so we just chilled in the classroom the whole time.
+EN | What's the difference between velocity and acceleration bro? I keep mixing them up in physics.
+EN | We messed up the physics experiment lowkey, the pendulum didn't swing at the right angle.
+EN | The geography assignment on climate change is due tomorrow, I haven't even started writing the intro.
+EN | I think the literature passage is a metaphor for society, but it's still confusing af.
+EN | Programming is fun until you miss one semicolon and the whole system crashes instantly.
+EN | The moral values in this story are pretty obvious, just write about being honest and hardworking.
+MY | Cikgu, pening sikit la bab respirasi sel ni. Apa beza aerobik dengan anaerobik eh?
+MY | Macam mana darah beroksigen dipam? Tak faham sgt part ventrikel kiri tu.
+MY | Fungsi tisu xilem ni utk angkut air dgn mineral dari akar ke daun kan?
+MY | Cikgu, kalau exam tanya pasal mutasi genetik, wajib ke letak cth sindrom Down?
+MY | Macam mana nak selesaikan persamaan serentak ni? Dah try masuk nilai tapi still salah.
+MY | Pening gila bab matriks ni. Camne nak cari songsangan kalau penentu dia kosong?
+MY | Tak faham r soalan kebarangkalian ni. Asal kena darab and bukan tambah probabiliti dia?
+MY | Cikgu explain balik jap, waktu enzim amilase pecahkan kanji tu dia jadi apa sebenarnya?
+MY | Asal tangan kita automatik tarik bila sentuh benda panas ek? Tu tindakan refleks kan?
+MY | Cikgu, formula utk cari luas permukaan sfera tu betul tak kalau saya buat camni?
+MY | Keseimbangan terma berlaku bila dua objek bersentuh capai suhu yang sama, betul tak cikgu?
+MY | Tindak balas asid dan alkali akan hasilkan garam dengan air kan, ni proses peneutralan.
+MY | Pembiasan cahaya jadi sebab kelajuan cahaya berubah bila masuk medium yang berbeza ketumpatan.
+MY | Kitorang nak gi kantin jap, awat cikgu sejarah tak masuk kelas lagi ni do.
+MY | Kereta pengetua rosak kelmarin, sebab tu dia tumpang kereta ustaz datang sekolah pagi tadi.
+MY | Budak kelas hujung tu ponteng kelas sains, padahal hari ni ada eksperimen fizik gempak.
+MY | Macam mana nak cari pintasan yek? Guna formula y = mx + c kan.
+MY | Tandas blok A tersumbat lagi r, terpaksa jalan jauh sikit gi tandas pejabat guru.
+MY | Sembang kencang je mamat tu, bab add maths satu apa pun dia tak faham kot.
+MY | Pening r baca teks sastera klasik ni, ayat dia berbunga-bunga sangat sampai tak faham.
+ID | Bu, aku agak bingung soal respirasi sel. Bedanya aerobik sama anaerobik tuh apa ya?
+ID | Gimana darah beroksigen dipompa? Aku nggak paham banget bagian ventrikel kiri itu sih.
+ID | Fungsi jaringan xilem tuh buat transport air sama mineral dari akar ke daun kan?
+ID | Bu, kalo ujian nanya soal mutasi genetik, wajib nggak sih kasih contoh sindrom Down?
+ID | Gimana cara kelarin persamaan simultan ini? Udah coba masukin nilai tapi tetep salah.
+ID | Pusing banget bab matriks ini. Gimana cara nyari invers kalo determinannya nol?
+ID | Nggak ngerti deh soal probabilitas ini. Kenapa peluangnya harus dikali dan bukan ditambah?
+ID | Bisa jelasin ulang nggak, pas enzim amilase mecah pati itu jadinya apa aja?
+ID | Kenapa tangan kita otomatis narik pas nyentuh benda panas? Itu gerak refleks ya?
+ID | Bu, rumus buat nyari luas permukaan bola itu bener nggak sih kalo kaya gini?
+ID | Keseimbangan termal terjadi pas dua benda bersentuhan capai suhu yang sama, bener nggak bu?
+ID | Reaksi asam dan basa bakal hasilin garam sama air kan, ini proses netralisasi.
+ID | Pembiasan cahaya terjadi karena kecepatan cahaya berubah pas masuk medium yang beda kepadatan.
+ID | Kita mau ke kantin bentar, kenapa guru sejarah nggak masuk kelas lagi nih.
+ID | Mobil kepala sekolah rusak kemarin, makanya dia numpang mobil guru agama ke sekolah tadi.
+ID | Anak kelas belakang itu bolos kelas ipa, padahal hari ini ada eksperimen fisika keren.
+ID | Gimana sih cara nyari perpotongan y? Pake rumus y = mx + c kan.
+ID | Kamar mandi blok A mampet lagi deh, terpaksa jalan jauh ke kamar mandi kantor.
+ID | Ngobrol gede doang tuh anak, bab matematika tambahan satu pun dia nggak ngerti sih.
+ID | Pusing deh baca teks sastra klasik ini, kalimatnya terlalu puitis sampe nggak paham.
+
+# ==============================================================================
+# BUCKET 5: LONG SENTENCE/PARAGRAPH (17-50 words)
+# ==============================================================================
+EN | I feel like the ecosystem chapter is super easy to memorize, but when it comes to genetics my brain just stops working because of all the weird terms, especially the mutation and inheritance parts.
+EN | If a question asks us to draw a trigonometric graph, do we really have to label every single x-intercept, or is it acceptable if we just mark the critical points?
+EN | Hey, did you manage to get the answer for calculus question 4? I calculated it multiple times but still got a negative value, I think I messed up the second derivative somewhere.
+EN | It's so hard to find the implicit meaning in this passage. The writer uses way too many metaphors and figurative language until I'm totally confused about what the main point actually is.
+EN | The IGCSE exam is literally next week and I'm freaking out over the reading comprehension section because I always misinterpret the questions, especially the ones asking for evidence across multiple paragraphs.
+EN | How are we supposed to calculate fractions when the denominators are different? I always get confused when we have to equalize the denominators first before we can add or subtract the fractions.
+EN | Teacher, for paper 2, if I choose descriptive writing, do I need to include a ton of sensory details, or do you prefer if we just focus on keeping the plot progression moving?
+EN | Have you guys read the short story for literature yet? I completely don't understand the main character's motives at all because they made such a weird decision right at the ending of the story.
+EN | How do I improve my vocabulary so my essays look more advanced like a band 9 student? My marks are always stuck at band 6 even though I try using complex sentences.
+EN | Honestly, the mitochondria generates most of the ATP supply through cellular respiration, but I always mix up the specific chemical steps when I'm under pressure during the actual biology paper.
+MY | Bab ekosistem ni kacang je nak hafal, tapi masuk bab genetik terus pening otak sbb banyak gila terma pelik, tambah-tambah tang mutasi dengan pewarisan tu.
+MY | Kalau soalan suruh lukis graf trigonometri, wajib ke label semua pintasan-x, atau cikgu boleh terima je kalau kita tanda point-point yg penting je?
+MY | Wei, kau dpt tak jawapan soalan kalkulus num 4 tu? Aku kira byk kali still dpt negatif, rasanya aku tersilap kat pembezaan peringkat kedua kot.
+MY | Susah la nak cari maksud tersirat dlm petikan ni. Penulis ni pakai banyak sgt kiasan dgn metafora sampai aku confuse apa sbnrnya point yg dia nak smpaikan.
+MY | Exam IGCSE minggu depan weh, cuak gila part pemahaman sbb asyik salah faham soalan, lg-lg yg mintak kita cari bukti dari dua tiga perenggan serentak.
+MY | Camne nak kira pecahan yang penyebut dia tak sama ek? Aku selalu keliru bila kena samakan penyebut dulu baru boleh tambah tolak benda alah tu.
+MY | Cikgu, utk paper 2 kalau saya amik karangan deskriptif, kena letak detail deria banyak-banyak ke, atau cikgu lagi suka kalau jalan cerita dia gerak laju?
+MY | Korang dah baca short story sastera tu belum? Aku sumpah tak faham motif watak utama tu, tibe-tibe buat keputusan pelik gila babi kat ending dia.
+MY | Camne nak gempakkan vocab aku supaya essay nampak pro sikit? Markah asyik sangkut kat band 6 je padahal dah try hard buat ayat majmuk.
+MY | Mitokondria ni function dia buat tenaga ATP ikut respirasi sel kan, tapi asal aku selalu tertukar step kimia dia bila jawab soalan bio time exam do.
+ID | Bab ekosistem ini emang gampang banget dihafal sih, tapi pas masuk bab genetika pusingnya minta ampun gara-gara banyak istilah aneh, apalagi bagian mutasi sama pewarisannya.
+ID | Kalo soal nyuruh gambar grafik trigonometri, wajib nggak sih labelin semua perpotongan-x, atau ibu bisa terima kalo kita tandain titik-titik yg penting aja?
+ID | Eh, lu dapet nggak jawaban buat soal kalkulus nomor 4? Udah ngitung berkali-kali tetep dapet negatif, kayanya gue salah hitung di turunan keduanya deh.
+ID | Susah banget nyari makna tersirat di bacaan ini. Penulisnya pake banyak banget kiasan sama metafora sampe aku bingung apa sebenernya poin utama yg mau disampein.
+ID | Ujian IGCSE minggu depan nih, panik banget bagian pemahaman soalnya sering salah nangkep maksud pertanyaan, apalagi yg minta kita cari bukti dari beberapa paragraf sekaligus.
+ID | Gimana sih cara ngitung pecahan yg penyebutnya beda? Aku sering banget keliru pas harus nyamain penyebutnya dulu sebelum bisa ditambahin atau dikurangin.
+ID | Bu, buat paper 2 kalo aku milih nulis deskriptif, harus masukin banyak detail indera ya, atau ibu lebih suka kalo kita fokus ke alur ceritanya aja?
+ID | Kalian udah pada baca cerpen sastranya belum sih? Gue beneran nggak paham motif tokoh utamanya, tiba-tiba ngambil keputusan aneh banget pas endingnya.
+ID | Gimana cara ningkatin vocab biar esaiku keliatan lebih advance? Nilai aku nyangkut di band 6 terus padahal udah nyoba pake kalimat majemuk.
+ID | Mitokondria ini kan fungsinya buat hasilin energi ATP lewat respirasi sel, tapi kok aku selalu kebalik-balik ya step kimianya pas ngerjain soal biologi pas ujian.

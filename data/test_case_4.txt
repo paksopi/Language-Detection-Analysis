@@ -1,0 +1,85 @@
+# ==============================================================================
+# SUBJECT 1: BIOLOGY & SCIENCE (25 cases)
+# Tests domain-specific science vocabulary mixed with local phrasing.
+# ==============================================================================
+EN | The mitochondria is often referred to as the powerhouse of the cell because it generates most of the cell's supply of ATP.
+MY | Cikgu, saya keliru sikit pasal pernafasan selular. Apa beza respirasi aerobik dengan anaerobik?
+ID | Bu, saya agak bingung soal pernapasan seluler. Apa bedanya respirasi aerobik sama anaerobik?
+ZH | 细胞分裂主要分为有丝分裂和减数分裂，两者在染色体数量的变化上有所不同。
+TA | மனித உடலில் இதயம் ஒரு முக்கிய உறுப்பு ஆகும், இது உடலின் அனைத்து பாகங்களுக்கும் இரத்தத்தை பம்ப் செய்கிறது.
+EN | During meiosis, the number of chromosomes is reduced by half, producing four genetically diverse haploid cells.
+MY | Macam mana darah beroksigen dipam dari jantung ke seluruh badan? Saya tak faham part ventrikel kiri tu.
+ID | Gimana darah beroksigen dipompa dari jantung ke seluruh tubuh? Aku nggak paham bagian ventrikel kiri itu.
+ZH | 老师，我不明白DNA复制的过程。酶是怎么解开双螺旋结构的？
+TA | ஒளிச்சேர்க்கையின் போது தாவரங்கள் கார்பன் டை ஆக்சைடை எடுத்துக்கொண்டு ஆக்ஸிஜனை வெளியிடுகின்றன.
+MY | Tisu xilem berfungsi untuk mengangkut air dan mineral dari akar ke daun tumbuhan.
+ID | Jaringan xilem berfungsi untuk mengangkut air dan mineral dari akar ke daun tumbuhan.
+EN | Enzymes act as biological catalysts to speed up chemical reactions without being consumed in the process.
+MY | Boleh cikgu explain balik pasal sistem pencernaan? Waktu enzim amilase pecahkan kanji tu jadi apa?
+ID | Bisa ibu jelasin lagi soal sistem pencernaan? Waktu enzim amilase mecah pati itu jadinya apa?
+EN | The human nervous system comprises the central nervous system and the peripheral nervous system.
+MY | Kenapa kalau kita sentuh benda panas, tangan kita automatik tarik balik? Adakah itu tindakan refleks?
+ID | Kenapa kalau kita nyentuh benda panas, tangan kita otomatis narik balik? Apakah itu gerak refleks?
+ZH | 免疫系统如何区分自身的细胞和外来的病原体？
+TA | மனித செரிமான அமைப்பில் இரைப்பையின் பங்கு என்ன?
+MY | Cikgu, kalau soalan exam tanya pasal mutasi genetik, wajib ke letak contoh penyakit macam sindrom Down?
+ID | Bu, kalau soal ujian nanya soal mutasi genetik, wajib nggak sih kasih contoh penyakit kaya sindrom Down?
+EN | Natural selection is the differential survival and reproduction of individuals due to differences in phenotype.
+MY | I rasa chapter ekosistem ni senang sikit nak hafal berbanding chapter genetik yang banyak gila terms susah.
+ID | Aku rasa bab ekosistem ini lebih gampang dihapal dibanding bab genetik yang banyak banget istilah susahnya.
+
+# ==============================================================================
+# SUBJECT 2: MATHEMATICS (25 cases)
+# Tests numerical concepts, formula logic, and problem-solving phrasing.
+# ==============================================================================
+EN | To find the roots of the equation $ax^2 + bx + c = 0$, we apply the quadratic formula.
+MY | Macam mana nak selesaikan persamaan serentak ni? Saya dah try ganti nilai $x$ tapi jawapan still salah.
+ID | Gimana cara nyelesaiin persamaan linear ini? Aku udah coba masukin nilai $x$ tapi jawabannya tetep salah.
+ZH | 请问这道微积分的题目怎么解？我找不到函数的导数。
+TA | $x$-ன் மதிப்பைக் கண்டறியவும், இங்கு $2x + 5 = 15$ ஆகும்.
+EN | Calculate the volume of a cylinder with a radius of $5\text{ cm}$ and a height of $10\text{ cm}$.
+MY | Cikgu, formula untuk cari luas permukaan sfera tu $4\pi r^2$ kan? Kena pakai $\pi = \frac{22}{7}$ atau 3.14?
+ID | Bu, rumus buat nyari luas permukaan bola itu $4\pi r^2$ kan? Harus pakai $\pi = \frac{22}{7}$ atau 3.14?
+ZH | 在直角三角形中，斜边的平方等于两直角边的平方和。
+TA | முக்கோணத்தின் பரப்பளவைக் கணக்கிடுவதற்கான சூத்திரம் என்ன?
+EN | Find the derivative of the function $f(x) = 3x^3 - 2x^2 + x - 5$ with respect to $x$.
+MY | Pening gila bab matriks ni. Macam mana nak cari matriks songsang kalau penentu dia kosong?
+ID | Pusing banget bab matriks ini. Gimana cara nyari invers matriks kalau determinannya nol?
+EN | The probability of drawing a red marble from a bag containing 3 red, 2 blue, and 5 green marbles is 3/10.
+MY | Saya tak faham soalan kebarangkalian ni. Kenapa kena darab dan bukan tambah probabiliti dia?
+ID | Aku nggak ngerti soal peluang ini. Kenapa harus dikali dan bukan ditambah probabilitasnya?
+ZH | 老师，统计学里的标准差和方差有什么实际的区别？
+TA | பித்தகோரஸ் தேற்றத்தை விளக்கி ஒரு உதாரணம் கொடுங்கள்.
+MY | Kalau soalan suruh lukis graf fungsi trigonometri, wajib ke label semua titik pintasan pada paksi-$x$?
+ID | Kalau soal nyuruh gambar grafik fungsi trigonometri, wajib nggak sih label semua titik potong di sumbu-$x$?
+EN | Integration is essentially the reverse process of differentiation, often used to find the area under a curve.
+MY | Wei, kau dapat tak jawapan untuk soalan calculus nombor 4? Aku kira banyak kali still dapat jawapan negatif.
+ID | Eh, lu dapet nggak jawaban buat soal kalkulus nomor 4? Aku itung berkali-kali tetep dapet jawaban negatif.
+
+# ==============================================================================
+# SUBJECT 3: IGCSE CAMBRIDGE ENGLISH (25 cases)
+# Tests literary terminology, essay writing prompts, and comprehension phrasing.
+# ==============================================================================
+EN | In the IGCSE First Language English Paper 2, candidates must demonstrate an excellent grasp of narrative or descriptive writing.
+MY | Cikgu, untuk paper 2 IGCSE ni, kalau saya pilih descriptive writing, kena letak banyak sensory details ke?
+ID | Bu, buat paper 2 IGCSE ini, kalau aku milih descriptive writing, harus masukin banyak sensory details ya?
+ZH | IGCSE 英语试卷的阅读理解部分要求我们能够分析作者的写作意图和语气。
+TA | IGCSE ஆங்கிலப் பரீட்சையில் கட்டுரை எழுதும் போது இலக்கணப் பிழைகள் இல்லாமல் எழுதுவது மிக முக்கியம்.
+EN | Explain how the writer uses language and structure to create suspense in the third paragraph.
+MY | Susah la nak cari implicit meaning dalam passage ni. Penulis ni pakai banyak sangat kiasan and metaphor.
+ID | Susah banget nyari implicit meaning di passage ini. Penulisnya pakai banyak banget kiasan dan metaphor.
+ZH | 老师，到底怎样才能在 directed writing 拿到满分？格式重要还是内容更重要？
+TA | கவிதை பகுப்பாய்வில் 'metaphor' மற்றும் 'simile' ஆகியவற்றுக்கு இடையேயான வித்தியாசம் என்ன?
+EN | Your directed writing response should adopt an appropriate tone and register for a formal letter to a headteacher.
+MY | Kalau soalan suruh tulis formal letter, format alamat penerima kena letak belah kanan atau kiri?
+ID | Kalau soal nyuruh nulis surat resmi, format alamat penerima harus ditaruh di sebelah kanan atau kiri?
+EN | The protagonist's internal conflict is evident when he hesitates before opening the mysterious envelope.
+MY | Wei, korang dah baca belum cerpen untuk literature tu? Aku tak faham langsung apa motif watak utama tu.
+ID | Eh, kalian udah baca belum cerpen buat literature itu? Aku nggak ngerti sama sekali apa motif karakter utamanya.
+ZH | 在写 summary 的时候，我们是不是必须用自己的话来概括，不能直接照抄原文？
+TA | IGCSE தேர்வில் சுருக்கம் (summary) எழுதும் போது எத்தனை வார்த்தைகளுக்குள் எழுத வேண்டும்?
+MY | Cikgu, macam mana nak improve vocabulary supaya essay nampak lagi advance macam student band 9?
+ID | Bu, gimana cara improve vocabulary supaya esai kelihatan lebih advance kaya murid band 9?
+EN | Discuss the thematic significance of weather in conveying the mood of the characters in the text.
+MY | Exam IGCSE minggu depan weh, aku cuak gila part comprehension sebab selalu salah interpret soalan.
+ID | Ujian IGCSE minggu depan nih, aku panik banget bagian comprehension soalnya sering salah interpretasi pertanyaan.

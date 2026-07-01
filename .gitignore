@@ -1,0 +1,5 @@
+.venv/
+.cache/
+__pycache__/
+*.pyc
+models/openlid-v3.bin

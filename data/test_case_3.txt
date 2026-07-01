@@ -1,0 +1,140 @@
+Here is a massive expansion for your `test_case.txt` file.
+
+This contains exactly **100 test cases**, fully labeled with the `ISO | text` ground truth format so your accuracy script can score them perfectly. It is strictly formatted to keep one test case per line, even for the massive multi-paragraph texts at the end.
+
+I have heavily varied the lengths, covering everything from 2-letter ambiguous words to extensive, highly technical paragraphs. The MY vs. ID differences have been meticulously crafted to include distinct vocabulary, slang, and structural differences.
+
+### **Expanded `test_case.txt` (100 Cases)**
+
+```text
+# ==============================================================================
+# TIER 1: SINGLE WORDS & EXTREMELY SHORT PHRASES (20 cases)
+# Tests the limits of n-gram detection on low-signal data.
+# ==============================================================================
+EN | Hello
+MY | Boleh
+ID | Bisa
+ZH | 你好
+TA | வணக்கம்
+MY | Cikgu
+ID | Bu
+EN | OK
+MY | Tak
+ID | Nggak
+MY | Jom
+ID | Ayo
+MY | Kereta
+ID | Mobil
+MY | Percuma
+ID | Gratis
+ZH | 谢谢
+TA | நன்றி
+EN | Photosynthesis
+MY | Tumbuhan
+
+# ==============================================================================
+# TIER 2: FORMAL & PLAIN SENTENCES (20 cases)
+# Tests baseline accuracy on standard, grammatically correct text.
+# ==============================================================================
+EN | The quick brown fox jumps over the lazy dog in the garden.
+MY | Kerajaan telah mengumumkan bajet baru untuk tahun hadapan.
+ID | Pemerintah telah mengumumkan anggaran baru untuk tahun depan.
+ZH | 科学技术的进步改变了我们日常生活的方式。
+TA | அறிவியல் மற்றும் தொழில்நுட்பத்தின் முன்னேற்றம் நமது அன்றாட வாழ்க்கையை மாற்றியுள்ளது.
+EN | Please ensure that all documents are submitted before the deadline.
+MY | Sila pastikan semua dokumen dihantar sebelum tarikh tutup.
+ID | Pastikan semua dokumen diserahkan sebelum batas waktu.
+EN | Water boils at one hundred degrees Celsius under standard atmospheric pressure.
+MY | Air mendidih pada suhu seratus darjah Celsius di bawah tekanan atmosfera piawai.
+ID | Air mendidih pada suhu seratus derajat Celsius di bawah tekanan atmosfer standar.
+ZH | 请确保在截止日期前提交所有相关文件。
+TA | கெடு முடிவதற்குள் அனைத்து ஆவணங்களும் சமர்ப்பிக்கப்படுவதை உறுதி செய்யவும்.
+EN | The hospital has state-of-the-art medical facilities.
+MY | Hospital itu mempunyai kemudahan perubatan yang canggih.
+ID | Rumah sakit itu memiliki fasilitas medis yang canggih.
+ZH | 这家医院拥有最先进的医疗设备。
+TA | இந்த மருத்துவமனையில் அதிநவீன மருத்துவ வசதிகள் உள்ளன.
+EN | What time does the next train arrive at the station?
+MY | Pukul berapakah kereta api seterusnya tiba di stesen?
+
+# ==============================================================================
+# TIER 3: INFORMAL & SLANG SENTENCES (20 cases)
+# Tests conversational data, heavily targeting MY vs ID colloquialisms.
+# ==============================================================================
+EN | Gonna grab some lunch, be back in 10 mins.
+MY | Nak pergi makan kejap, nanti dalam 10 minit I balik.
+ID | Mau pergi makan bentar, nanti 10 menitan aku balik.
+EN | That movie was absolutely mind-blowing, highly recommend it!
+MY | Cerita tu memang gempak gila, kau kena tengok wei!
+ID | Filmnya keren banget parah, lu wajib nonton sih!
+ZH | 哇老，这个东西也太贵了吧，买不起。
+TA | மச்சான், இன்னைக்கு நைட் party-க்கு நீ வரியா?
+EN | Did you get the email I sent earlier today?
+MY | Kau ada dapat tak emel yang aku hantar pagi tadi?
+ID | Kamu udah dapet email yang aku kirim tadi pagi belum?
+MY | Boleh tolong belikan air mineral tak kat kedai depan tu?
+ID | Tolong beliin air mineral dong di warung depan.
+ZH | 你等下得空吗？我们可以一起去喝茶。
+TA | நீங்க கொஞ்ச நேரம் wait பண்ண முடியுமா?
+EN | I'm so exhausted, I could sleep for a week.
+MY | Penat gila harini, rasa macam nak tidur seharian.
+ID | Capek banget hari ini, rasanya pengen tidur seharian.
+MY | Jangan lupa bawa payung, macam nak hujan je ni.
+ID | Jangan lupa bawa payung, kayanya mau hujan deh.
+
+# ==============================================================================
+# TIER 4: HEAVY CODE-SWITCHING (20 cases)
+# Tests the detector's ability to pick the dominant language in mixed strings.
+# ==============================================================================
+MY | I rasa better we cancel the meeting lah, ramai yang tak boleh join harini.
+ID | Aku rasa mending kita cancel aja meeting-nya, banyak yang nggak bisa join hari ini.
+EN | So basically, the sistem kerajaan needs a complete overhaul to function properly.
+ZH | 你可以 help 我 print 这个 document 吗？我急用。
+TA | நான் library-க்கு போறேன், you want to join me for study?
+MY | Cikgu, saya nak tanya sikit pasal assignment semalam, due date dia bila actually?
+ID | Bu, saya mau nanya dikit soal assignment kemarin, due date-nya kapan actually?
+MY | Weh, wifi kat library ni slow gila lah, tak boleh nak download slide lecture langsung.
+ID | Eh, wifi di perpus ini lemot banget sih, nggak bisa download slide kuliah sama sekali.
+EN | I totally understand your point, tapi kita kena tengok budget juga kan.
+ZH | 这个 presentation slide 做得很美，but content 好像不太够 detail。
+TA | இந்த maths problem ரொம்ப கஷ்டமா இருக்கு, can you explain the steps again?
+MY | Kalau you pergi mall nanti, tolong tapaukan I makanan sikit please, lapar gila.
+ID | Kalau kamu ke mall nanti, tolong bungkusin makanan dong please, laper banget.
+MY | Guys, jangan lupa submit report by 5 PM sharp okay, kalau tak markah kena tolak.
+ID | Guys, jangan lupa submit report jam 5 sore pas ya, kalau nggak nilainya dipotong.
+EN | The traffic jam was crazy today, nasib baik I left the house early.
+ZH | 昨天晚上的 traffic jam 真的很夸张，lucky 我提早出门。
+TA | இன்னைக்கு morning traffic ரொம்ப heavy-ஆ இருந்துச்சு, lucky-ஆ நான் early-ஆ கிளம்பிட்டேன்.
+MY | Macam mana nak connect printer ni dengan laptop I? Puas try dari tadi tapi still error.
+
+# ==============================================================================
+# TIER 5: LONG PARAGRAPHS (10 cases)
+# Tests sustained text context. (Written on one line).
+# ==============================================================================
+EN | Artificial intelligence is rapidly transforming various industries, from healthcare and finance to education and transportation. By automating repetitive tasks and analyzing massive datasets at unprecedented speeds, AI allows professionals to focus on higher-level strategic thinking. However, this rapid advancement also raises important ethical questions regarding data privacy, algorithm bias, and the future of human employment in an increasingly automated world.
+MY | Kecerdasan buatan sedang mengubah pelbagai industri dengan pantas, dari penjagaan kesihatan dan kewangan hingga ke pendidikan dan pengangkutan. Dengan mengautomasikan tugas yang berulang dan menganalisis set data yang besar pada kelajuan yang tidak pernah terjadi sebelum ini, AI membolehkan para profesional untuk memberi tumpuan kepada pemikiran strategik peringkat tinggi. Walau bagaimanapun, kemajuan pesat ini juga menimbulkan persoalan etika yang penting mengenai privasi data, berat sebelah algoritma, dan masa depan pekerjaan manusia dalam dunia yang semakin diautomasikan.
+ID | Kecerdasan buatan sedang mengubah berbagai industri dengan cepat, dari perawatan kesehatan dan keuangan hingga pendidikan dan transportasi. Dengan mengotomatiskan tugas-tugas yang berulang dan menganalisis kumpulan data yang besar pada kecepatan yang belum pernah terjadi sebelumnya, AI memungkinkan para profesional untuk fokus pada pemikiran strategis tingkat tinggi. Namun, kemajuan pesat ini juga menimbulkan pertanyaan etis yang penting mengenai privasi data, bias algoritma, dan masa depan pekerjaan manusia di dunia yang semakin terotomatisasi.
+ZH | 人工智能正在迅速改变各个行业，从医疗保健和金融到教育和交通。通过自动化重复性任务并以前所未有的速度分析海量数据集，人工智能使专业人士能够专注于更高层次的战略思考。然而，这种快速发展也引发了关于数据隐私、算法偏见以及在日益自动化的世界中人类就业未来的重要伦理问题。
+TA | செயற்கை நுண்ணறிவு சுகாதாரப் பராமரிப்பு மற்றும் நிதி முதல் கல்வி மற்றும் போக்குவரத்து வரை பல்வேறு தொழில்களை வேகமாக மாற்றி வருகிறது. மீண்டும் மீண்டும் செய்யும் பணிகளைத் தானியக்கமாக்குவதன் மூலமும், முன்னோடியில்லாத வேகத்தில் பெரிய தரவுத்தொகுப்புகளை பகுப்பாய்வு செய்வதன் மூலமும், AI தொழில் வல்லுநர்களை உயர் மட்ட மூலோபாய சிந்தனையில் கவனம் செலுத்த அனுமதிக்கிறது. எவ்வாறாயினும், இந்த விரைவான முன்னேற்றம் தரவு தனியுரிமை, அல்காரிதம் சார்பு மற்றும் பெருகிய முறையில் தானியங்கி உலகில் மனித வேலைவாய்ப்பின் எதிர்காலம் தொடர்பான முக்கியமான நெறிமுறை கேள்விகளையும் எழுப்புகிறது.
+MY | Cikgu, saya nak minta maaf sebab tak dapat hadir ke kelas tambahan petang semalam. Saya terpaksa menemani ibu saya ke hospital kerana beliau tiba-tiba mengadu sakit dada. Doktor menasihatkan supaya beliau ditahan di wad untuk pemantauan lanjut selama beberapa hari. Boleh tak cikgu kongsikan nota dan latihan yang telah dibincangkan dalam kelas semalam supaya saya tidak ketinggalan dalam pelajaran?
+ID | Bu, saya mau minta maaf karena tidak bisa hadir ke kelas tambahan kemarin sore. Saya harus menemani ibu saya ke rumah sakit karena beliau tiba-tiba mengeluh sakit dada. Dokter menyarankan agar beliau dirawat inap untuk pemantauan lebih lanjut selama beberapa hari. Boleh nggak bu bagikan catatan dan latihan yang sudah dibahas di kelas kemarin supaya saya tidak tertinggal pelajaran?
+EN | The theory of relativity, developed by Albert Einstein, revolutionized our understanding of space, time, and gravity. It consists of two interrelated theories: special relativity and general relativity. Special relativity introduced the idea that the laws of physics are the same for all non-accelerating observers, and that the speed of light in a vacuum is independent of the motion of all observers. General relativity expanded on this by proposing that gravity is not a force, but a curvature of spacetime caused by mass and energy.
+ZH | 昨天的会议上我们讨论了关于下个季度市场营销策略的几个重点。大家一致认为我们需要增加在社交媒体平台上的广告投放，特别是针对年轻人的短视频内容。除此之外，客服部门也需要提供更快捷的回复速度来提升客户满意度。如果你有什么新的 idea 或者 suggestion，记得在星期五之前 email 给我。
+TA | நேற்றைய கூட்டத்தில், அடுத்த காலாண்டிற்கான சந்தைப்படுத்தல் உத்தி குறித்த பல முக்கிய புள்ளிகளை விவாதித்தோம். சமூக ஊடக தளங்களில், குறிப்பாக இளைஞர்களை இலக்காகக் கொண்ட குறுகிய வீடியோ உள்ளடக்கத்தில் விளம்பரங்களை அதிகரிக்க வேண்டும் என்பதை அனைவரும் ஒப்புக்கொண்டனர். கூடுதலாக, வாடிக்கையாளர் திருப்தியை மேம்படுத்த வாடிக்கையாளர் சேவைத் துறை விரைவான பதில் நேரங்களை வழங்க வேண்டும். உங்களுக்கு ஏதேனும் புதிய யோசனைகள் அல்லது பரிந்துரைகள் இருந்தால், வெள்ளிக்கிழமைக்கு முன் எனக்கு மின்னஞ்சல் செய்யவும்.
+
+# ==============================================================================
+# TIER 6: MASSIVE MULTI-PARAGRAPH TEXTS (10 cases)
+# Stress tests for speed and sustained context. (Must be one physical line).
+# ==============================================================================
+EN | The global transition to renewable energy sources is no longer just an environmental imperative; it has become an economic necessity. Solar and wind power have seen dramatic reductions in cost over the past decade, making them cheaper than fossil fuels in many parts of the world. However, the intermittent nature of these energy sources presents significant challenges for grid stability. Energy storage technologies, particularly lithium-ion batteries, are crucial to bridging this gap by storing excess energy generated during peak production times and releasing it when demand is high. Furthermore, upgrading the existing power grid infrastructure to accommodate decentralized energy generation requires massive public and private investment. Governments worldwide are implementing policy incentives, such as carbon pricing and tax subsidies, to accelerate this transition. The success of this monumental shift will ultimately depend on international cooperation, technological innovation, and a fundamental change in consumer behavior regarding energy consumption.
+MY | Peralihan global kepada sumber tenaga boleh diperbaharui bukan lagi sekadar keperluan alam sekitar; ia telah menjadi satu keperluan ekonomi. Tenaga solar dan angin telah menyaksikan penurunan kos yang drastik sepanjang dekad yang lalu, menjadikannya lebih murah berbanding bahan api fosil di banyak bahagian di dunia. Walau bagaimanapun, sifat terputus-putus sumber tenaga ini memberikan cabaran besar kepada kestabilan grid. Teknologi penyimpanan tenaga, terutamanya bateri litium-ion, adalah sangat penting untuk merapatkan jurang ini dengan menyimpan lebihan tenaga yang dijana semasa waktu puncak pengeluaran dan melepaskannya apabila permintaan tinggi. Tambahan pula, menaik taraf infrastruktur grid kuasa sedia ada untuk menampung penjanaan tenaga terdesentralisasi memerlukan pelaburan awam dan swasta yang besar. Kerajaan di seluruh dunia sedang melaksanakan insentif dasar, seperti penetapan harga karbon dan subsidi cukai, untuk mempercepatkan peralihan ini. Kejayaan anjakan monumental ini akhirnya akan bergantung kepada kerjasama antarabangsa, inovasi teknologi, dan perubahan asas dalam tingkah laku pengguna mengenai penggunaan tenaga.
+ID | Transisi global ke sumber energi terbarukan bukan lagi sekadar keharusan lingkungan; itu telah menjadi kebutuhan ekonomi. Tenaga surya dan angin telah mengalami penurunan biaya yang dramatis selama dekade terakhir, menjadikannya lebih murah daripada bahan bakar fosil di banyak bagian dunia. Namun, sifat intermiten dari sumber-sumber energi ini menghadirkan tantangan signifikan bagi stabilitas jaringan. Teknologi penyimpanan energi, khususnya baterai lithium-ion, sangat penting untuk menjembatani kesenjangan ini dengan menyimpan kelebihan energi yang dihasilkan selama waktu produksi puncak dan melepaskannya saat permintaan tinggi. Selain itu, meningkatkan infrastruktur jaringan listrik yang ada untuk mengakomodasi pembangkit energi yang terdesentralisasi membutuhkan investasi publik dan swasta yang besar. Pemerintah di seluruh dunia menerapkan insentif kebijakan, seperti penetapan harga karbon dan subsidi pajak, untuk mempercepat transisi ini. Keberhasilan pergeseran monumental ini pada akhirnya akan bergantung pada kerja sama internasional, inovasi teknologi, dan perubahan mendasar dalam perilaku konsumen terkait konsumsi energi.
+ZH | 全球向可再生能源的过渡已不再仅仅是环境的迫切要求；它已经成为经济的必然选择。在过去十年中，太阳能和风能的成本急剧下降，在世界上许多地方，它们的成本已经低于化石燃料。然而，这些能源的间歇性特征对电网的稳定性提出了重大挑战。储能技术，特别是锂离子电池，对于弥合这一差距至关重要，它们能够在生产高峰期储存产生的多余能量，并在需求高涨时释放出来。此外，升级现有电网基础设施以适应分散式能源发电，需要大量的公共和私人投资。世界各国政府正在实施碳定价和税收补贴等政策激励措施，以加速这一转型。这一巨大转变的成功最终将取决于国际合作、技术创新以及消费者在能源消耗行为方面的根本改变。
+TA | புதுப்பிக்கத்தக்க எரிசக்தி ஆதாரங்களுக்கான உலகளாவிய மாற்றம் இனி சுற்றுச்சூழல் கட்டாயம் மட்டுமல்ல; அது ஒரு பொருளாதாரத் தேவையாகிவிட்டது. சூரிய மற்றும் காற்று சக்தி கடந்த தசாப்தத்தில் செலவில் வியத்தகு குறைப்புகளைக் கண்டுள்ளன, இது உலகின் பல பகுதிகளில் புதைபடிவ எரிபொருட்களை விட மலிவானது. எவ்வாறாயினும், இந்த ஆற்றல் மூலங்களின் இடைப்பட்ட தன்மை கட்டத்தின் நிலைத்தன்மைக்கு குறிப்பிடத்தக்க சவால்களை அளிக்கிறது. ஆற்றல் சேமிப்பு தொழில்நுட்பங்கள், குறிப்பாக லித்தியம்-அயன் பேட்டரிகள், உச்ச உற்பத்தி நேரங்களில் உருவாகும் அதிகப்படியான ஆற்றலைச் சேமித்து, தேவை அதிகமாக இருக்கும் போது அதை வெளியிடுவதன் மூலம் இந்த இடைவெளியைக் குறைக்க முக்கியமானவை. மேலும், பரவலாக்கப்பட்ட ஆற்றல் உற்பத்தியை இடமளிக்க, தற்போதைய மின் கட்ட கட்டமைப்பை மேம்படுத்த பெரிய பொது மற்றும் தனியார் முதலீடு தேவைப்படுகிறது. உலகெங்கிலும் உள்ள அரசாங்கங்கள் இந்த மாற்றத்தை விரைவுபடுத்துவதற்காக கார்பன் விலை நிர்ணயம் மற்றும் வரி மானியங்கள் போன்ற கொள்கை ஊக்குவிப்புகளை செயல்படுத்துகின்றன. இந்த மகத்தான மாற்றத்தின் வெற்றியானது இறுதியில் சர்வதேச ஒத்துழைப்பு, தொழில்நுட்ப கண்டுபிடிப்பு மற்றும் ஆற்றல் நுகர்வு தொடர்பான நுகர்வோர் நடத்தையில் ஒரு அடிப்படை மாற்றம் ஆகியவற்றைப் பொறுத்தது.
+MY | Cikgu, saya dan group members saya ada jumpa sikit masalah waktu nak run eksperimen biology yang cikgu suruh buat haritu. Kami dah ikut semua steps sebiji macam dalam lab manual, tapi bila sampai part nak tengok reaction chemical tu, solution tu langsung tak bertukar warna jadi biru macam yang sepatutnya. Kami syak mungkin reagent yang kami guna tu dah expired atau concentration dia tak cukup kuat. Boleh tak kalau esok pagi waktu rehat kami pergi jumpa cikgu kat bilik guru untuk tunjukkan result eksperimen kami ni? Kami takut kalau tunggu sampai kelas minggu depan nanti lambat sangat nak buat report, lagipun kami nak faham betul-betul kat mana silap kami supaya tak ulang masa exam nanti. Terima kasih cikgu.
+ID | Bu, saya dan anggota kelompok saya nemuin sedikit masalah waktu mau jalanin eksperimen biologi yang ibu suruh buat kemarin itu. Kami udah ngikutin semua langkah persis kaya di buku panduan lab, tapi pas sampai bagian mau lihat reaksi kimianya, larutannya sama sekali nggak berubah warna jadi biru kaya yang seharusnya. Kami curiga mungkin reagen yang kami pakai itu udah kedaluwarsa atau konsentrasinya kurang kuat. Boleh nggak kalau besok pagi pas jam istirahat kami pergi nemuin ibu di ruang guru buat nunjukin hasil eksperimen kami ini? Kami takut kalau nunggu sampai kelas minggu depan nanti terlalu telat buat bikin laporan, lagian kami juga pengen paham bener-bener di mana salah kami biar nggak keulang pas ujian nanti. Terima kasih bu.
+MY | Guys, I rasa kita kena start planning untuk final project dari sekarang lah sebab due date dah nak dekat gila. Kalau kita procrastinate lagi macam sem lepas, confirm kita takkan sempat siap and then kelam-kabut last minute. I suggest malam ni kita buat group call pukul 9 untuk bahagikan task masing-masing, so everyone clear apa yang dorang kena buat. You all setuju tak?
+ID | Guys, aku rasa kita harus mulai planning buat final project dari sekarang deh soalnya due date-nya udah deket banget. Kalau kita nunda-nunda lagi kaya semester lalu, confirm kita nggak bakal sempet selesai terus jadi panik di saat-saat terakhir. Aku usul nanti malam kita bikin group call jam 9 buat ngebagi tugas masing-masing, jadi semua orang jelas apa yang harus mereka kerjain. Kalian setuju nggak?
+EN | The integration of advanced machine learning algorithms into daily diagnostic procedures has provided medical professionals with an unprecedented toolkit for early disease detection. In radiology, neural networks can now identify micro-fractures, subtle tumors, and structural anomalies in MRI and CT scans with a level of precision that frequently surpasses the human eye. However, the adoption of these tools requires rigorous clinical validation to ensure that the AI models are not just hallucinating patterns based on biased training data. Moreover, physicians must be trained not just to use the software, but to understand its limitations, ensuring that artificial intelligence remains a collaborative assistant rather than a replacement for human clinical judgment.
+
+```

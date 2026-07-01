@@ -1,0 +1,10 @@
+lingua-language-detector
+langdetect
+pycld2
+fasttext
+langid
+regex
+numpy
+matplotlib
+scikit-learn
+statsmodels

@@ -1,0 +1,90 @@
+Loaded 1273 test cases from WindowsPath('C:/Users/faids/Documents/GitHub/language detection/test_dataset/test_case_7_enmyid.txt')
+
+==============================================================================================================
+BENCHMARK 1: RAM & MEMORY PROFILING
+==============================================================================================================
+Starting tracemalloc... building detector models in memory.
+
+  -> Lingua (HIGH accuracy):  0.00 MB peak RAM to build
+  -> Lingua (LOW accuracy):   0.00 MB peak RAM to build
+  -> langdetect:   loads profiles lazily — not directly measurable with tracemalloc
+  -> langid:       pure-Python model loaded at import
+  -> fasttext/OpenLID: C++ memory not visible to tracemalloc
+  -> pycld2:       compiled C++ — memory not visible to tracemalloc
+
+Loading auxiliary models...
+All models loaded.
+
+==============================================================================================================
+BENCHMARK 2: RAW PROCESSING SPEED (bucketed by word count, ms per call)
+==============================================================================================================
+Bucket         |    n |  langdetect |   lingua-low |  lingua-high |      langid |     fasttext |  openlid-v3 |       pycld2 | fastest
+-------------------------------------------------------------------------------------------------------------------------------------
+1 word         |  677 |      5.5216ms |      0.0134ms |      0.0188ms |      0.0221ms |      0.0040ms |      0.0478ms |      0.0017ms | pycld2
+2 words        |  399 |      4.5003ms |      0.0199ms |      0.0294ms |      0.0227ms |      0.0061ms |      0.0477ms |      0.0019ms | pycld2
+3-7 words      |   94 |      3.3995ms |      0.0474ms |      0.0740ms |      0.0322ms |      0.0085ms |      0.0766ms |      0.0026ms | pycld2
+8-16 words     |   73 |      2.2760ms |      0.1084ms |      0.1627ms |      0.0561ms |      0.0165ms |      0.1204ms |      0.0034ms | pycld2
+17-50 words    |   30 |      2.1027ms |      0.2364ms |      0.1553ms |      0.0853ms |      0.0246ms |      0.2435ms |      0.0063ms | pycld2
+
+==============================================================================================================
+BENCHMARK 3: ACCURACY BY BUCKET (strict exact-match scoring — no fallbacks)
+==============================================================================================================
+
+Bucket: 1 word
+  LANG  |   n | langdetect | lingua-low | lingua-high |     langid |   fasttext | openlid-v3 |     pycld2
+  EN    | 226 |      25.7% |      73.9% |      88.9% |      99.1% |      88.9% |       6.6% |       4.0%
+  MY    | 226 |       0.0% |      39.8% |      47.3% |       0.4% |       7.5% |       6.6% |       6.6%
+  ID    | 225 |      25.8% |      45.8% |      49.3% |       8.0% |      12.0% |      33.3% |      11.6%
+
+Bucket: 2 words
+  LANG  |   n | langdetect | lingua-low | lingua-high |     langid |   fasttext | openlid-v3 |     pycld2
+  EN    | 141 |      45.4% |      89.4% |      94.3% |      97.2% |      92.9% |      22.0% |      29.8%
+  MY    | 129 |       0.0% |      41.1% |      61.2% |      12.4% |      14.0% |      22.5% |      22.5%
+  ID    | 129 |      50.4% |      57.4% |      62.0% |      40.3% |      24.0% |      58.9% |      17.8%
+
+Bucket: 3-7 words
+  LANG  |   n | langdetect | lingua-low | lingua-high |     langid |   fasttext | openlid-v3 |     pycld2
+  EN    |  30 |      93.3% |      96.7% |      96.7% |     100.0% |     100.0% |      90.0% |      96.7%
+  MY    |  32 |       0.0% |      59.4% |      78.1% |      50.0% |      37.5% |      78.1% |      56.2%
+  ID    |  32 |      90.6% |      59.4% |      65.6% |      65.6% |      59.4% |      78.1% |      78.1%
+
+Bucket: 8-16 words
+  LANG  |   n | langdetect | lingua-low | lingua-high |     langid |   fasttext | openlid-v3 |     pycld2
+  EN    |  25 |     100.0% |     100.0% |     100.0% |     100.0% |     100.0% |     100.0% |     100.0%
+  MY    |  24 |       0.0% |      66.7% |      70.8% |      50.0% |      50.0% |      87.5% |      79.2%
+  ID    |  24 |     100.0% |      70.8% |      95.8% |      83.3% |      87.5% |      91.7% |      91.7%
+
+Bucket: 17-50 words
+  LANG  |   n | langdetect | lingua-low | lingua-high |     langid |   fasttext | openlid-v3 |     pycld2
+  EN    |  10 |     100.0% |     100.0% |     100.0% |     100.0% |     100.0% |     100.0% |     100.0%
+  MY    |  10 |       0.0% |      80.0% |      70.0% |      60.0% |      30.0% |      80.0% |     100.0%
+  ID    |  10 |     100.0% |      80.0% |      80.0% |      70.0% |     100.0% |      90.0% |     100.0%
+
+==============================================================================================================
+BENCHMARK 3b: ACCURACY BY LANGUAGE (all buckets combined)
+==============================================================================================================
+  LANG  |   n | langdetect | lingua-low | lingua-high |     langid |   fasttext | openlid-v3 |     pycld2
+---------------------------------------------------------------------------------------------------------
+  EN    | 432 |      42.8% |      82.6% |      92.1% |      98.6% |      91.9% |      25.0% |      26.6%
+  MY    | 421 |       0.0% |      44.2% |      55.8% |      12.1% |      14.7% |      23.3% |      21.6%
+  ID    | 420 |      44.3% |      52.6% |      57.9% |      28.1% |      25.7% |      49.3% |      25.2%
+---------------------------------------------------------------------------------------------------------
+  ALL   | 1273 |      29.1% |      60.0% |      68.8% |      46.7% |      44.5% |      32.4% |      24.5%
+
+==============================================================================================================
+BENCHMARK 4: CONFUSION MATRICES & ROC CURVES (all models)
+==============================================================================================================
+ -> Exported 'C:\Users\faids\Documents\GitHub\language detection\confusion_matrix\confusion_matrix_all_4.png'
+
+Model          |    AUC | Optimal Threshold (Youden J)
+-------------------------------------------------------
+langdetect     | 0.6586 |                       1.0000
+lingua-low     | 0.7248 |                       0.8577
+lingua-high    | 0.7417 |                       0.6009
+langid         | 0.3837 |                          inf
+fasttext       | 0.6819 |                       0.4554
+openlid-v3     | 0.7504 |                       0.9225
+pycld2         | 0.9746 |                       0.8300
+ -> Exported 'C:\Users\faids\Documents\GitHub\language detection\roc_curve\roc_curve_all_4.png'
+
+End of Benchmark Suite. All results have been logged to 'C:\Users\faids\Documents\GitHub\language detection\log\test_case_7_enmyid\final_report_benchmark.txt'.
