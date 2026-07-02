@@ -96,7 +96,7 @@ pip install -e .             # registers voting/benchmark as importable packages
 ```
 
 `models/openlid-v3.bin` (1.2 GB) is excluded from this repo via `.gitignore` — it's too large
-for a normal git push. Download it separately from [Hugging Face](https://huggingface.co/laurievb/OpenLID)
+for a normal git push. Download it separately from [Hugging Face](https://huggingface.co/HPLT/OpenLID-v3)
 and place it at `models/openlid-v3.bin` before running any `openlid-v3` scripts.
 
 ## Usage
@@ -142,6 +142,7 @@ for details. `models/openlid-v3.bin` is excluded from this repo via `.gitignore`
 - [fastText language identification](https://github.com/facebookresearch/fastText/blob/main/docs/language-identification.md) — pretrained fastText models for language ID (176 languages)
 - [langid.py](https://github.com/saffsd/langid.py) — stand-alone language identification system
 - [OpenLID](https://github.com/laurieburchell/open-lid-dataset) — fastText-based language ID model covering 201 languages, from Burchell et al., ["An Open Dataset and Model for Language Identification"](https://arxiv.org/abs/2305.13820) (2023); model weights on [Hugging Face](https://huggingface.co/laurievb/OpenLID)
+- [OpenLID-v3](https://huggingface.co/HPLT/OpenLID-v3) — the version actually used in this repo (`models/openlid-v3.bin`); trained by HPLT on OpenLID-v2, glotlid-corpus, and Wikipedia data
 
 ### Evaluation methods and metrics
 

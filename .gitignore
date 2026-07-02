@@ -5,3 +5,4 @@ __pycache__/
 .pytest_cache/
 *.egg-info/
 models/openlid-v3.bin
+models/openlid-v1.bin
