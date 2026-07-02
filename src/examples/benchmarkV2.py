@@ -334,13 +334,13 @@ print("\n")
 print("=" * 90)
 print("BENCHMARK 5: SESSION STATE MANAGEMENT (Sliding Window Integration)")
 print("=" * 90)
-print("Simulating a conversation to test how the project handles code-switching turns...\n")
-print("(Uses the lingua HIGH-accuracy detector, since this models a real the project turn.)\n")
+print("Simulating a conversation to test how the assistant handles code-switching turns...\n")
+print("(Uses the lingua HIGH-accuracy detector, since this models a real assistant turn.)\n")
 
 detector = detector_high  # alias for the session simulation below
 
 
-class projectSession:
+class ChatSession:
     def __init__(self):
         self.active_language = None
         self.foreign_language_candidate = None
@@ -368,7 +368,7 @@ class projectSession:
         # SCENARIO A: First message of the conversation (The Anchor)
         if self.active_language is None:
             self.active_language = detected_iso
-            print(f"  ACTION: Anchor Set! the project will now speak [{self.active_language}]")
+            print(f"  ACTION: Anchor Set! Assistant will now speak [{self.active_language}]")
             return self.active_language
 
         # SCENARIO B: User is speaking the expected active language
@@ -393,7 +393,7 @@ class projectSession:
 
                 # Check if we hit the Sliding Window limit!
                 if self.consecutive_turns >= self.REQUIRED_TURNS:
-                    print(f"  ACTION: SWITCHING OVERRIDE! the project changes from [{self.active_language}] to [{detected_iso}]")
+                    print(f"  ACTION: SWITCHING OVERRIDE! Assistant changes from [{self.active_language}] to [{detected_iso}]")
                     self.active_language = detected_iso
                     self.consecutive_turns = 0  # Reset
             else:
@@ -404,7 +404,7 @@ class projectSession:
 
 
 # Simulate a 7-turn conversation
-session = projectSession()
+session = ChatSession()
 
 mock_conversation = [
     "Cikgu, macam mana nak kira fraction ni?",        # Turn 1: Sets anchor to Malay

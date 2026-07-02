@@ -13,7 +13,7 @@
 # they're the closest two languages in the set, so they're the real stress
 # test of whether lingua (or langdetect) can tell priority languages apart
 # from each other, not just from English.
-# Replace these with real logged the project messages once you have a sample to pull from.
+# Replace these with real logged production messages once you have a sample to pull from.
 
 # ===================== TIER 1: SINGLE WORD (6 samples) =====================
 

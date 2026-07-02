@@ -1,6 +1,6 @@
-# Language Detection Engine Evaluation — 7-Model Benchmark & Voting Ensemble Design (the project)
+# Language Detection Engine Evaluation — 7-Model Benchmark & Voting Ensemble Design
 
-Evaluating seven language detection libraries as candidates for the core language routing engine for the project. This evaluation assesses accuracy, speed, and AUC characteristics across a 475-case stress test of highly ambiguous Southeast Asian code-switching ("Bahasa Rojak"), formal educational terminology, and micro-text. The target integration point is **Stage 2 (NLP)** of the **Perception Layer** (`app/services/perception/`).
+Evaluating seven language detection libraries as candidates for the core language routing engine of a downstream NLP pipeline. This evaluation assesses accuracy, speed, and AUC characteristics across a 475-case stress test of highly ambiguous Southeast Asian code-switching ("Bahasa Rojak"), formal educational terminology, and micro-text. The target integration point is an early NLP stage of the application's perception/language pipeline.
 
 ---
 
@@ -282,7 +282,7 @@ Estimated from confusion matrix data — 2-of-3 majority:
 
 - Run all three models in parallel (they are in-process, not network calls); total latency ≈ `lingua-high` time + negligible overhead for pycld2/langdetect.
 - `langdetect`'s `id` output for MY text is expected behaviour — do not treat it as a bug. The other two votes resolve it.
-- For the project Perception Stage 2, the ensemble output should produce a BCP-47 tag (e.g., `ms-MY`, `en-MY`, `zh-Hans`) with a `low_confidence` flag when all three disagree or when the majority confidence falls below threshold.
+- For this pipeline stage, the ensemble output should produce a BCP-47 tag (e.g., `ms-MY`, `en-MY`, `zh-Hans`) with a `low_confidence` flag when all three disagree or when the majority confidence falls below threshold.
 
 ---
 

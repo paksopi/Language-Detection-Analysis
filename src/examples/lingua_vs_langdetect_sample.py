@@ -199,6 +199,6 @@ if lingua_total > 0:
 
 print(
     "\nNote: with very few lines in test_case.txt, this mostly measures noise —\n"
-    "raise REPEATS, or better, run this against a real sample of logged the project\n"
+    "raise REPEATS, or better, run this against a real sample of logged production\n"
     "messages (hundreds+) for a number worth quoting in your write-up."
 )

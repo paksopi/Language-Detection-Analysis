@@ -295,6 +295,6 @@ plt.close()
 print(" -> Exported 'roc_curve.png' successfully.")
 
 print(f"\nMATHEMATICAL RECOMMENDATION FOR SERVER ROUTING (Youden's J):")
-print(f"Set the the project manual-review threshold to exactly: {optimal_threshold:.4f}")
+print(f"Set the manual-review threshold to exactly: {optimal_threshold:.4f}")
 print("If Lingua's confidence falls below this number, trigger the fallback mechanism.")
 print("\nEnd of Benchmark Suite. All results have been logged to log.txt.")

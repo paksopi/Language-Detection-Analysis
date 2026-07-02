@@ -4,7 +4,7 @@
 
 ## Executive Summary
 
-This report evaluates seven language detection libraries across 2,036 complex Southeast Asian text cases (`test_case_7.txt`) to design the core routing engine for the project's Perception Layer (Stage 2). Initial benchmarking identified three models—`lingua-high`, `langdetect`, and `pycld2`—that exhibited complementary failure modes. We hypothesized that a majority-vote ensemble of these three would resolve their individual weaknesses, particularly the deep ambiguity between Malay (MY) and Indonesian (ID).
+This report evaluates seven language detection libraries across 2,036 complex Southeast Asian text cases (`test_case_7.txt`) to design the core routing engine for a downstream NLP pipeline's language-detection stage. Initial benchmarking identified three models—`lingua-high`, `langdetect`, and `pycld2`—that exhibited complementary failure modes. We hypothesized that a majority-vote ensemble of these three would resolve their individual weaknesses, particularly the deep ambiguity between Malay (MY) and Indonesian (ID).
 
 However, empirical voting results replicated the structural failure seen in the earlier 475-case evaluation: while voting improved ID accuracy, it degraded MY accuracy, dropping it from 55.8% to 51.3% under hard voting and to 32.3% under soft voting. McNemar's test confirmed the MY drop under hard voting is highly significant (p < 0.0001), and Cohen's kappa again showed `langdetect`'s vote on MY text is structurally adversarial (κ = −0.0191, 18.1% agreement with `lingua-high` — worse than chance).
 
@@ -27,7 +27,7 @@ Based on these findings, we recommend deploying **Scenario 2 Weighted Voting (`l
 10. [Scenario Comparison — Speed, Accuracy & Complexity](#10-scenario-comparison--speed-accuracy--complexity)
 11. [Methodology Notes](#11-methodology-notes)
 12. [Limitations and Threats to Validity](#12-limitations-and-threats-to-validity)
-13. [Integration Notes for the project](#13-integration-notes-for-project-v2)
+13. [Integration Notes for Downstream Deployment](#13-integration-notes-for-downstream-deployment)
 
 ---
 
@@ -346,7 +346,7 @@ There is no single winner across all three axes:
 * **Scenario 1 (Two-Stage, weighted)** wins on **the accuracy metric that matters most for this evaluation (MY protection)** and on **deployment simplicity** (2.3 MB, no extra asset pipeline, fast cold start). Its weakness — `langdetect`'s per-call latency — is, in absolute terms, still under 4 ms, unlikely to matter for a Stage-2 perception service that is not p99-latency-critical at the microsecond level.
 * **Scenario 2 (weighted)** wins on **raw per-request throughput** (17–73× lower steady-state latency) and on **overall/ID accuracy**, but at the cost of a 1.2 GB model artifact, ~4× slower cold start, extra preprocessing/mapping code, and materially weaker MY protection than Scenario 1's two-stage design.
 
-**Recommendation:** We recommend **Scenario 2 Weighted Voting (`lingua-high` + `openlid-v3` + `pycld2`)** as the primary architecture for the project's Stage-2 Perception Layer. It wins on overall accuracy (81.7%), ID accuracy (76.0%), and per-request latency (17–73× lower than Scenario 1 once the process is warm), and its architecture is simpler to build and maintain — a single-stage vote with no Stage-1/Stage-2 routing logic required, since `openlid-v3` (unlike `langdetect`) shares a full output space with the other voters.
+**Recommendation:** We recommend **Scenario 2 Weighted Voting (`lingua-high` + `openlid-v3` + `pycld2`)** as the primary architecture for a downstream NLP pipeline's language-detection stage. It wins on overall accuracy (81.7%), ID accuracy (76.0%), and per-request latency (17–73× lower than Scenario 1 once the process is warm), and its architecture is simpler to build and maintain — a single-stage vote with no Stage-1/Stage-2 routing logic required, since `openlid-v3` (unlike `langdetect`) shares a full output space with the other voters.
 
 The 1.2 GB model artifact and ~4× slower cold start (§10.1, §10.3) are real, one-time operational costs, but for a long-lived, in-process service they are paid once at deployment/restart rather than per request — a reasonable trade for a 17–73× steady-state latency win. The more consequential tradeoff is accuracy-side: Scenario 2's MY accuracy (43.7%) is materially below `lingua-high` alone (55.8%) and below every Scenario 1 two-stage variant (best: 56.5%). This should be mitigated operationally — flag low-confidence MY/ID predictions for downstream context-gathering, per §13 — and revisited if production data shows the MY gap causing real harm. In that case, **Scenario 1 Two-Stage Weighted** (56.5% MY, 81.4% ALL) is the immediate fallback, and a `lingua-high` + `openlid-v3`-only Stage 2 (dropping `pycld2`, untested here but motivated by `openlid-v3`'s strong individual ID accuracy of 79.3% and genuine MY diversity from `lingua-high`, κ=0.2218, §7) is worth building as a possible best-of-both option before reintroducing `langdetect`.
 
@@ -370,8 +370,8 @@ When `langdetect` was forced to vote on Malay text, it broke both assumptions si
 
 ---
 
-## 13. Integration Notes for the project
-* **Placement:** Implement the ensemble inside `app/services/perception/` (Stage 2 NLP).
+## 13. Integration Notes for Downstream Deployment
+* **Placement:** Implement the ensemble as an early stage of the application's NLP/perception pipeline.
 * **Execution:** Run the three models (`lingua-high`, `openlid-v3`, `pycld2`) in parallel, as they are in-process memory calls. Per-call latency for `lingua-high` and `openlid-v3` stays under 0.2 ms even on longer text buckets, easily satisfying standard async pipeline requirements. Ensure `openlid-v3.bin` (1.2 GB) is loaded once at process startup, not per-request — cold-start load time is ~1.5 s (§10.1).
 * **Micro-Text & MY/ID Handling:** The models peak at ~47–56% accuracy for single-word MY/ID inputs, and Scenario 2's MY accuracy (43.7% overall) is a known weak point relative to `lingua-high` alone (55.8%, §10.2). Unconditionally flag any 1-word MY or ID predictions — and any MY prediction generally — with a `low_confidence` tag to trigger downstream context-gathering. Track MY-specific accuracy in production; if it proves too weak in practice, fall back to Scenario 1 Two-Stage Weighted (§9).
 * **Output Mapping:** Ensure the resulting majority consensus maps cleanly to a BCP-47 tag (e.g., `ms-MY`, `id-ID`, `en-MY`, `zh-Hans`) before passing it to subsequent processing layers.

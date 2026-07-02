@@ -4,7 +4,7 @@
 
 ## Executive Summary
 
-This report evaluates seven language detection libraries across 475 complex Southeast Asian text cases to design the core routing engine for the project's Perception Layer (Stage 2). Initial benchmarking identified three models—`lingua-high`, `langdetect`, and `pycld2`—that exhibited complementary failure modes. We hypothesized that a majority-vote ensemble of these three would resolve their individual weaknesses, particularly the deep ambiguity between Malay (MY) and Indonesian (ID).
+This report evaluates seven language detection libraries across 475 complex Southeast Asian text cases to design the core routing engine for a downstream NLP pipeline's language-detection stage. Initial benchmarking identified three models—`lingua-high`, `langdetect`, and `pycld2`—that exhibited complementary failure modes. We hypothesized that a majority-vote ensemble of these three would resolve their individual weaknesses, particularly the deep ambiguity between Malay (MY) and Indonesian (ID).
 
 However, empirical voting results revealed a structural failure: while voting improved ID accuracy, it significantly degraded MY accuracy, dropping it from 65.3% to 58.9% under hard voting. Rigorous diagnosis using McNemar's significance testing, Cohen's kappa, and calibration analysis proved this degradation was not random noise. The root cause was `langdetect`'s lack of a Malay profile; it deterministically cast an overconfident "proxy" vote for Indonesian on every Malay text, structurally biasing the election and overriding `lingua-high`'s correct predictions.
 
@@ -26,7 +26,7 @@ Based on these findings, we recommend deploying **Scenario 2 Hard Voting (`lingu
 9. [Master Summary Table & Final Recommendation](#9-master-summary-table--final-recommendation)
 10. [Methodology Notes](#10-methodology-notes)
 11. [Limitations and Threats to Validity](#11-limitations-and-threats-to-validity)
-12. [Integration Notes for the project](#12-integration-notes-for-project-v2)
+12. [Integration Notes for Downstream Deployment](#12-integration-notes-for-downstream-deployment)
 
 ---
 
@@ -284,8 +284,8 @@ When `langdetect` was forced to vote on Malay text, it broke both assumptions si
 
 ---
 
-## 12. Integration Notes for the project
-* **Placement:** Implement the ensemble inside `app/services/perception/` (Stage 2 NLP).
+## 12. Integration Notes for Downstream Deployment
+* **Placement:** Implement the ensemble as an early stage of the application's NLP/perception pipeline.
 * **Execution:** Run the three models (`lingua-high`, `openlid-v3`, `pycld2`) in parallel, as they are in-process memory calls. Total latency will be bottlenecked by `lingua-high` (~0.07 ms) and `openlid-v3` (~0.15 ms), which easily satisfies standard async pipeline requirements.
 * **Micro-Text Handling:** The models peak at ~56–66% accuracy for single-word MY/ID inputs. Unconditionally flag any 1-word MY or ID predictions with a `low_confidence` tag to trigger downstream context-gathering.
 * **Output Mapping:** Ensure the resulting majority consensus maps cleanly to a BCP-47 tag (e.g., `ms-MY`, `id-ID`, `en-MY`, `zh-Hans`) before passing it to subsequent processing layers.
