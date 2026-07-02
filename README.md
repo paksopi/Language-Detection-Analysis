@@ -1,5 +1,6 @@
 # Language Detection Engine Evaluation
 
+[![tests](https://github.com/paksopi/Language-Detection-Analysis/actions/workflows/tests.yml/badge.svg)](https://github.com/paksopi/Language-Detection-Analysis/actions/workflows/tests.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)
 
