@@ -4,6 +4,56 @@ A proof-of-concept comparing language-detection engines — **lingua**, **langde
 **pycld2**, **fasttext**, and **langid** — on short-text EN / MS / ID (English / Malay /
 Indonesian) classification, and combining them into a weighted voting ensemble.
 
+## Dataset
+
+The main evaluation dataset is `data/test_case_7_enmyid.txt` — 1,273 English/Malay/Indonesian
+cases in `LANG | text` format, filtered from the 5-language `test_case_7.txt` (2,036 cases,
+which also includes Chinese and Tamil). Cases are organized into five word-count buckets so
+accuracy and speed can be measured per bucket per language, not just overall:
+
+| Bucket | n | Description |
+|---|---|---|
+| 1 word | 677 | 50% shared/formal roots (stress-tests EN/MY/ID ambiguity), 50% exclusive/colloquial (tests distinct dialect routing) |
+| 2 words | 399 | Same 50/50 shared-root / colloquial split as bucket 1 |
+| 3–7 words | 94 | Authentic Bahasa Rojak, code-switching patterns |
+| 8–16 words | 73 | Localized slang, multi-word educational phrases |
+| 17–50 words | 30 | Full sentences, educational content, paragraphs |
+
+Earlier, smaller test cases (`test_case_1.txt` through `test_case_6.txt`) are kept in `data/`
+for history — see the archived reports in `reports/archive/` for the runs that used them. Labels
+are scored as exact-match [BCP 47](https://www.rfc-editor.org/info/bcp47) codes (`en`, `ms`, `id`).
+
+## Results
+
+Evaluated on 1,273 EN/MY/ID short-text cases (`test_case_7_enmyid.txt`). Current production
+baseline (`langdetect` alone) scores **29.1%** overall accuracy and cannot detect Malay at all
+(0.0% MY). The recommended **Scenario 2 Weighted Voting** ensemble (`lingua-high` + `openlid-v3`
++ `pycld2`) reaches **70.8%** overall accuracy — **+41.7 pp** — while running 8.6–115.5× faster
+per call.
+
+| Strategy | Ensemble | EN | MY | ID | ALL |
+|---|---|---|---|---|---|
+| langdetect (current production) | — | 42.8% | 0.0% | 44.3% | 29.1% |
+| lingua-high (individual) | — | 92.1% | 55.8% | 57.9% | 68.8% |
+| S1 two_stage_weighted | ld+li+py (2-stage) | 92.4% | **56.5%** | 61.4% | 70.3% |
+| **S2 weighted (recommended)** | ol+li+py | 92.1% | 43.7% | **76.0%** | **70.8%** |
+
+### Speed & complexity (Scenario 1 vs. Scenario 2)
+
+Scenario 2 (recommended) wins on steady-state latency but costs more to deploy:
+
+| Dimension | S1 (`lingua`+`langdetect`+`pycld2`) | S2 (`lingua`+`openlid-v3`+`pycld2`) |
+|---|---|---|
+| Per-request latency (1-word text) | 5.5216 ms | 0.0478 ms (**115.5× faster**) |
+| Per-request latency (17–50 words) | 2.1027 ms | 0.2435 ms (**8.6× faster**) |
+| Model artifact size | ~2.3 MB | **1.2 GB** (`openlid-v3.bin`) |
+| Cold-start load time | ~0.242 s | ~1.155 s (~4.8× slower) |
+| Routing logic needed | Two-stage voting required to protect MY accuracy | Single-stage vote, no routing |
+
+Since detection runs synchronously before any downstream NLP stage, per-request latency dominates
+in production; the 1.2 GB artifact and slower cold start are one-time costs paid at deploy/restart,
+not per request. Full breakdown in [§10 of the report](reports/language_detection_ensemble_evaluation.md#10-scenario-comparison--speed-accuracy--complexity).
+
 ## Layout
 
 All code lives under `src/`, grouped by purpose:
