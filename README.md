@@ -1,5 +1,8 @@
 # Language Detection Engine Evaluation
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)
+
 A proof-of-concept comparing language-detection engines — **lingua**, **langdetect**,
 **pycld2**, **fasttext**, and **langid** — on short-text EN / MS / ID (English / Malay /
 Indonesian) classification, and combining them into a weighted voting ensemble.
@@ -38,6 +41,12 @@ per call.
 | S1 two_stage_weighted | ld+li+py (2-stage) | 92.4% | **56.5%** | 61.4% | 70.3% |
 | **S2 weighted (recommended)** | ol+li+py | 92.1% | 43.7% | **76.0%** | **70.8%** |
 
+![ROC curves for all seven models](results/roc_curve/roc_curve_all_1.png)
+
+`pycld2` is the most discriminative single model by AUC (0.97), but its raw accuracy alone is
+low (§1 of the report) — it needs the other voters to convert that discriminative power into
+correct calls. Full ROC methodology in [§1.5 of the report](reports/language_detection_ensemble_evaluation.md#15-roc-auc-analysis).
+
 ### Speed & complexity (Scenario 1 vs. Scenario 2)
 
 Scenario 2 (recommended) wins on steady-state latency but costs more to deploy:
@@ -68,7 +77,6 @@ All code lives under `src/`, grouped by purpose:
 | `data/` | Test-case text files used as evaluation input |
 | `results/` | Generated artifacts: `logs/`, `logs_scenario2/`, `calibration/`, `confusion_matrix/`, `roc_curve/` — all reproducible by re-running the scripts above |
 | `reports/` | Written analysis of results — see [`reports/language_detection_ensemble_evaluation.md`](reports/language_detection_ensemble_evaluation.md) for the current canonical report. Superseded drafts/earlier runs live in `reports/archive/`. |
-| `docs/reference/` | Background reference material from a separate, unrelated project — **not** documentation of this repo. See [`docs/reference/README.md`](docs/reference/README.md). |
 | `tests/` | Unit tests (pytest) for the pure, model-free functions in `src/voting/core.py` |
 
 ## Setup
