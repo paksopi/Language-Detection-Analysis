@@ -94,6 +94,10 @@ pip install -r requirements.txt
 pip install -e .             # registers voting/benchmark as importable packages
 ```
 
+`models/openlid-v3.bin` (1.2 GB) is excluded from this repo via `.gitignore` — it's too large
+for a normal git push. Download it separately from [Hugging Face](https://huggingface.co/laurievb/OpenLID)
+and place it at `models/openlid-v3.bin` before running any `openlid-v3` scripts.
+
 ## Usage
 
 Run the main benchmark:
@@ -116,6 +120,16 @@ Scripts write logs/plots into `results/`, keyed by test case, and default to
 ```bash
 python -m pytest tests/
 ```
+
+## Model attribution
+
+`models/lid.176.ftz` is Facebook/Meta's pretrained fastText language-identification model,
+redistributed here unmodified. It is licensed under
+[CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/), trained on data from
+Wikipedia, Tatoeba, and SETimes. See [fastText's language-identification
+docs](https://github.com/facebookresearch/fastText/blob/main/docs/language-identification.md)
+for details. `models/openlid-v3.bin` is excluded from this repo via `.gitignore` (see
+[Setup](#setup)) and is not redistributed here.
 
 ## References
 
