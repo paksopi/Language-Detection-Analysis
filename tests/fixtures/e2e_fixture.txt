@@ -1,0 +1,22 @@
+# tests/fixtures/e2e_fixture.txt — hand-picked subset of data/test_case_7_enmyid.txt
+# (bucket "3-7 words", the same three colloquial-phrasing questions asked in EN/MY/ID)
+# used by tests/test_pipeline_e2e.py to exercise the full S1/S2 voting pipelines,
+# not just the pure functions in src/voting/core.py.
+EN | Wait what's photosynthesis exactly tbh?
+EN | Can you explain osmosis again?
+EN | I literally don't get derivatives.
+EN | Why do cells divide anyway?
+EN | How do enzymes speed up reactions?
+EN | Quadratic formula is so hard bro.
+MY | Fotosintesis tu menatang apa do sebenarnya?
+MY | Boleh cikgu terangkan balik pasal osmosis?
+MY | Pening r tak faham bab pembezaan.
+MY | Kenapa sel kena membahagi camtu ek?
+MY | Camne enzim boleh lajukan tindak balas?
+MY | Formula kuadratik ni susah gila weh.
+ID | Fotosintesis itu apaan sih sebenernya?
+ID | Bisa ibu jelasin ulang soal osmosis?
+ID | Pusing nih nggak ngerti turunan sama sekali.
+ID | Kenapa sel harus ngebelah kayak gitu?
+ID | Gimana enzim bisa percepat reaksi kimia?
+ID | Rumus kuadrat ini susah banget sumpah.

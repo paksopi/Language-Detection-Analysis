@@ -84,15 +84,15 @@ All code lives under `src/`, grouped by purpose:
 
 | Folder | Contents |
 |---|---|
-| `src/voting/` | Core voting-ensemble logic and evaluation scripts (accuracy, kappa, AUC, reproducibility, two-stage voting) |
-| `src/voting/scenario2/` | A second voting scenario variant (`voting_s2*.py`), built on `src/voting/core.py` |
-| `src/benchmark/` | Single-engine benchmark script producing confusion matrices and ROC curves |
+| `src/voting/` | Core voting-ensemble logic and evaluation scripts (accuracy, kappa, AUC, reproducibility, two-stage voting) for Scenario 1 (`lingua-high`+`langdetect`+`pycld2`) |
+| `src/voting/strategies/` | Scenario 2 (`lingua-high`+`openlid-v3`+`pycld2`) voting logic, organized by technique: `hard.py`, `soft.py`, `weighted.py`, `two_stage.py`, plus the `run_s2_*.py` report-generation scripts. Formerly `src/voting/scenario2/` — see the module docstring in `src/voting/strategies/__init__.py` for the old-name → new-name mapping used by the report's "S1"/"S2" terminology |
+| `src/benchmark/` | Single-engine benchmark script producing confusion matrices and ROC curves; also `reweight_by_real_distribution.py`, which recomputes reported accuracy under a different query-length distribution than the test set's own bucket mix |
 | `src/examples/` | Earlier standalone demo/comparison scripts (lingua vs. langdetect, iterative versions) — kept for history, not part of the main pipeline |
 | `models/` | Pretrained language-ID model binaries (`lid.176.ftz`, `openlid-v3.bin`) |
 | `data/` | Test-case text files used as evaluation input |
-| `results/` | Generated artifacts: `logs/`, `logs_scenario2/`, `calibration/`, `confusion_matrix/`, `roc_curve/` — all reproducible by re-running the scripts above |
+| `results/` | Generated artifacts: `logs/`, `logs_scenario2/` (Scenario 2 output; directory name predates the `strategies/` rename and is left as-is since it's just generated data), `calibration/`, `confusion_matrix/`, `roc_curve/` — all reproducible by re-running the scripts above |
 | `reports/` | Written analysis of results — see [`reports/language_detection_ensemble_evaluation.md`](reports/language_detection_ensemble_evaluation.md) for the current canonical report. Superseded drafts/earlier runs live in `reports/archive/`. |
-| `tests/` | Unit tests (pytest) for the pure, model-free functions in `src/voting/core.py` |
+| `tests/` | Pytest suite: unit tests for the pure, model-free functions in `src/voting/core.py`, plus one end-to-end test that runs a small fixture dataset through the full S1 and S2 pipelines — see [Tests](#tests) below for exactly what the CI badge does and doesn't cover |
 
 ## Setup
 
@@ -135,6 +135,19 @@ Scripts write logs/plots into `results/`, keyed by test case, and default to
 ```bash
 python -m pytest tests/
 ```
+
+**What the `tests` CI badge actually validates** (`.github/workflows/tests.yml` runs this same
+command on Ubuntu, Python 3.12, on every push/PR to `main`):
+
+| Coverage | What it checks | What it does NOT check |
+|---|---|---|
+| `tests/test_core.py` | Pure, model-free functions in `src/voting/core.py` — bucketing, vote-counting arithmetic, path numbering, accuracy aggregation | Never loads a real model; doesn't touch the actual voting/scoring pipeline |
+| `tests/test_pipeline_e2e.py` | Runs `tests/fixtures/e2e_fixture.txt` (18 hand-labeled cases) through the **real S1 pipeline** (`lingua-high`+`langdetect`+`pycld2`) and, when `models/openlid-v3.bin` is present, the **real S2 pipeline** (`lingua-high`+`openlid-v3`+`pycld2`); asserts accuracy stays within an expected range | Not a re-validation of the report's 1,273-case statistical findings — it's a regression guard against pipeline-wiring bugs (broken imports, wrong argument order, a vote function silently returning `"unknown"`). The **S2 half is skipped in CI**, because `models/openlid-v3.bin` (1.2 GB) is excluded via `.gitignore` and not fetched by the workflow — CI only ever exercises the S1 half of this file |
+
+In short: passing CI means the vote-counting logic and the S1 pipeline wiring are intact. It does
+**not** mean the 70.8%/56.5%/etc. accuracy figures in the report have been re-verified — those
+come from the one-off scripts in `src/voting/` and `src/voting/strategies/` run manually against
+the full dataset, not from anything CI runs automatically.
 
 ## Model attribution
 

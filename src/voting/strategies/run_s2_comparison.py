@@ -1,14 +1,17 @@
 """
-voting_scenario2/voting_s2.py
+voting/strategies/run_s2_comparison.py — formerly voting/scenario2/voting_s2.py.
 Scenario 2: replace langdetect with openlid-v3.
 Ensemble: lingua-high + openlid-v3 + pycld2
 
 Compares against Scenario 1 (lingua-high + langdetect + pycld2) inline.
-Writes all output to voting_scenario2/log_s2_N.txt
+Writes all output to results/logs_scenario2/test_case_7_enmyid/final_report_s2_N.txt
+
+hard_vote_3 / soft_vote_3 / weighted_vote_3 and the S1_WEIGHTS/S2_WEIGHTS live in
+voting.strategies.hard / .soft / .weighted (see voting/strategies/__init__.py for the
+old-name -> new-name mapping).
 """
 
 import sys
-import regex
 import numpy as np
 from collections import defaultdict
 
@@ -23,6 +26,10 @@ from voting.core import (
     ROOT, TARGET_LANGS, LANGUAGE_ORDER, BUCKET_ORDER, LINGUA_LANGS,
     load_dataset, lingua_probs, langdetect_probs, pycld2_probs, pick_top,
 )
+from voting.strategies import openlid_probs
+from voting.strategies.hard import hard_vote_3
+from voting.strategies.soft import soft_vote_3
+from voting.strategies.weighted import weighted_vote_3, S1_WEIGHTS, S2_WEIGHTS
 
 # ── Paths ──────────────────────────────────────────────────────────────────────
 OUT_DIR    = ROOT / "results" / "logs_scenario2" / "test_case_7_enmyid"
@@ -40,29 +47,6 @@ class Logger:
     def flush(self):     self.terminal.flush();  self.log.flush()
 
 sys.stdout = Logger(LOG_PATH)
-
-# ── Constants ──────────────────────────────────────────────────────────────────
-# TARGET_LANGS, LANGUAGE_ORDER, BUCKET_ORDER, LINGUA_LANGS come from voting.core (shared
-# with Scenario 1) so both scenarios always evaluate against the same language set.
-
-# OpenLID FLORES-200 -> ISO mapping (strict — only confirmed mappings)
-OPENLID_TO_ISO = {
-    "eng_Latn": "en",
-    "zsm_Latn": "ms",
-    "msa_Latn": "ms",
-    "ind_Latn": "id",
-    "zho_Hans": "zh",
-    "zho_Hant": "zh",
-    "cmn_Hans": "zh",   # Mandarin Chinese (simplified) — FLORES-200 variant
-    "cmn_Hant": "zh",
-    "tam_Taml": "ta",
-}
-
-# AUC weights (from log_combined_3.txt strict scoring)
-# Scenario 1 (for comparison)
-S1_WEIGHTS = {"lingua": 0.8503, "model2": 0.7516, "pycld2": 0.9634}
-# Scenario 2
-S2_WEIGHTS = {"lingua": 0.8503, "model2": 0.7097, "pycld2": 0.9634}
 
 SEP = "=" * 105
 
@@ -85,61 +69,6 @@ print("  langdetect   : ready (lazy, seed=0)  [Scenario 1 comparison]")
 print("  pycld2       : ready (compiled C++)")
 print("All models loaded.\n")
 
-# ── OpenLID preprocessor ───────────────────────────────────────────────────────
-_NONWORD = regex.compile(r"[^\p{Word}\p{Zs}]|\d")
-_SPACES  = regex.compile(r"\s\s+")
-
-def preprocess_openlid(text):
-    text = text.strip().replace("\n", " ").lower()
-    text = _SPACES.sub(" ", text)
-    text = _NONWORD.sub("", text)
-    return text
-
-def openlid_label_to_iso(label):
-    code = label.replace("__label__", "")
-    return OPENLID_TO_ISO.get(code, "unknown")
-
-# ── Probability functions ──────────────────────────────────────────────────────
-# lingua_probs, langdetect_probs, pycld2_probs come from voting.core (shared with
-# Scenario 1). Only openlid_probs is unique to this scenario.
-def openlid_probs(text):
-    """Return {iso: prob} from openlid-v3. Uses top-20 FLORES-200 predictions."""
-    probs = {l: 0.0 for l in TARGET_LANGS}
-    processed = preprocess_openlid(text)
-    if not processed.strip():
-        return probs
-    try:
-        labels, scores = openlid_model.predict(processed, k=20)
-        for label, score in zip(labels, scores):
-            iso = openlid_label_to_iso(label)
-            if iso in probs:
-                probs[iso] += float(score)
-    except Exception:
-        pass
-    return probs
-
-# ── Voting strategies (generic — works for both scenarios) ─────────────────────
-def hard_vote_3(p1, p2, p3, tiebreak_pred):
-    votes = defaultdict(int)
-    for p in [p1, p2, p3]:
-        if p and p != "unknown": votes[p] += 1
-    if not votes: return "unknown"
-    top_v = max(votes.values())
-    winners = [l for l, v in votes.items() if v == top_v]
-    return tiebreak_pred if tiebreak_pred in winners else winners[0]
-
-def soft_vote_3(pa, pb, pc):
-    combined = {l: (pa.get(l, 0.0) + pb.get(l, 0.0) + pc.get(l, 0.0)) / 3
-                for l in TARGET_LANGS}
-    return max(combined, key=combined.get)
-
-def weighted_vote_3(pa, pb, pc, weights):
-    combined = {l: pa.get(l, 0.0) * weights["lingua"] +
-                   pb.get(l, 0.0) * weights["model2"] +
-                   pc.get(l, 0.0) * weights["pycld2"]
-                for l in TARGET_LANGS}
-    return max(combined, key=combined.get)
-
 # ── Run predictions for both scenarios ────────────────────────────────────────
 print("Running predictions for both scenarios (this takes ~5-10 min due to langdetect)...")
 s1_results = []   # lingua + langdetect + pycld2
@@ -149,7 +78,7 @@ for i, case in enumerate(cases):
     text = case["text"]
     lp   = lingua_probs(detector, text)
     dp   = langdetect_probs(text)
-    op   = openlid_probs(text)
+    op   = openlid_probs(openlid_model, text)
     cp   = pycld2_probs(text)
 
     l_pred = pick_top(lp)
