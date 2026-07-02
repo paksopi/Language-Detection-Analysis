@@ -17,7 +17,7 @@ All code lives under `src/`, grouped by purpose:
 | `models/` | Pretrained language-ID model binaries (`lid.176.ftz`, `openlid-v3.bin`) |
 | `data/` | Test-case text files used as evaluation input |
 | `results/` | Generated artifacts: `logs/`, `logs_scenario2/`, `calibration/`, `confusion_matrix/`, `roc_curve/` — all reproducible by re-running the scripts above |
-| `reports/` | Written analysis of results — see [`reports/FINAL_REPORT.md`](reports/FINAL_REPORT.md) for the current canonical report. Superseded drafts/earlier runs live in `reports/archive/`. |
+| `reports/` | Written analysis of results — see [`reports/language_detection_ensemble_evaluation.md`](reports/language_detection_ensemble_evaluation.md) for the current canonical report. Superseded drafts/earlier runs live in `reports/archive/`. |
 | `docs/reference/` | Background reference material from a separate, unrelated project — **not** documentation of this repo. See [`docs/reference/README.md`](docs/reference/README.md). |
 | `tests/` | Unit tests (pytest) for the pure, model-free functions in `src/voting/core.py` |
 

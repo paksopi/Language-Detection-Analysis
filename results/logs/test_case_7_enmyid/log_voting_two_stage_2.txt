@@ -1,0 +1,172 @@
+Log: C:\Users\faids\Documents\PersonalGitHub\language detection\results\logs\test_case_7_enmyid\log_voting_two_stage_2.txt
+Loading lingua-high detector...
+Loaded 1273 total cases.
+====================================================================================================
+OBJECTIVE 5 — DEV/TEST SPLIT & LEAKAGE CHECK
+====================================================================================================
+
+WEIGHTS in voting.py are derived from the same full dataset used to
+evaluate voting accuracy — a circular evaluation.
+Fix: stratified 60/40 split. Dev set (60%) → compute per-model AUC → derive
+weights. Held-out test set (40%) → report final voting accuracy using dev weights.
+Compare "honest" held-out numbers to the leaked-weight numbers.
+Library: sklearn.model_selection.train_test_split (stratify=language_label)
+
+Dev set:  763  cases (152 per language)
+Test set: 510 cases (102 per language)
+
+Stratification check:
+  EN: dev=259  test=173
+  MY: dev=252  test=169
+  ID: dev=252  test=168
+
+Running dev set predictions...
+Running test set predictions...
+Done.
+
+Dev-set AUC (macro OVR):
+  lingua-high:  0.8620  (global: 0.8503)
+  langdetect:   0.6233  (global: 0.7516)
+  pycld2:       0.6142  (global: 0.9634)
+
+Evaluating on held-out test set with dev-derived weights...
+
+Leakage Check — Test Set Accuracy (n=510)
+  Strategy                       Accuracy
+  ---------------------------- ----------
+  lingua-high (test)                69.8%
+  langdetect  (test)                33.3%
+  pycld2      (test)                24.1%
+  hard vote (test)                  69.4%
+  soft vote (test)                  65.7%
+  weighted-global (test)            67.1%  ← weights from full dataset
+  weighted-dev (test)               65.5%  ← weights from dev set only (honest)
+
+  Overfitting gap (dev-wt vs global-wt): -1.57 pp
+  A gap near 0 means the global AUC weights did NOT materially overfit.
+
+Per-language test accuracy:
+  LANG  |   n |      lingua-high |             hard |             soft |        wt-global |           wt-dev
+------------------------------------------------------------------------------------------------------------
+  EN    | 173 |            92.5% |            92.5% |            91.9% |            91.9% |            91.9%
+  MY    | 169 |            54.4% |            48.5% |            30.8% |            36.1% |            30.2%
+  ID    | 168 |            61.9% |            66.7% |            73.8% |            72.6% |            73.8%
+------------------------------------------------------------------------------------------------------------
+  ALL   | 510 |            69.8% |            69.4% |            65.7% |            67.1% |            65.5%
+
+====================================================================================================
+OBJECTIVE 6 — TWO-STAGE VOTING
+====================================================================================================
+
+DESIGN:
+  Stage 1 (all 3 models):
+    Collapse ms → MSID, id → MSID in each model's output.
+    Hard vote on the coarse classes {en, MSID, zh, ta}.
+    langdetect's 'id' output for Malay text counts as MSID — structurally valid.
+    If result is en/zh/ta → final answer.
+    If result is MSID    → trigger Stage 2.
+
+  Stage 2 (lingua-high + pycld2 only, langdetect excluded):
+    (a) two_stage_agree : if both agree on ms/id → use that;
+        if disagree → use model with higher confidence for its ms/id prediction.
+    (b) two_stage_weighted : multiply each model's ms/id probability by
+        per-class accuracy weight derived from the dev set (MY accuracy for
+        the ms vote, ID accuracy for the id vote).
+        score_ms = lingua_p['ms'] * w_l_ms + cld2_p['ms'] * w_c_ms
+        score_id = lingua_p['id'] * w_l_id + cld2_p['id'] * w_c_id
+
+RATIONALE:
+  langdetect can never output 'ms', so including it in Stage 2 always adds a
+  biased vote for 'id'. Excluding it from Stage 2 removes this structural bias.
+
+Stage 2 per-class weights (from dev set):
+  lingua-high  MY accuracy: 0.5675  (weight for lingua 'ms' score)
+  lingua-high  ID accuracy: 0.5516  (weight for lingua 'id' score)
+  pycld2       MY accuracy: 0.2183  (weight for pycld2 'ms' score)
+  pycld2       ID accuracy: 0.2659  (weight for pycld2 'id' score)
+
+Applying two-stage voting to full 1273-case dataset...
+
+TWO-STAGE RESULTS — FULL DATASET (n=1273)
+Reference: 3-model hard vote, 3-model soft vote
+
+  LANG  |   n |     lingua-high |         3m-hard |         3m-soft |        2s-agree |     2s-weighted
+-------------------------------------------------------------------------------------------------------
+  EN    | 432 |           92.1% |           92.4% |           91.7% |           92.4% |           92.4%
+  MY    | 421 |           55.8% |           51.3% |           32.3% |           53.9% |           56.5%
+  ID    | 420 |           57.9% |           63.1% |           74.3% |           64.0% |           61.4%
+-------------------------------------------------------------------------------------------------------
+  ALL   | 1273 |           68.8% |           69.1% |           66.3% |           70.3% |           70.3%
+
+TWO-STAGE — MY and ID ACCURACY BY BUCKET
+
+  Focus: MY
+    BUCKET       |   n |    lingua-high |        3m-hard |        3m-soft |       2s-agree |        2s-wgtd
+    -------------------------------------------------------------------------------------------------------
+    1 word       | 226 |          47.3% |          43.4% |          27.4% |          42.9% |          46.0%
+    2 words      | 129 |          61.2% |          57.4% |          30.2% |          58.9% |          61.2%
+    3-7 words    |  32 |          78.1% |          68.8% |          40.6% |          81.2% |          84.4%
+    8-16 words   |  24 |          70.8% |          62.5% |          62.5% |          83.3% |          83.3%
+    17-50 words  |  10 |          70.0% |          70.0% |          70.0% |          80.0% |          80.0%
+
+  Focus: ID
+    BUCKET       |   n |    lingua-high |        3m-hard |        3m-soft |       2s-agree |        2s-wgtd
+    -------------------------------------------------------------------------------------------------------
+    1 word       | 225 |          49.3% |          52.0% |          63.1% |          53.8% |          50.7%
+    2 words      | 129 |          62.0% |          65.9% |          80.6% |          65.9% |          64.3%
+    3-7 words    |  32 |          65.6% |          90.6% |         100.0% |          90.6% |          90.6%
+    8-16 words   |  24 |          95.8% |         100.0% |         100.0% |         100.0% |         100.0%
+    17-50 words  |  10 |          80.0% |         100.0% |         100.0% |         100.0% |          80.0%
+
+====================================================================================================
+OBJECTIVE 6 — McNEMAR'S TESTS: TWO-STAGE vs BASELINES (MY and ID focus)
+====================================================================================================
+
+Paired McNemar test on full dataset.
+Focusing on MY (the degraded class) and ID (the large-gain class).
+Testing: two_stage_agree and two_stage_weighted
+  vs lingua-high (best individual)
+  vs hard (best 3-model overall)
+
+── MY ───────────────────────────────────────────────────────────────────────────
+  Comparison                                    p-value  sig     b     c  method
+  ------------------------------------------ ----------  ---  ----  ----  ------
+  two_stage_agree vs lingua-high                 0.3020         19    27  chi2
+  two_stage_agree vs 3m-hard                     0.0543         19     8  chi2
+  two_stage_agree vs 3m-soft                     0.0000  ***    91     0  chi2
+  two_stage_wgtd vs lingua-high                  0.7835         28    25  chi2
+  two_stage_wgtd vs 3m-hard                      0.0005  ***    29     7  chi2
+  two_stage_wgtd vs 3m-soft                      0.0000  ***   103     1  chi2
+
+── ID ───────────────────────────────────────────────────────────────────────────
+  Comparison                                    p-value  sig     b     c  method
+  ------------------------------------------ ----------  ---  ----  ----  ------
+  two_stage_agree vs lingua-high                 0.0000  ***    31     5  chi2
+  two_stage_agree vs 3m-hard                     0.3877          8     4  exact
+  two_stage_agree vs 3m-soft                     0.0000  ***     3    46  chi2
+  two_stage_wgtd vs lingua-high                  0.0328    *    29    14  chi2
+  two_stage_wgtd vs 3m-hard                      0.2100          8    15  exact
+  two_stage_wgtd vs 3m-soft                      0.0000  ***     3    57  chi2
+
+====================================================================================================
+FINAL VERDICT — DOES TWO-STAGE FIX THE MY/ID PROBLEM?
+====================================================================================================
+
+MY ACCURACY SUMMARY (n=421):
+  lingua-high (individual):    235/421 = 55.8%
+  3-model hard (baseline):     216/421  = 51.3%
+  two_stage_agree:             227/421 = 53.9%
+  two_stage_weighted:          238/421 = 56.5%
+
+ID ACCURACY SUMMARY (n=420):
+  lingua-high (individual):    243/420 = 57.9%
+  3-model hard (baseline):     265/420  = 63.1%
+  two_stage_agree:             269/420 = 64.0%
+  two_stage_weighted:          258/420 = 61.4%
+
+VERDICT: Two-stage voting FIXES the MY/ID problem.
+  MY accuracy is restored to at least lingua-high individual level.
+  ID accuracy is maintained or improved.
+  Statistical backing: see McNemar tests above.
+
+Log saved: C:\Users\faids\Documents\PersonalGitHub\language detection\results\logs\test_case_7_enmyid\log_voting_two_stage_2.txt

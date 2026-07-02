@@ -1,0 +1,64 @@
+Log: C:\Users\faids\Documents\PersonalGitHub\language detection\results\logs\test_case_7_enmyid\log_reproducibility_1.txt
+Loading models (once — shared across all runs)...
+Loaded 1273 cases.
+
+================================================================================
+PART 1 — SEEDED RUNS (langdetect seed=0, N=5)
+Expected: all runs produce identical accuracy numbers.
+================================================================================
+  Run 1/5 (seeded)... overall hard=69.1%
+  Run 2/5 (seeded)... overall hard=69.1%
+  Run 3/5 (seeded)... overall hard=69.1%
+  Run 4/5 (seeded)... overall hard=69.1%
+  Run 5/5 (seeded)... overall hard=69.1%
+
+Seeded run accuracy — hard vote (should be identical across all runs):
+  Run    |     EN |     MY |     ID | ALL
+  Run 1  |  92.4% |  51.3% |  63.1% |  69.1%
+  Run 2  |  92.4% |  51.3% |  63.1% |  69.1%
+  Run 3  |  92.4% |  51.3% |  63.1% |  69.1%
+  Run 4  |  92.4% |  51.3% |  63.1% |  69.1%
+  Run 5  |  92.4% |  51.3% |  63.1% |  69.1%
+
+All seeded runs identical: YES -- reproducibility confirmed
+
+================================================================================
+PART 2 — UNSEEDED RUNS (langdetect no seed, N=5)
+Shows residual non-determinism when seed is not fixed.
+================================================================================
+  Run 1/5 (unseeded)... overall hard=68.8%
+  Run 2/5 (unseeded)... overall hard=68.8%
+  Run 3/5 (unseeded)... overall hard=68.8%
+  Run 4/5 (unseeded)... overall hard=68.8%
+  Run 5/5 (unseeded)... overall hard=68.8%
+
+Unseeded run accuracy — mean ± std across 5 runs:
+
+  Strategy: hard
+  Lang   |   Run 1 |   Run 2 |   Run 3 |   Run 4 |   Run 5 | Mean ± Std
+  EN     |   92.1% |   92.1% |   92.1% |   92.1% |   92.1% | 92.1% ± 0.0pp
+  MY     |   55.8% |   55.8% |   55.8% |   55.8% |   55.8% | 55.8% ± 0.0pp
+  ID     |   57.9% |   57.9% |   57.9% |   57.9% |   57.9% | 57.9% ± 0.0pp
+  ALL    |   68.8% |   68.8% |   68.8% |   68.8% |   68.8% | 68.8% ± 0.0pp
+
+  Strategy: soft
+  Lang   |   Run 1 |   Run 2 |   Run 3 |   Run 4 |   Run 5 | Mean ± Std
+  EN     |   92.4% |   92.4% |   92.4% |   92.4% |   92.4% | 92.4% ± 0.0pp
+  MY     |   53.4% |   53.4% |   53.4% |   53.4% |   53.4% | 53.4% ± 0.0pp
+  ID     |   64.0% |   64.0% |   64.0% |   64.0% |   64.0% | 64.0% ± 0.0pp
+  ALL    |   70.1% |   70.1% |   70.1% |   70.1% |   70.1% | 70.1% ± 0.0pp
+
+  Strategy: weighted
+  Lang   |   Run 1 |   Run 2 |   Run 3 |   Run 4 |   Run 5 | Mean ± Std
+  EN     |   92.4% |   92.4% |   92.4% |   92.4% |   92.4% | 92.4% ± 0.0pp
+  MY     |   53.9% |   53.9% |   53.9% |   53.9% |   53.9% | 53.9% ± 0.0pp
+  ID     |   64.0% |   64.0% |   64.0% |   64.0% |   64.0% | 64.0% ± 0.0pp
+  ALL    |   70.3% |   70.3% |   70.3% |   70.3% |   70.3% | 70.3% ± 0.0pp
+
+
+Summary:
+  Seeded (seed=0):  all runs are byte-identical -> use seed=0 in all scripts
+  Unseeded:         results above show the variance when seed is omitted.
+  Conclusion: fix langdetect seed=0 to guarantee reproducible benchmarks.
+
+Log saved: C:\Users\faids\Documents\PersonalGitHub\language detection\results\logs\test_case_7_enmyid\log_reproducibility_1.txt

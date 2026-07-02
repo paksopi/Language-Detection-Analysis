@@ -1,0 +1,62 @@
+Log: C:\Users\faids\Documents\PersonalGitHub\language detection\results\logs\test_case_7_enmyid\log_kappa_s2_4.txt
+Loading models...
+  lingua-high, openlid-v3, pycld2 ready.
+
+Loaded 1273 cases. Running predictions...
+Done.
+
+=====================================================================================
+SCENARIO 2 TRIO — COHEN'S KAPPA + PAIRWISE AGREEMENT
+(lingua-high + openlid-v3 + pycld2)
+=====================================================================================
+
+Library: sklearn.metrics.cohen_kappa_score
+Reference for MY: κ < 0 means the pair agrees less than chance (structural artifact).
+
+-- EN  (n=432) -------------------------------------------------------
+  Pair                               kappa   agree %  note
+  lingua-high vs openlid-v3         0.1188     62.3%  
+  openlid-v3  vs pycld2             0.1755     48.1%  
+  lingua-high vs pycld2 (ref)       0.0247     26.4%  
+
+-- MY  (n=421) -------------------------------------------------------
+  Pair                               kappa   agree %  note
+  lingua-high vs openlid-v3         0.2254     51.1%  openlid: 117 ms, 241 id for true MY
+  openlid-v3  vs pycld2             0.1844     34.4%  openlid: 117 ms, 241 id for true MY
+  lingua-high vs pycld2 (ref)       0.0551     20.4%  
+
+-- ID  (n=420) -------------------------------------------------------
+  Pair                               kappa   agree %  note
+  lingua-high vs openlid-v3         0.1342     55.0%  
+  openlid-v3  vs pycld2             0.1097     36.4%  
+  lingua-high vs pycld2 (ref)       0.0570     20.7%  
+
+-- ALL  (n=1273) -------------------------------------------------------
+  Pair                               kappa   agree %  note
+  lingua-high vs openlid-v3         0.3939     56.2%  
+  openlid-v3  vs pycld2             0.2374     39.7%  
+  lingua-high vs pycld2 (ref)       0.1407     22.5%  
+
+=====================================================================================
+OPENLID-V3 PREDICTION DISTRIBUTION PER TRUE LANGUAGE
+(shows whether errors are structurally biased like langdetect's id-for-ms)
+=====================================================================================
+
+  True lang  | pred=  en | pred=  ms | pred=  id | pred=unk
+  ---------------------------------------------------------------------------
+  EN         |      266 |        5 |       39 |     122
+  MY         |       14 |      117 |      241 |      49
+  ID         |       14 |       23 |      333 |      50
+
+COMPARISON WITH SCENARIO 1 (lingua-high + langdetect + pycld2):
+  lingua vs langdetect (MY): kappa = -0.0191, agreement 18.1%  (see voting_stats.py Objective 3)
+    -> langdetect has 0 ms predictions for true MY (fully structural)
+  lingua vs openlid   (MY): see table above
+    -> if kappa > -0.05 and openlid outputs some ms, it is a better voter
+
+KEY QUESTION: Does openlid-v3 bring genuine diversity on the ms/id axis?
+  - If it outputs ms for at least some true-MY cases AND its errors
+    differ from lingua-high's errors -> YES, genuine diversity.
+  - If it always outputs id for true-MY -> same structural problem as langdetect.
+
+Log saved: C:\Users\faids\Documents\PersonalGitHub\language detection\results\logs\test_case_7_enmyid\log_kappa_s2_4.txt

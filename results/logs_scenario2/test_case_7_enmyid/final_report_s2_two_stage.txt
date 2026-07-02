@@ -1,4 +1,4 @@
-Log: C:\Users\faids\Documents\GitHub\language detection\voting_scenario2\test_case_7_enmyid\final_report_s2_two_stage.txt
+Log: C:\Users\faids\Documents\PersonalGitHub\language detection\results\logs_scenario2\test_case_7_enmyid\final_report_s2_two_stage.txt
 Loading models...
   lingua-high, openlid-v3, pycld2 ready.
 
@@ -63,4 +63,4 @@ Scope-corrected Bonferroni: alpha_corr = 0.05/4 = 0.0125 per scope
   ID    | S2 ts_weighted (weighted)      |    0 |    0 |    1.0000 |   ns
   ID    | S2 hard (baseline)             |    2 |    1 |    1.0000 |   ns
 
-Log saved: C:\Users\faids\Documents\GitHub\language detection\voting_scenario2\test_case_7_enmyid\final_report_s2_two_stage.txt
+Log saved: C:\Users\faids\Documents\PersonalGitHub\language detection\results\logs_scenario2\test_case_7_enmyid\final_report_s2_two_stage.txt

@@ -1,0 +1,159 @@
+Log: C:\Users\faids\Documents\PersonalGitHub\language detection\results\logs\test_case_7_enmyid\log_voting_stats_3.txt
+Loading lingua-high detector...
+Loaded 1273 test cases. Running predictions...
+Predictions complete.
+
+====================================================================================================
+OBJECTIVE 1 — McNEMAR'S TEST (paired significance)
+====================================================================================================
+
+Two classifiers scored on the same 475 cases. The 2×2 table:
+  [[both correct, A correct B wrong],
+   [A wrong B correct, both wrong]]
+Key cells: b = (A right, B wrong), c = (A wrong, B right).
+If b+c < 25 → exact binomial; else → chi-squared (correction=True).
+Bonferroni threshold: α = 0.05 / 36 comparisons = 0.0014  → flagged ***
+Standard thresholds: ** p < 0.01,  * p < 0.05
+Library: statsmodels.stats.contingency_tables.mcnemar
+
+── EN  (n=432) ────────────────────────────────────────────────────────────
+  Pair                                   p-value  sig     b     c  method
+  ----------------------------------- ----------  ---  ----  ----  ------
+  lingua-high vs hard                     1.0000          0     1  exact
+  lingua-high vs soft                     0.6875          4     2  exact
+  lingua-high vs weighted                 0.6875          4     2  exact
+  hard vs soft                            0.3750          4     1  exact
+  hard vs weighted                        0.3750          4     1  exact
+  soft vs weighted                        1.0000          0     0  exact
+
+── MY  (n=421) ────────────────────────────────────────────────────────────
+  Pair                                   p-value  sig     b     c  method
+  ----------------------------------- ----------  ---  ----  ----  ------
+  lingua-high vs hard                     0.0000  ***    19     0  exact
+  lingua-high vs soft                     0.0000  ***   103     4  chi2
+  lingua-high vs weighted                 0.0000  ***    95    16  chi2
+  hard vs soft                            0.0000  ***    84     4  chi2
+  hard vs weighted                        0.0000  ***    76    16  chi2
+  soft vs weighted                        0.0000  ***     0    20  exact
+
+── ID  (n=420) ────────────────────────────────────────────────────────────
+  Pair                                   p-value  sig     b     c  method
+  ----------------------------------- ----------  ---  ----  ----  ------
+  lingua-high vs hard                     0.0000  ***     1    23  exact
+  lingua-high vs soft                     0.0000  ***     4    73  chi2
+  lingua-high vs weighted                 0.0000  ***     7    71  chi2
+  hard vs soft                            0.0000  ***     3    50  chi2
+  hard vs weighted                        0.0000  ***     6    48  chi2
+  soft vs weighted                        0.0625          5     0  exact
+
+── ALL  (n=1273) ────────────────────────────────────────────────────────────
+  Pair                                   p-value  sig     b     c  method
+  ----------------------------------- ----------  ---  ----  ----  ------
+  lingua-high vs hard                     0.6511         20    24  chi2
+  lingua-high vs soft                     0.0245    *   111    79  chi2
+  lingua-high vs weighted                 0.2519        106    89  chi2
+  hard vs soft                            0.0038   **    91    55  chi2
+  hard vs weighted                        0.1036         86    65  chi2
+  soft vs weighted                        0.0051   **     5    20  chi2
+
+Interpretation note:
+  - The -6.3% MY drop (lingua-high 65.3% -> hard 58.9%) and +16.8% ID gain
+    (lingua-high 69.5% -> soft 86.3%) are the two headline findings.
+    See significance markers above to assess statistical reliability.
+  - Small n (95 per language) means b+c is often < 25; exact test used.
+
+====================================================================================================
+OBJECTIVE 2 — BINOMIAL CONFIDENCE INTERVALS (95%, Wilson method)
+====================================================================================================
+
+Each reported accuracy is a Bernoulli proportion. Wilson interval (statsmodels
+proportion_confint method='wilson') is used — it handles p near 0/1 better
+than the normal approximation.
+Library: statsmodels.stats.proportion.proportion_confint
+
+  Lang  |   n |        lingua-high         |         langdetect         |           pycld2           |            hard            |            soft            |          weighted         
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  EN    | 432 |     92.1% [89.2%–94.3%]    |     51.4% [46.7%–56.1%]    |     26.6% [22.7%–31.0%]    |     92.4% [89.5%–94.5%]    |     91.7% [88.7%–93.9%]    |     91.7% [88.7%–93.9%]   
+  MY    | 421 |     55.8% [51.0%–60.5%]    |      0.0% [ 0.0%– 0.9%]    |     21.6% [17.9%–25.8%]    |     51.3% [46.5%–56.0%]    |     32.3% [28.0%–36.9%]    |     37.1% [32.6%–41.8%]   
+  ID    | 420 |     57.9% [53.1%–62.5%]    |     49.3% [44.5%–54.1%]    |     25.2% [21.3%–29.6%]    |     63.1% [58.4%–67.6%]    |     74.3% [69.9%–78.2%]    |     73.1% [68.7%–77.1%]   
+  ALL   | 1273 |     68.8% [66.2%–71.3%]    |     33.7% [31.2%–36.3%]    |     24.5% [22.2%–26.9%]    |     69.1% [66.5%–71.6%]    |     66.3% [63.7%–68.8%]    |     67.5% [64.9%–70.0%]   
+
+CI width at n=95 is ≈ ±10 pp for proportions near 50% and ≈ ±5 pp near 95%.
+Overlapping CIs do not imply no difference — use McNemar (Obj. 1) for that.
+
+====================================================================================================
+OBJECTIVE 3 — INTER-MODEL AGREEMENT (Cohen's kappa + pairwise agreement rate)
+====================================================================================================
+
+Cohen's kappa measures agreement correcting for chance.
+  κ > 0.8 → near-perfect; 0.6–0.8 → substantial; 0.4–0.6 → moderate
+Low kappa = diverse voters (ensemble should help); high kappa = redundant voters.
+Library: sklearn.metrics.cohen_kappa_score
+
+── EN  (n=432) ───────────────────────────────────────────────────────
+  Pair                               kappa   agree %  note
+  lingua-high vs langdetect         0.0619     50.7%  
+  lingua-high vs pycld2             0.0247     26.4%  
+  langdetect  vs pycld2             0.3745     67.4%  
+
+── MY  (n=421) ───────────────────────────────────────────────────────
+  Pair                               kappa   agree %  note
+  lingua-high vs langdetect        -0.0191     18.1%  ← structural (ld→id biased vs true ms)
+  lingua-high vs pycld2             0.0551     20.4%  
+  langdetect  vs pycld2             0.1692     46.6%  ← structural (ld→id biased vs true ms)
+
+── ID  (n=420) ───────────────────────────────────────────────────────
+  Pair                               kappa   agree %  note
+  lingua-high vs langdetect         0.0647     33.3%  
+  lingua-high vs pycld2             0.0570     20.7%  
+  langdetect  vs pycld2             0.3244     63.6%  
+
+── ALL  (n=1273) ───────────────────────────────────────────────────────
+  Pair                               kappa   agree %  note
+  lingua-high vs langdetect         0.1952     34.2%  
+  lingua-high vs pycld2             0.1407     22.5%  
+  langdetect  vs pycld2             0.3365     59.2%  
+
+Notes:
+  - High kappa between langdetect and pycld2 on MY cases signals a structural
+    artifact, not genuine agreement: langdetect can only output 'id' for Malay,
+    so any pycld2 output of 'id' on a true-MY case creates spurious 'agreement'.
+    This violates the voter-independence assumption for the ms/id axis.
+  - The overall kappas guide which model pairs are genuinely diverse.
+
+====================================================================================================
+OBJECTIVE 4 — CALIBRATION ANALYSIS (ECE + reliability diagrams)
+====================================================================================================
+
+A well-calibrated model: when it says 0.7 confidence → it's correct 70% of the time.
+ECE = Σ (n_bin/n_total) × |avg_confidence − fraction_correct|  (lower is better)
+Library: sklearn.calibration.calibration_curve for reliability; ECE computed manually.
+
+  Model              ECE    Avg conf (correct)    Avg conf (wrong)
+  -------------- -------  --------------------  ------------------
+  lingua-high     0.0431                0.6932              0.5425
+  langdetect      0.1845                0.8733              0.2620
+  pycld2          0.0316                0.9447              0.0598
+
+Reliability diagram saved: C:\Users\faids\Documents\PersonalGitHub\language detection\results\calibration\reliability_1.png
+
+  Model           Median conf (correct)    Median conf (wrong)
+  -------------- ----------------------  ---------------------
+  lingua-high                    0.6627                 0.5264
+  langdetect                     1.0000                 0.0000
+  pycld2                         0.9700                 0.0000
+Confidence distribution plot saved: C:\Users\faids\Documents\PersonalGitHub\language detection\results\calibration\conf_dist_1.png
+
+Calibration interpretation:
+  - If one model's confidence scale is systematically higher than another's,
+    soft_vote and weighted_vote will be biased toward that model regardless of
+    AUC -- because raw probability averaging amplifies the high-confidence model.
+  - The mean/median confidence gap between correct and wrong predictions
+    measures discrimination (not calibration) -- a well-discriminating model
+    is confident when right and uncertain when wrong.
+
+
+====================================================================================================
+Log saved: C:\Users\faids\Documents\PersonalGitHub\language detection\results\logs\test_case_7_enmyid\log_voting_stats_3.txt
+Plots:     C:\Users\faids\Documents\PersonalGitHub\language detection\results\calibration\reliability_1.png
+           C:\Users\faids\Documents\PersonalGitHub\language detection\results\calibration\conf_dist_1.png

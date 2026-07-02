@@ -1,0 +1,72 @@
+Log: C:\Users\faids\Documents\PersonalGitHub\language detection\results\logs\test_case_7_enmyid\log_stage1_accuracy_1.txt
+Loading models...
+Loaded 1273 cases. Running predictions...
+Done.
+
+==========================================================================================
+TABLE 1 — STAGE 1 COARSE ROUTING ACCURACY
+==========================================================================================
+
+Stage 1 collapses ms/id -> MSID and runs hard vote on {en, MSID, zh, ta}.
+A 'correct route' for true-MY or true-ID means Stage 1 returns MSID.
+A 'misroute' means Stage 1 returned en, zh, or ta for a true-MY/ID case.
+
+  True lang     n   Correct route   Misrouted  Misrouted to
+  -----------------------------------------------------------------
+  EN          432           92.4%          33  msid(33)
+  MY          421           92.6%          31  en(31)
+  ID          420           92.6%          31  en(31)
+
+Stage 1 routing by bucket — MY and ID:
+  Bucket         n(MY)   MY->MSID  n(ID)   ID->MSID
+  --------------------------------------------------
+  1 word           226      88.1%    225      88.0%
+  2 words          129      96.9%    129      96.9%
+  3-7 words         32     100.0%     32     100.0%
+  8-16 words        24     100.0%     24     100.0%
+  17-50 words       10     100.0%     10     100.0%
+
+==========================================================================================
+TABLE 2 — TWO-STAGE ERROR BREAKDOWN (two_stage_agree)
+==========================================================================================
+
+For each true language, errors are classified as:
+  Stage 1 misroute: Stage 1 sent the case to wrong coarse class (not MSID for MY/ID)
+  Stage 2 error:    Stage 1 correctly sent to MSID, but Stage 2 chose wrong ms/id
+  No error:         two_stage_agree was correct
+
+  True lang     n   Correct   S1 misroute    S2 error     Acc
+  ------------------------------------------------------------
+  EN          432       399             0          33   92.4%
+  MY          421       227            31         163   53.9%
+  ID          420       269            31         120   64.0%
+
+Error breakdown by bucket — MY and ID:
+
+  MY:
+  Bucket           n   Correct   S1 misroute    S2 error     Acc
+  -------------------------------------------------------
+  1 word         226        97            27         102   42.9%
+  2 words        129        76             4          49   58.9%
+  3-7 words       32        26             0           6   81.2%
+  8-16 words      24        20             0           4   83.3%
+  17-50 words     10         8             0           2   80.0%
+
+  ID:
+  Bucket           n   Correct   S1 misroute    S2 error     Acc
+  -------------------------------------------------------
+  1 word         225       121            27          77   53.8%
+  2 words        129        85             4          40   65.9%
+  3-7 words       32        29             0           3   90.6%
+  8-16 words      24        24             0           0  100.0%
+  17-50 words     10        10             0           0  100.0%
+
+==========================================================================================
+STAGE 1 SUMMARY
+==========================================================================================
+
+Stage 1 coarse accuracy (all 1273):    1178/1273 = 92.5%
+Stage 1 MSID routing (MY+ID, n=841):  779/841 = 92.6%
+two_stage_agree final accuracy:        895/1273 = 70.3%
+
+Log saved: C:\Users\faids\Documents\PersonalGitHub\language detection\results\logs\test_case_7_enmyid\log_stage1_accuracy_1.txt

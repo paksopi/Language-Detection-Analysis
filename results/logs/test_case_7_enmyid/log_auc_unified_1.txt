@@ -1,0 +1,24 @@
+Log: C:\Users\faids\Documents\PersonalGitHub\language detection\results\logs\test_case_7_enmyid\log_auc_unified_1.txt
+Loading lingua-high detector...
+Loaded 1273 cases. Running predictions...
+Done.
+
+================================================================================
+UNIFIED AUC (binary correct + top-1 confidence, matching benchmarkV5)
+================================================================================
+
+  Model           Unified AUC   benchmarkV5     delta  match?
+  -------------- ------------  ------------  --------  ------
+  lingua-high          0.7417        0.8503   -0.1086  NO
+  langdetect           0.8481        0.7516   +0.0965  NO
+  pycld2               0.9845        0.9634   +0.0211  NO
+
+Notes:
+  - benchmarkV5 computes AUC from top-1 prediction binary + top-1 confidence score.
+  - The old compute_macro_auc in voting_two_stage.py used per-class OVR probability
+    vectors, yielding different (inconsistent) results.
+  - pycld2's 0.9634 AUC comes from its sharp discrimination: very high confidence
+    when correct, near-zero when it declines to predict (unknown cases).
+  - This function is importable: from auc_unified import compute_binary_auc
+
+Log saved: C:\Users\faids\Documents\PersonalGitHub\language detection\results\logs\test_case_7_enmyid\log_auc_unified_1.txt

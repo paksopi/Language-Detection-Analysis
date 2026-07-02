@@ -1,0 +1,8 @@
+Log: C:\Users\faids\Documents\PersonalGitHub\language detection\results\logs\test_case_7_enmyid\log_voting_stats_2.txt
+Loading lingua-high detector...
+Loaded 1273 test cases. Running predictions...
+Predictions complete.
+
+====================================================================================================
+OBJECTIVE 1 — McNEMAR'S TEST (paired significance)
+====================================================================================================
