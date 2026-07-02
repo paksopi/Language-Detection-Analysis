@@ -2,9 +2,18 @@
 
 > **Dataset: `test_case_7_enmyid.txt` — 1,273 cases (EN 432 / MY 421 / ID 420), filtered to English/Malay/Indonesian only.** Chinese (ZH) and Tamil (TA) cases were removed from `test_case_7.txt` at the user's request, since MY/ID disambiguation — not ZH/TA, which every model already handled near-perfectly — is the actual problem this evaluation exists to solve. A full 5-language archived report is kept at `Language_Detection_Engine_Final_Report_test_case_7.md`, and the older `test_case_6` (475-case, 5-language) report at `Language_Detection_Engine_Final_Report_test_case_6.md`.
 
+> **Naming convention:** `EN`/`MY`/`ID` are this report's dataset language labels, used in prose ("Malay (MY)") and as table/column headers. `en`/`ms`/`id` are the corresponding [BCP-47](https://www.rfc-editor.org/info/bcp47) ISO codes, used in inline code font when referring to a literal model output value (e.g. "the model outputs `ms`"). `ms` is never used as shorthand for "milliseconds" outside of explicit `X ms` latency figures — those are always written with a numeric prefix to avoid ambiguity with the Malay ISO code.
+
+## TL;DR
+
+- Current production (`langdetect` alone) scores 29.1% overall and 0.0% on Malay (MY). The best single proposed config — **S2 Weighted** (`lingua-high` + `openlid-v3` + `pycld2`) — reaches **70.8%** overall, **+41.7pp**, and is 8.6–115.5× faster per call.
+- **But S2 Weighted's own MY accuracy is 43.7% — *worse* than `lingua-high` running alone (55.8%) and worse than the S1 Two-Stage Weighted alternative (56.5%).** The 70.8% headline is an ALL-language (EN+MY+ID blended) number bought partly by trading away MY accuracy for a large ID accuracy gain.
+- **Recommendation:** ship **S2 Weighted** if ID accuracy and per-request latency matter most and low-confidence MY/ID predictions get flagged for downstream context-gathering (§13). Ship **S1 Two-Stage Weighted** instead if MY protection matters most — it matches/exceeds `lingua-high` alone on MY at a cost of only 0.5pp ALL accuracy. See the decision matrix in §9.
+- The 70.8% figure is itself bucket-composition-dependent: 53% of the test set (677/1,273 cases) is single-word text, the bucket with the weakest, least-representative signal (§12). §12b shows what ALL/EN/MY/ID accuracy becomes under more realistic query-length distributions.
+
 ## Executive Summary
 
-**Headline finding:** A representative production baseline currently runs language detection on **`langdetect` alone** — a single unvoted model that cannot detect Malay at all (0% MY accuracy) and scores only 29.1% overall accuracy on this dataset. Because language detection is a synchronous step that must complete *before* downstream AI processing receives any context (§10.1), every millisecond and every misdetection here has a direct, un-hidden cost to the user. The proposed 3-model weighted-voting ensemble (`lingua-high` + `openlid-v3` + `pycld2`) reaches 70.8% overall accuracy — **+41.7 percentage points** — while also running 8.6–115.5× faster per call. This is not a speed-for-accuracy tradeoff: the proposed system is a strict improvement over what ships today on both axes at once.
+**Headline finding — and the trade-off that comes with it:** A representative production baseline currently runs language detection on **`langdetect` alone** — a single unvoted model that cannot detect Malay at all (0% MY accuracy) and scores only 29.1% overall accuracy on this dataset. Because language detection is a synchronous step that must complete *before* downstream AI processing receives any context (§10.1), every millisecond and every misdetection here has a direct, un-hidden cost to the user. The proposed 3-model weighted-voting ensemble (`lingua-high` + `openlid-v3` + `pycld2`, "**S2 Weighted**") reaches 70.8% overall accuracy — **+41.7 percentage points** — while also running 8.6–115.5× faster per call. **That headline number comes with a real, immediate trade-off: S2 Weighted's own Malay (MY) accuracy is 43.7%, which is *below* both `lingua-high` running alone (55.8%) and the S1 Two-Stage Weighted alternative (56.5%, §6).** On the ALL-language axis this is not a speed-for-accuracy trade — the proposed system beats what ships today on both accuracy and speed simultaneously. But on the MY axis specifically, the config with the best ALL accuracy is *not* the config with the best MY accuracy, and which one to ship depends on which error type is more costly downstream — see the decision matrix in §9.
 
 This report evaluates seven language detection libraries across 1,273 English/Malay/Indonesian text cases (`test_case_7_enmyid.txt`, filtered from the 2,036-case `test_case_7.txt` to drop Chinese and Tamil) to design the core routing engine for a downstream NLP pipeline's language-detection stage. Initial benchmarking identified three models—`lingua-high`, `langdetect`, and `pycld2`—that exhibited complementary failure modes. We hypothesized that a majority-vote ensemble of these three would resolve their individual weaknesses, particularly the deep ambiguity between Malay (MY) and Indonesian (ID).
 
@@ -12,11 +21,21 @@ However, empirical voting results replicated the same structural failure seen in
 
 A simple leave-one-out ablation (removing `langdetect` entirely) again does **not** fully recover MY accuracy (53.4–53.9% vs. `lingua-high`'s individual 55.8%). Two-Stage Voting (weighted variant) is still the only configuration that fully restores MY protection (56.5%, exceeding `lingua-high` alone), while Scenario 2 (`openlid-v3`-based) Weighted Voting achieves the best overall accuracy (70.8%) and the best ID accuracy (76.0%), at the cost of materially worse MY accuracy (43.7%).
 
-Based on these findings — and per the user's explicit direction in the prior 5-language report — we recommend deploying **Scenario 2 Weighted Voting (`lingua-high` + `openlid-v3` + `pycld2`)** as the primary architecture. It wins on overall accuracy, ID accuracy, and per-request latency, and needs no Stage-1/Stage-2 routing logic. The MY tradeoff (43.7% vs. 55.8% for `lingua-high` alone, vs. 56.5% for the Two-Stage fallback) should be mitigated with downstream low-confidence flagging and monitored in production; see §10 and §13.
+**Decision matrix — pick based on which error costs more downstream:**
+
+| Choose... | If... | ALL | MY | ID | EN |
+|---|---|---|---|---|---|
+| **S2 Weighted** (`lingua-high`+`openlid-v3`+`pycld2`) | ID accuracy, per-request latency, and single-stage simplicity matter more than MY protection; MY/ID low-confidence flagging (§13) is in place downstream | **70.8%** | 43.7% | **76.0%** | 92.1% |
+| **S1 Two-Stage Weighted** (`lingua-high`+`langdetect`+`pycld2`, 2-stage) | Protecting Malay-language users from misdetection matters more than squeezing out the last few points of ID/ALL accuracy | 70.3% | **56.5%** | 61.4% | 92.4% |
+
+The two configs are close on ALL (70.8% vs. 70.3%, 0.5pp apart) but diverge sharply per-language: S2 trades 12.8pp of MY accuracy for 14.6pp of ID accuracy relative to Two-Stage. Neither config is a strict win — the choice depends on which language's errors are more costly to the downstream product.
+
+Based on these findings — and per the user's explicit direction in the prior 5-language report — we recommend deploying **Scenario 2 Weighted Voting (`lingua-high` + `openlid-v3` + `pycld2`)** as the primary architecture, on the assumption that downstream low-confidence flagging (§13) adequately mitigates the MY gap. It wins on overall accuracy, ID accuracy, and per-request latency, and needs no Stage-1/Stage-2 routing logic. But this is a conditional recommendation, not a strict win: if MY protection turns out to matter more than the decision matrix above assumes, **S1 Two-Stage Weighted** (56.5% MY, 70.3% ALL) is the better default. The MY tradeoff (43.7% vs. 55.8% for `lingua-high` alone, vs. 56.5% for the Two-Stage fallback) should be monitored in production regardless of which config ships; see §10 and §13.
 
 ---
 
 ## Table of Contents
+0. [TL;DR](#tldr)
 1. [Benchmark Methodology & Individual Model Performance](#1-benchmark-methodology--individual-model-performance)
 2. [Model Selection & Initial Ensemble Design Hypothesis](#2-model-selection--initial-ensemble-design-hypothesis)
 3. [Initial Voting Results (The Failure)](#3-initial-voting-results-the-failure)
@@ -29,6 +48,7 @@ Based on these findings — and per the user's explicit direction in the prior 5
 10. [Scenario Comparison — Speed, Accuracy & Complexity](#10-scenario-comparison--speed-accuracy--complexity)
 11. [Methodology Notes](#11-methodology-notes)
 12. [Limitations and Threats to Validity](#12-limitations-and-threats-to-validity)
+    - 12b. [Accuracy Under Realistic Query-Length Distributions](#12b-accuracy-under-realistic-query-length-distributions)
 13. [Integration Notes for Downstream Deployment](#13-integration-notes-for-downstream-deployment)
 
 ---
@@ -126,7 +146,7 @@ Based on the individual benchmarks, four models were eliminated:
 Three models were selected for a voting ensemble: **`lingua-high`**, **`langdetect`**, and **`pycld2`**. We hypothesized that this trio offered complementary failure modes that would cancel each other out in a majority vote.
 
 **The Initial Hypothesis for MY/ID Resolution:**
-Because `langdetect` lacks a Malay profile, it outputs Indonesian (`id`) for true Malay (`ms`) 100% of the time (421/421 cases). Originally, we hypothesized that this systematic `id` proxy output would be safely overridden by the majority consensus of `lingua-high` and `pycld2`. We assumed that when true Malay text was processed, `lingua-high` and `pycld2` would both vote `ms`, successfully winning the election 2-to-1 against `langdetect`.
+Because `langdetect` lacks a Malay profile, it outputs Indonesian (`id`) for true Malay (MY) 100% of the time (421/421 cases). Originally, we hypothesized that this systematic `id` proxy output would be safely overridden by the majority consensus of `lingua-high` and `pycld2`. We assumed that when true Malay text was processed, `lingua-high` and `pycld2` would both vote `ms`, successfully winning the election 2-to-1 against `langdetect`.
 
 ---
 
@@ -188,11 +208,11 @@ Identical to the 5-language finding: removing `langdetect` improves MY accuracy 
 
 ## 6. Fix 1: Two-Stage Voting Architecture
 
-Since simple ablation left a residual MY gap, we applied the Two-Stage Voting mechanism to safely integrate `langdetect`'s useful signal on English while removing its structural bias on the MS/ID axis.
+Since simple ablation left a residual MY gap, we applied the Two-Stage Voting mechanism to safely integrate `langdetect`'s useful signal on English while removing its structural bias on the MY/ID axis.
 
 **Design:**
 * **Stage 1:** Coarse classification. `langdetect`'s `id` vote is mapped to a broad "MSID" (Malay/Indonesian) class. All three models hard-vote on {en, MSID}. If the outcome is not MSID, the decision is final.
-* **Stage 2:** Fine MS/ID decision. Triggered only if Stage 1 yields MSID. This stage strictly uses `lingua-high` and `pycld2`.
+* **Stage 2:** Fine MY/ID decision. Triggered only if Stage 1 yields MSID. This stage strictly uses `lingua-high` and `pycld2`.
     * *two_stage_agree:* If they agree, output the consensus. If they disagree, use the model with higher confidence.
     * *two_stage_weighted:* Score each label using per-class dev-fitted accuracy weights for `lingua-high` and `pycld2`.
 
@@ -210,7 +230,7 @@ Identical per-language numbers to the 5-language run: `two_stage_weighted` fully
 
 ## 7. Fix 2: Scenario 2 (Replacing langdetect with openlid-v3)
 
-We evaluated a new ensemble (Scenario 2) replacing `langdetect` with `openlid-v3` (`lingua-high` + `openlid-v3` + `pycld2`), using the corrected FLORES-200 ISO mapping (`voting/core.py`). `openlid-v3` natively supports Malay (`ms`), achieving 27.8% MY accuracy individually — identical to the 5-language run, since this is measured only on MY cases.
+We evaluated a new ensemble (Scenario 2) replacing `langdetect` with `openlid-v3` (`lingua-high` + `openlid-v3` + `pycld2`), using the corrected FLORES-200 ISO mapping (`voting/core.py`). `openlid-v3` natively supports Malay (MY), achieving 27.8% MY accuracy individually — identical to the 5-language run, since this is measured only on MY cases.
 
 **Scenario 2 Results (full 1,273-case dataset):**
 | LANG | S1 hard (langdetect) | S2 hard (openlid) | S2 soft | S2 weighted |
@@ -241,6 +261,8 @@ The gap (−1.57 pp) falls within standard sampling noise, confirming there is n
 
 All figures below are on the full 1,273-case (EN/MY/ID-only) dataset except where noted.
 
+**No single strategy wins on every axis.** S2 Weighted has the best ALL and ID accuracy; S1 Two-Stage Weighted has the best MY accuracy and matches `lingua-high` run alone on MY. Read the table with that in mind before jumping to the recommendation below.
+
 | Strategy | Ensemble | EN | MY | ID | ALL |
 |---|---|---|---|---|---|
 | lingua-high (individual) | — | 92.1% | 55.8% | 57.9% | 68.8% |
@@ -249,13 +271,20 @@ All figures below are on the full 1,273-case (EN/MY/ID-only) dataset except wher
 | S1 two_stage_agree | ld+li+py (2-stage) | 92.4% | 53.9% | **64.0%** | 70.3% |
 | S1 two_stage_weighted | ld+li+py (2-stage) | 92.4% | **56.5%** | 61.4% | 70.3% |
 | S2 hard | ol+li+py | **92.4%** | 53.0% | 64.3% | 70.1% |
-| **S2 weighted (RECOMMENDED)** | ol+li+py | 92.1% | 43.7% | **76.0%** | **70.8%** |
+| **S2 weighted (RECOMMENDED, conditionally — see below)** | ol+li+py | 92.1% | 43.7% | **76.0%** | **70.8%** |
 
-**Final Recommendation:** Deploy **Scenario 2 Weighted Voting (`lingua-high` + `openlid-v3` + `pycld2`)**. It achieves the best overall accuracy on this dataset (70.8%) and the best ID accuracy (76.0%), needs only a single-stage vote (no Stage-1/Stage-2 routing logic to build and maintain), and is 8–116× faster per request than any `langdetect`-based configuration (§10.2) — while using a genuinely diverse voter on the MS/ID axis (κ = 0.2254 vs. `langdetect`'s −0.0191, §7). More fundamentally, it already beats current production (`langdetect` alone) by +41.7pp overall accuracy while also being faster — see §10.1.
+### Decision matrix
 
-The tradeoff is real and should be tracked: S2 weighted's MY accuracy (43.7%) sits below both `lingua-high` alone (55.8%) and every S1 two-stage variant (best: 56.5%). Mitigate this the way §13 already recommends for all micro-text — flag low-confidence MY/ID predictions (especially 1-word inputs) for downstream context-gathering rather than trusting the raw vote. If MY protection later proves too weak in production, **S1 Two-Stage Weighted** (56.5% MY, 70.3% ALL) remains the fallback, and the untested `lingua-high` + `openlid-v3`-only Stage 2 (§10.5) is worth building before reverting to `langdetect`, since `openlid-v3` is already the model in use.
+| Choose... | If... | ALL | MY | ID |
+|---|---|---|---|---|
+| **S2 Weighted** | ID accuracy, latency, and single-stage simplicity matter more than MY protection, and low-confidence MY/ID flagging (§13) is in place downstream | **70.8%** | 43.7% | **76.0%** |
+| **S1 Two-Stage Weighted** | MY protection matters more than the last ~0.5pp of ALL accuracy — e.g. MY-heavy traffic, or MY misdetection is costlier downstream than ID misdetection | 70.3% | **56.5%** | 61.4% |
 
-See §10 for the full speed/accuracy/complexity comparison behind this recommendation — notably, `openlid-v3` requires shipping a 1.2 GB model artifact, which is the main cost of choosing Scenario 2.
+**Final Recommendation:** Deploy **Scenario 2 Weighted Voting (`lingua-high` + `openlid-v3` + `pycld2`)** as the primary architecture, *conditional on* downstream low-confidence flagging (§13) being in place to catch the MY gap described below. It achieves the best overall accuracy on this dataset (70.8%) and the best ID accuracy (76.0%), needs only a single-stage vote (no Stage-1/Stage-2 routing logic to build and maintain), and is 8–116× faster per request than any `langdetect`-based configuration (§10.2) — while using a genuinely diverse voter on the MY/ID axis (κ = 0.2254 vs. `langdetect`'s −0.0191, §7). More fundamentally, it already beats current production (`langdetect` alone) by +41.7pp overall accuracy while also being faster — see §10.1.
+
+**The MY regression is real and is not a minor footnote:** S2 Weighted's MY accuracy (43.7%) sits *below* both `lingua-high` run alone (55.8%) and every S1 two-stage variant (best: 56.5%) — a 12.8pp gap versus the Two-Stage fallback. If MY protection matters more than the decision matrix above assumes for your traffic, **ship S1 Two-Stage Weighted instead** (56.5% MY, 70.3% ALL) — it is only 0.5pp behind S2 on ALL accuracy and requires no separate model artifact beyond what Scenario 1 already needs. Mitigate the MY gap the way §13 recommends for all micro-text — flag low-confidence MY/ID predictions (especially 1-word inputs) for downstream context-gathering rather than trusting the raw vote — and track MY-specific accuracy in production regardless of which config ships. The untested `lingua-high` + `openlid-v3`-only Stage 2 (§10.5) is worth building as a possible best-of-both option before reverting to `langdetect`, since `openlid-v3` is already the model in use.
+
+See §10 for the full speed/accuracy/complexity comparison behind this recommendation — notably, `openlid-v3` requires shipping a 1.2 GB model artifact, which is the main cost of choosing Scenario 2. See §12b for how the 70.8%/56.5% ALL figures shift under more realistic query-length distributions than this dataset's synthetic bucket split.
 
 ---
 
@@ -361,6 +390,40 @@ When `langdetect` was forced to vote on Malay text, it broke both assumptions si
 * **Micro-text limitations:** All models struggled on 1-word inputs for MY and ID (peaking at ~49% for `lingua-high`). The ensemble heavily relies on context to break the ambiguity, limiting its utility on isolated colloquial keywords. 1-word cases make up over half the dataset (677/1,273).
 * **Aggregate ("ALL") figures are lower than the 5-language report's, by design:** removing ZH/TA — the two languages every model handled at 95–100% — pulls the blended accuracy down across the board (e.g. `lingua-high` ALL: 80.2% → 68.8%). This is not a regression in per-language performance (every EN/MY/ID number is identical to the 5-language run); it simply means ALL now reflects only the genuinely contested part of the problem. Don't compare ALL figures across the two reports without accounting for this.
 * **Speed/complexity measurements are single-machine, single-run, and vary between sessions:** §10's cold-start and pipeline-latency figures were re-measured for this run and differ somewhat from the 5-language report's (e.g. `langdetect`'s 1-word latency: 3.68 ms there vs. 5.52 ms here). Treat the absolute numbers as directionally correct rather than precise SLA figures; the relative speed-up between scenarios is large enough (an order of magnitude or more) to be robust to this noise.
+
+### 12b. Accuracy Under Realistic Query-Length Distributions
+
+Every headline figure in this report (70.8% ALL for S2 Weighted, 56.5% MY for S1 Two-Stage Weighted, etc.) is a blend across this dataset's five word-count buckets, weighted by **this test set's own bucket composition** — 677/399/94/73/30 cases (53% single-word). That composition was chosen to stress-test EN/MY/ID ambiguity across text lengths (§1.1), not to mirror real production query-length traffic. Since 1-word inputs are also the bucket every model scores worst on (§12, "Micro-text limitations"), the ALL figure is materially sensitive to how much single-word traffic actually shows up in production.
+
+[`src/benchmark/reweight_by_real_distribution.py`](../src/benchmark/reweight_by_real_distribution.py) recomputes ALL/EN/MY/ID accuracy as a weighted average of the same measured per-bucket accuracy, substituting a different bucket-mix histogram for the raw test-set counts. Below are the report's four key configurations (current production, `lingua-high` alone, S1 Two-Stage Weighted, S2 Weighted) reweighted under three illustrative distributions — **these histograms are illustrative, not measured from real LIAM traffic**; swap in a real query-length histogram via `--histogram` once one is available:
+
+* **`chat_short`** — mostly 1–2 word lookups (45%/35%/15%/4%/1% across the five buckets)
+* **`query_typical`** — mostly 3–16 word queries (5%/10%/45%/30%/10%)
+* **`long_form`** — mostly 8–50 word content (2%/3%/15%/35%/45%)
+
+| Distribution | Strategy | EN | MY | ID | ALL |
+|---|---|---|---|---|---|
+| test_set (published figures) | langdetect | 42.8% | 0.0% | 44.3% | 29.1% |
+| test_set (published figures) | lingua-high | 92.1% | 55.8% | 57.9% | 68.8% |
+| test_set (published figures) | S1 two_stage_weighted | 92.4% | 56.5% | 61.4% | 70.3% |
+| test_set (published figures) | **S2 weighted** | 92.1% | 43.7% | **76.0%** | **70.8%** |
+| chat_short | langdetect | 46.4% | 0.0% | 47.8% | 31.5% |
+| chat_short | lingua-high | 92.5% | 58.0% | 58.4% | 69.8% |
+| chat_short | S1 two_stage_weighted | 93.0% | 58.9% | 63.7% | 72.1% |
+| chat_short | **S2 weighted** | 92.9% | 46.2% | **78.2%** | **72.6%** |
+| query_typical | langdetect | 87.8% | 0.0% | 87.1% | 58.5% |
+| query_typical | lingua-high | 97.4% | 71.9% | 74.9% | 81.6% |
+| query_typical | S1 two_stage_weighted | 98.9% | **79.4%** | 87.7% | 88.8% |
+| query_typical | **S2 weighted** | 98.9% | 79.0% | **96.5%** | **91.5%** |
+| long_form | langdetect | 95.9% | 0.0% | 95.6% | 64.1% |
+| long_form | lingua-high | 99.1% | 70.8% | 82.2% | 84.2% |
+| long_form | S1 two_stage_weighted | 99.6% | **80.6%** | 87.5% | 89.3% |
+| long_form | **S2 weighted** | 99.6% | 85.7% | **98.8%** | **94.7%** |
+
+**Takeaway:** the 70.8%/56.5% headline figures are bucket-composition-dependent, and the direction of the dependency matters for the S2-vs-Two-Stage decision (§9):
+* Under `query_typical` and `long_form` — arguably the more realistic shapes for a downstream NLP query, since 1-word isolated input is an edge case for most product surfaces — **the MY gap between S2 Weighted and S1 Two-Stage Weighted shrinks to 0.4pp (query_typical) or even reverses in S2's favor (long_form: 85.7% vs. 80.6%)**, while S2's ALL/ID lead widens. This weakens the case for defaulting to Two-Stage purely to protect MY, *if* production queries are mostly multi-word.
+* Under `chat_short` — closer to this test set's own composition — the MY gap is smaller than the published 12.8pp (43.7% vs. 56.5%) but still real (46.2% vs. 58.9%, a 12.7pp gap), because single-word MY/ID disambiguation is where every strategy is weakest.
+* **This does not change the recommendation in §9** — it should inform which branch of the decision matrix applies. If real LIAM query-length data shows queries are predominantly single-word or two-word (like this test set), the MY caveat in §9 applies at close to full published strength. If real queries are predominantly multi-word, the MY caveat is smaller than published, and S2 Weighted's case strengthens further. **This is exactly the kind of production data this report cannot supply on its own** — re-run `reweight_by_real_distribution.py --histogram <real_query_length_histogram.json>` once real query-length telemetry exists, rather than trusting either the published bucket mix or the illustrative distributions above as ground truth.
 
 ---
 

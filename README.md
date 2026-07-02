@@ -5,8 +5,12 @@
 ![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)
 
 A proof-of-concept comparing language-detection engines — **lingua**, **langdetect**,
-**pycld2**, **fasttext**, and **langid** — on short-text EN / MS / ID (English / Malay /
+**pycld2**, **fasttext**, and **langid** — on short-text EN / MY / ID (English / Malay /
 Indonesian) classification, and combining them into a weighted voting ensemble.
+
+> **Naming:** `EN`/`MY`/`ID` are the language labels used in prose and table headers below;
+> `en`/`ms`/`id` are their [BCP-47](https://www.rfc-editor.org/info/bcp47) ISO codes, used in
+> code font when referring to a literal model output value.
 
 ## Dataset
 
@@ -31,16 +35,26 @@ are scored as exact-match [BCP 47](https://www.rfc-editor.org/info/bcp47) codes 
 
 Evaluated on 1,273 EN/MY/ID short-text cases (`test_case_7_enmyid.txt`). Current production
 baseline (`langdetect` alone) scores **29.1%** overall accuracy and cannot detect Malay at all
-(0.0% MY). The recommended **Scenario 2 Weighted Voting** ensemble (`lingua-high` + `openlid-v3`
-+ `pycld2`) reaches **70.8%** overall accuracy — **+41.7 pp** — while running 8.6–115.5× faster
-per call.
+(0.0% MY). The best-ALL-accuracy config, **S2 Weighted Voting** (`lingua-high` + `openlid-v3`
++ `pycld2`), reaches **70.8%** overall accuracy — **+41.7 pp** over production — while running
+8.6–115.5× faster per call. **That 70.8% figure comes with a trade-off worth reading before you
+pick a config: S2 Weighted's own Malay (MY) accuracy is 43.7%, below both `lingua-high` running
+alone (55.8%) and the S1 Two-Stage Weighted alternative (56.5%).** Choose S2 Weighted if ID
+accuracy/latency/simplicity matter more than MY protection; choose S1 Two-Stage Weighted if MY
+protection matters more (only 0.5 pp behind on ALL). Full decision matrix in
+[§9 of the report](reports/language_detection_ensemble_evaluation.md#9-master-summary-table--final-recommendation).
 
 | Strategy | Ensemble | EN | MY | ID | ALL |
 |---|---|---|---|---|---|
 | langdetect (current production) | — | 42.8% | 0.0% | 44.3% | 29.1% |
 | lingua-high (individual) | — | 92.1% | 55.8% | 57.9% | 68.8% |
 | S1 two_stage_weighted | ld+li+py (2-stage) | 92.4% | **56.5%** | 61.4% | 70.3% |
-| **S2 weighted (recommended)** | ol+li+py | 92.1% | 43.7% | **76.0%** | **70.8%** |
+| **S2 weighted (best ALL/ID; MY trade-off, see above)** | ol+li+py | 92.1% | 43.7% | **76.0%** | **70.8%** |
+
+The 70.8%/56.5% figures above also depend on this dataset's bucket composition (53% single-word
+cases) — see [`src/benchmark/reweight_by_real_distribution.py`](src/benchmark/reweight_by_real_distribution.py)
+and [§12b of the report](reports/language_detection_ensemble_evaluation.md#12b-accuracy-under-realistic-query-length-distributions)
+for what these numbers become under more realistic query-length distributions.
 
 ![ROC curves for all seven models](results/roc_curve/roc_curve_all_1.png)
 
